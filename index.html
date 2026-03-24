@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💻 Yazılımcı Hayatı</title>
+  <title>💻 Yazılımcı Hayatı — Makro Yazılım</title>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,7 +21,6 @@
       align-items: stretch;
     }
 
-    /* ═══ PAPER ═══════════════════════════════════════ */
     .paper {
       position: relative;
       width: 100%;
@@ -34,11 +33,8 @@
       background-image: repeating-linear-gradient(
         transparent, transparent 34px, #c8d4e3 34px, #c8d4e3 35px
       );
-      box-shadow: 4px 0 0 #d9c9a3, 8px 0 20px rgba(0,0,0,0.3),
-                  -2px 0 8px rgba(0,0,0,0.15);
+      box-shadow: 4px 0 0 #d9c9a3, 8px 0 20px rgba(0,0,0,0.3), -2px 0 8px rgba(0,0,0,0.15);
     }
-
-    /* kırmızı margin çizgisi */
     .paper::before {
       content: '';
       position: absolute;
@@ -46,8 +42,6 @@
       background: rgba(210,70,70,0.35);
       pointer-events: none; z-index: 1;
     }
-
-    /* spiral delikler */
     .paper::after {
       content: '';
       position: absolute;
@@ -56,59 +50,21 @@
       border-radius: 50%;
       background: #5a3e28;
       box-shadow: 0 100px 0 #5a3e28, 0 200px 0 #5a3e28,
-                  0 300px 0 #5a3e28, 0 400px 0 #5a3e28,
-                  0 500px 0 #5a3e28;
+                  0 300px 0 #5a3e28, 0 400px 0 #5a3e28, 0 500px 0 #5a3e28;
       pointer-events: none; z-index: 1;
     }
 
-    /* ═══ BÖLÜMLER ═════════════════════════════════════ */
-    .p-head    { flex-shrink: 0; padding: 16px 24px 0 80px; }
-    .p-stats   { flex-shrink: 0; padding: 8px 24px 10px 80px; border-bottom: 1.5px dashed #b8bcc8; }
+    /* ── BÖLÜMLER ── */
+    .p-head    { flex-shrink: 0; padding: 14px 24px 0 80px; }
+    .p-stats   { flex-shrink: 0; padding: 7px 24px 9px 80px; border-bottom: 1.5px dashed #b8bcc8; }
     .p-body    { flex: 1; overflow-y: auto; padding: 10px 24px 6px 80px; scrollbar-width: thin; scrollbar-color: #c8d4e3 transparent; }
-    .p-choices { flex-shrink: 0; padding: 6px 24px 14px 80px; }
+    .p-choices { flex-shrink: 0; padding: 5px 24px 12px 80px; }
 
-    /* ═══ SCREENS ══════════════════════════════════════ */
+    /* ── SCREENS ── */
     .screen { display: none; height: 100%; flex-direction: column; }
     .screen.active { display: flex; }
 
-    /* ═══ INTRO ════════════════════════════════════════ */
-    .intro-inner {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      height: 100%; text-align: center; gap: 12px;
-      padding: 0 20px;
-    }
-    .intro-title { font-size: 3em; font-weight: 700; color: #1a1a1a; line-height: 1.1; }
-    .intro-sub   { font-size: 1.55em; color: #888; }
-    .intro-desc  { font-size: 1.3em; color: #444; line-height: 1.7; }
-
-    /* ═══ CHAR ═════════════════════════════════════════ */
-    .char-inner {
-      display: flex; flex-direction: column;
-      height: 100%; padding: 0; justify-content: center; gap: 10px;
-    }
-    .sec-title {
-      font-size: 1.9em; font-weight: 700; color: #1a1a1a;
-      border-bottom: 2px solid #1a1a1a; padding-bottom: 3px; margin-bottom: 4px;
-    }
-    .char-label { font-size: 1.25em; color: #555; }
-    .char-input {
-      font-family: 'Caveat', cursive; font-size: 1.45em;
-      border: none; border-bottom: 2px solid #555; background: transparent;
-      outline: none; width: 200px; color: #1a1a1a; padding: 2px 0;
-    }
-    .pos-list { display: flex; flex-direction: column; gap: 6px; margin: 4px 0; }
-    .pos-btn {
-      font-family: 'Caveat', cursive; font-size: 1.25em;
-      background: transparent; border: 1.5px solid #ccc; padding: 7px 14px;
-      text-align: left; cursor: pointer; color: #333; transition: all 0.13s;
-    }
-    .pos-btn:hover, .pos-btn.sel {
-      background: #fef9c3; border-color: #c8a000;
-      transform: translateX(8px); font-weight: 700;
-    }
-
-    /* ═══ BUTONLAR ════════════════════════════════════ */
+    /* ── BUTONLAR ── */
     .btn {
       display: inline-block; font-family: 'Caveat', cursive;
       font-size: 1.4em; font-weight: 700; padding: 10px 32px;
@@ -117,87 +73,102 @@
       transition: transform 0.12s, box-shadow 0.12s;
     }
     .btn:hover  { transform: translateY(-2px); box-shadow: 4px 5px 0 rgba(0,0,0,0.18); }
-    .btn:active { transform: translateY(0);    box-shadow: 1px 1px 0 rgba(0,0,0,0.1); }
-    .btn-y { background: #fef08a; border-color: #c8a000; color: #1a1a1a; }
-    .btn-g { background: #86efac; border-color: #16a34a; color: #1a1a1a; }
+    .btn:active { transform: translateY(0);    box-shadow: 1px 1px 0 rgba(0,0,0,0.1);  }
+    .btn-y   { background: #fef08a; border-color: #c8a000; color: #1a1a1a; }
+    .btn-g   { background: #86efac; border-color: #16a34a; color: #1a1a1a; }
     .btn-off { opacity: 0.4; pointer-events: none; }
 
-    /* ═══ STATS ════════════════════════════════════════ */
-    .day-info { font-size: 1.1em; color: #999; margin-bottom: 6px; }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px 20px;
+    /* ── INTRO ── */
+    .intro-inner {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 100%; text-align: center; gap: 10px; padding: 0 20px;
     }
-    .s-row { display: flex; align-items: center; gap: 7px; }
-    .s-lbl { width: 108px; font-size: 1.05em; color: #555; flex-shrink: 0; }
-    .s-track {
-      flex: 1; height: 10px; background: #e6e0d0;
-      border: 1px solid #ccc; overflow: hidden;
+    .logo-tag {
+      font-size: 0.95em; color: #aaa; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 4px;
     }
+
+    /* ── CHAR ── */
+    .char-inner {
+      display: flex; flex-direction: column;
+      height: 100%; justify-content: center; gap: 8px;
+    }
+    .sec-title {
+      font-size: 1.85em; font-weight: 700; color: #1a1a1a;
+      border-bottom: 2px solid #1a1a1a; padding-bottom: 3px; margin-bottom: 4px;
+    }
+    .char-label { font-size: 1.2em; color: #555; }
+    .char-input {
+      font-family: 'Caveat', cursive; font-size: 1.4em;
+      border: none; border-bottom: 2px solid #555; background: transparent;
+      outline: none; width: 200px; color: #1a1a1a; padding: 2px 0;
+    }
+    .pos-list { display: flex; flex-direction: column; gap: 5px; margin: 4px 0; }
+    .pos-btn {
+      font-family: 'Caveat', cursive; font-size: 1.2em;
+      background: transparent; border: 1.5px solid #ccc; padding: 7px 14px;
+      text-align: left; cursor: pointer; color: #333; transition: all 0.13s;
+    }
+    .pos-btn:hover, .pos-btn.sel {
+      background: #fef9c3; border-color: #c8a000;
+      transform: translateX(8px); font-weight: 700;
+    }
+
+    /* ── STATS ── */
+    .day-info { font-size: 1.05em; color: #999; margin-bottom: 5px; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; }
+    .s-row { display: flex; align-items: center; gap: 6px; }
+    .s-lbl { width: 108px; font-size: 1.02em; color: #555; flex-shrink: 0; }
+    .s-track { flex: 1; height: 10px; background: #e6e0d0; border: 1px solid #ccc; overflow: hidden; }
     .s-fill {
       height: 100%; transition: width 0.5s cubic-bezier(.4,0,.2,1);
-      background-image: repeating-linear-gradient(
-        45deg, rgba(255,255,255,0.18), rgba(255,255,255,0.18) 2px,
-        transparent 2px, transparent 6px
-      );
+      background-image: repeating-linear-gradient(45deg,
+        rgba(255,255,255,0.18), rgba(255,255,255,0.18) 2px, transparent 2px, transparent 6px);
     }
     .fk { background-color: #4a6cf7; }
     .fp { background-color: #e85d4a; }
     .fa { background-color: #27ae60; }
     .fi { background-color: #f97316; }
-    .s-num { width: 44px; text-align: right; font-size: 0.95em; color: #888; }
+    .s-num { width: 44px; text-align: right; font-size: 0.92em; color: #888; }
 
-    /* ═══ SENARYO ══════════════════════════════════════ */
-    .sc-title {
-      font-size: 1.75em; font-weight: 700; color: #111;
-      margin-bottom: 8px; line-height: 1.2; flex-shrink: 0;
-    }
-    .sc-text {
-      font-size: 1.3em; color: #2d2d2d; line-height: 1.65;
-      white-space: pre-wrap;
-    }
+    /* ── SENARYO ── */
+    .sc-title { font-size: 1.7em; font-weight: 700; color: #111; margin-bottom: 7px; line-height: 1.2; flex-shrink: 0; }
+    .sc-text  { font-size: 1.27em; color: #2d2d2d; line-height: 1.62; white-space: pre-wrap; }
 
-    /* ═══ STRİP SEÇENEKLERİ ════════════════════════════ */
+    /* ── STRİP SEÇENEKLER ── */
     .strip-wrap { display: flex; flex-direction: column; gap: 5px; }
-
     .strip {
       display: flex; align-items: center;
-      width: 100%; min-height: 44px;
+      width: 100%; min-height: 43px;
       padding: 7px 14px 7px 22px;
       border: none; cursor: pointer;
       text-align: left; position: relative;
-      font-family: 'Caveat', cursive; font-size: 1.2em;
+      font-family: 'Caveat', cursive; font-size: 1.18em;
       color: #1a1a1a; line-height: 1.3;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.6);
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.55);
       transition: transform 0.12s, box-shadow 0.12s;
     }
-    /* sol yapışma şeridi */
     .strip::before {
       content: '';
       position: absolute; left: 0; top: 0; bottom: 0; width: 10px;
-      background: rgba(0,0,0,0.1);
-      border-right: 1px solid rgba(0,0,0,0.07);
+      background: rgba(0,0,0,0.1); border-right: 1px solid rgba(0,0,0,0.07);
     }
-    /* sağ alt kıvrım */
     .strip::after {
       content: '';
       position: absolute; right: 0; bottom: 0;
       width: 0; height: 0; border-style: solid;
-      border-width: 0 0 14px 14px;
+      border-width: 0 0 13px 13px;
       border-color: transparent transparent rgba(0,0,0,0.08) transparent;
     }
     .strip:nth-child(1) { background: #fef08a; }
     .strip:nth-child(2) { background: #fda4af; }
     .strip:nth-child(3) { background: #93c5fd; }
     .strip:nth-child(4) { background: #86efac; }
-    .strip:hover {
-      transform: translateX(6px);
-      box-shadow: 4px 3px 10px rgba(0,0,0,0.18);
-    }
+    .strip:hover  { transform: translateX(6px); box-shadow: 4px 3px 10px rgba(0,0,0,0.18); }
     .strip:disabled { opacity: 0.38; pointer-events: none; }
 
-    /* ═══ FEEDBACK OVERLAY ════════════════════════════ */
+    /* ── FEEDBACK OVERLAY ── */
     .overlay {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.5);
@@ -205,14 +176,11 @@
       z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.22s;
     }
     .overlay.show { opacity: 1; pointer-events: all; }
-
     .fb-card {
       background: #fefcf3;
-      background-image: repeating-linear-gradient(
-        transparent, transparent 34px, #c8d4e3 34px, #c8d4e3 35px
-      );
+      background-image: repeating-linear-gradient(transparent, transparent 34px, #c8d4e3 34px, #c8d4e3 35px);
       max-width: 460px; width: 92%;
-      padding: 32px 36px 28px;
+      padding: 30px 34px 26px;
       box-shadow: 5px 5px 0 #d9c9a3, 8px 8px 22px rgba(0,0,0,0.35);
       position: relative;
     }
@@ -221,53 +189,54 @@
       left: 0; top: 0; bottom: 0; width: 2px;
       background: rgba(210,70,70,0.3);
     }
-    .fb-deltas { font-size: 1.55em; font-weight: 700; margin-bottom: 12px; line-height: 1.6; }
-    .fb-text   { font-size: 1.28em; color: #444; margin-bottom: 22px; font-style: italic; line-height: 1.5; }
+    .fb-deltas { font-size: 1.5em; font-weight: 700; margin-bottom: 10px; line-height: 1.6; }
+    .fb-text   { font-size: 1.25em; color: #444; margin-bottom: 20px; font-style: italic; line-height: 1.5; }
     .dp { color: #16a34a; }
     .dn { color: #dc2626; }
     .dz { color: #888; }
 
-    /* ═══ SONUÇ ════════════════════════════════════════ */
+    /* ── SONUÇ ── */
     .result-inner {
-      display: flex; flex-direction: column;
       height: 100%; overflow-y: auto; padding: 0;
       scrollbar-width: thin; scrollbar-color: #c8d4e3 transparent;
     }
-    .result-verd    { font-size: 1.5em; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
-    .result-comment { font-size: 1.2em; color: #555; margin-bottom: 8px; font-style: italic; }
+    .result-verd    { font-size: 1.45em; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+    .result-comment { font-size: 1.18em; color: #555; margin-bottom: 7px; font-style: italic; }
     .result-overall {
-      margin: 14px 0; padding: 14px 16px;
+      margin: 12px 0; padding: 13px 16px;
       background: #fef9c3; border-left: 4px solid #c8a000;
-      font-size: 1.35em; font-weight: 700; color: #1a1a1a;
+      font-size: 1.3em; font-weight: 700; color: #1a1a1a;
     }
   </style>
 </head>
 <body>
 <div class="paper">
 
-  <!-- ══ INTRO ════════════════════════════════════ -->
+  <!-- ══ INTRO ══ -->
   <div class="screen active" id="s-intro">
     <div class="p-head" style="height:0"></div>
     <div class="p-body" style="display:flex;align-items:center;justify-content:center">
       <div style="text-align:center">
-        <div style="font-size:3em;font-weight:700;color:#1a1a1a;margin-bottom:6px">💻 Yazılımcı Hayatı</div>
-        <div style="font-size:1.55em;color:#888;margin-bottom:28px">Bir Kariyer Simülasyonu</div>
-        <div style="font-size:1.3em;color:#444;line-height:1.75;margin-bottom:36px">
+        <div class="logo-tag">Makro Yazılım A.Ş.</div>
+        <div style="font-size:2.8em;font-weight:700;color:#1a1a1a;margin-bottom:6px">💻 Yazılımcı Hayatı</div>
+        <div style="font-size:1.5em;color:#888;margin-bottom:24px">Bir Kariyer Simülasyonu</div>
+        <div style="font-size:1.27em;color:#444;line-height:1.75;margin-bottom:32px">
           Her karar kariyerini, patronunu,<br>
           arkadaşlarını ve aileni etkiliyor.<br>
-          Bazıları düşündüğün gibi değil.
+          Bazen CTO Şeyda da uğrar, hediye getirir.<br>
+          <span style="color:#999;font-size:0.9em">Bazıları düşündüğün gibi değil.</span>
         </div>
         <button class="btn btn-y" onclick="goster('s-char');charEkrani()">🚀 Başla</button>
       </div>
     </div>
   </div>
 
-  <!-- ══ CHAR ══════════════════════════════════════ -->
+  <!-- ══ CHAR ══ -->
   <div class="screen" id="s-char">
-    <div class="p-head"><div style="height:16px"></div></div>
+    <div class="p-head"><div style="height:14px"></div></div>
     <div class="p-body">
       <div class="char-inner">
-        <div class="sec-title">Karakter Oluştur</div>
+        <div class="sec-title">Makro Yazılım'a Hoş Geldin</div>
         <label class="char-label">Adın nedir?</label>
         <input class="char-input" id="char-ad" type="text" placeholder="Ali" maxlength="20">
         <label class="char-label" style="margin-top:8px">Pozisyonunu seç:</label>
@@ -277,7 +246,7 @@
     </div>
   </div>
 
-  <!-- ══ GAME ═══════════════════════════════════════ -->
+  <!-- ══ GAME ══ -->
   <div class="screen" id="s-game">
     <div class="p-head">
       <div class="day-info" id="day-info"></div>
@@ -294,17 +263,16 @@
     </div>
   </div>
 
-  <!-- ══ RESULT ═════════════════════════════════════ -->
+  <!-- ══ RESULT ══ -->
   <div class="screen" id="s-result">
-    <div class="p-head"><div style="height:16px"></div></div>
+    <div class="p-head"><div style="height:14px"></div></div>
     <div class="p-body">
       <div class="result-inner" id="result-inner"></div>
     </div>
   </div>
 
-</div><!-- /paper -->
+</div>
 
-<!-- ── Feedback overlay ──────────────────────── -->
 <div class="overlay" id="overlay">
   <div class="fb-card">
     <div class="fb-deltas" id="fb-deltas"></div>
@@ -314,397 +282,558 @@
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════
-   VERİ: senaryolar
-   k=kariyer  p=patron  a=arkadaslar  i=aile
-═══════════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   ŞEMA: k=kariyer  p=patron  a=arkadaslar  i=aile
+════════════════════════════════════════════ */
 
-const POZLAR = ['Junior Developer','Mid-level Developer','Senior Developer','DevOps Mühendisi','Test Mühendisi'];
+const POZLAR = [
+  'Junior Developer',
+  'Mid-level Developer',
+  'Senior Developer',
+  'Yapay Zeka Mühendisi',
+  'Test Mühendisi'
+];
 
+/* ── GENEL SENARYO HAVUZU ──────────────────── */
 const GEN = [
   {
-    t:'📋 Sprint Planning Toplantısı',
-    m:s=>`Pazartesi 09:00. Henüz kahveni bile içmemişken PM Tarık Bey "Sprint planning var, 5 dakikaya gel" demişti.\n\nEkran dolup taşıyor: 47 backlog item.\n\nTarık Bey: "Bu sprint ${s.n}, hepsini bitiririz değil mi?" Ekip sana bakıyor. Kaktüs bile sana bakıyor.`,
+    t:'📋 Sprint Planning',
+    m:s=>`Pazartesi 09:00. Henüz kahveni bile içmemişken PM Tarık Bey "Sprint planning var, 5 dakikaya gel" dedi.\n\nEkran dolup taşıyor: 47 backlog item.\n\nTarık Bey: "Bu sprint ${s.n}, hepsini bitiririz değil mi?" Ekip sana bakıyor. Kaktüs bile sana bakıyor.`,
     o:[
-      {m:'"Tabii ki!" de ve mucize bekle.',      k:-15,p:+5, a:-5, i:0,  ac:'Sprint ortasında çöktün. Tarık Bey "neden söylemedi?" dedi.'},
-      {m:'Story point hesapla, gerçekçi tahmin sun.',  k:+20,p:+10,a:+5, i:0,  ac:'Veri odaklı yaklaşımın takdir gördü. Ekip "sonunda biri söyledi" dedi.'},
-      {m:'"Önce önceliklendirme yapalım" de.',   k:+10,p:0, a:+5, i:0,  ac:'Sağduyulu buldular ama Tarık Bey biraz sıkıldı.'},
-      {m:'Telefona bak, "acil bir şey" de ve kaç.',k:-5,p:-15,a:-5,i:0, ac:'Kaçtın ama Slack\'te 47 kez mention\'landın.'}
+      {m:'"Tabii ki!" de ve mucize bekle.',           k:-15,p:+5, a:-5, i:0, ac:'Sprint ortasında çöktün. Tarık Bey "neden söylemedi?" dedi.'},
+      {m:'Story point hesapla, gerçekçi tahmin sun.', k:+20,p:+10,a:+5, i:0, ac:'Veri odaklı yaklaşımın takdir gördü.'},
+      {m:'"Önce önceliklendirme yapalım" de.',        k:+10,p:0, a:+5, i:0, ac:'Sağduyulu buldular ama Tarık Bey biraz sıkıldı.'},
+      {m:'Telefona bak, "acil" de ve kaç.',           k:-5, p:-15,a:-5, i:0, ac:'Kaçtın ama Slack\'te 47 kez mention\'landın.'}
     ]
   },
   {
     t:'💬 Yanlış Slack Mesajı',
-    m:s=>`Öğle arası. Arkadaşına şikâyet mesajı yazacaksın:\n\n"Tarık Bey bugün de saçmaladı 🤦"\n\n...ve Enter\'a bastın. Gönderildi.\n\nKanal: #genel 👁️ (127 üye). Tarık Bey mesajı okudu.`,
+    m:s=>`Öğle arası. Arkadaşına şikâyet yazacaksın:\n\n"Tarık Bey bugün de saçmaladı 🤦"\n\n...Enter'a bastın. Gönderildi.\n\nKanal: #genel 👁️ (127 üye). Tarık Bey okudu.`,
     o:[
-      {m:'Mesajı sil, hiçbir şey olmamış gibi davran.',k:-10,p:-20,a:0,i:0, ac:'Herkes gördü. Slack bildirim geçmişi silinemez.'},
-      {m:'"Yanlış kanala, özür dilerim!" yaz.',       k:-5,p:-10,a:+5,i:0, ac:'Dürüst davrandın ama utanç devam ediyor.'},
-      {m:'Tarık Bey\'e özür DM\'i at, yüz yüze konuş.', k:+15,p:+10,a:0,i:0, ac:'Olgun yaklaşım. Tarık Bey takdir etti.'},
-      {m:'Sahiplen: "Evet, bu benim gerçek düşüncem."', k:+5,p:-5,a:+15,i:0, ac:'Arkadaşlar "bizim sesi" dedi. Tarık Bey ikili görüşme istedi.'}
+      {m:'Mesajı sil, olmamış gibi davran.',              k:-10,p:-20,a:0,  i:0, ac:'Herkes gördü. Slack bildirimleri silinemez.'},
+      {m:'"Yanlış kanala, özür dilerim!" yaz.',           k:-5, p:-10,a:+5, i:0, ac:'Dürüst davrandın ama utanç devam ediyor.'},
+      {m:'Tarık Bey\'e özür DM\'i at, yüz yüze konuş.', k:+15,p:+10,a:0,  i:0, ac:'Olgun yaklaşım. Tarık Bey takdir etti.'},
+      {m:'Sahiplen: "Evet, bu gerçek düşüncem."',        k:+5, p:-5, a:+15, i:0, ac:'Arkadaşlar "bizim sesi" dedi. Tarık Bey ikili görüşme istedi.'}
     ]
   },
   {
     t:'🚨 Cuma 17:58 — Prod\'da Hata',
-    m:s=>`Çantanı alıyorsun, kapıya yürüyorsun...\n\nTelefon titriyor: "CRITICAL: Ödeme servisi çöktü."\n\nSon deploy senindi. 17:45\'te merge etmiştin. Ekip hâlâ ofiste.`,
+    m:s=>`Çantanı alıyorsun, kapıya yürüyorsun...\n\nTelefon titriyor: "CRITICAL: Ödeme servisi çöktü."\n\nSon deploy senindi. 17:45\'te merge etmiştin. Ekip hâlâ ofiste. Tarık Bey de.`,
     o:[
-      {m:'Geri dön, analiz et, düzelt.',         k:+25,p:+20,a:+10,i:0, ac:'45 dakikada fix\'ledin. Tarık Bey "işte bu" dedi. Efsane oldun.'},
-      {m:'Deploy\'u revert et, sonra incele.',   k:+20,p:+15,a:+5, i:0, ac:'Hızlı düşündün. Servis kurtarıldı, herkes eve gitti.'},
+      {m:'Geri dön, analiz et, düzelt.',         k:+25,p:+20,a:+10,i:0, ac:'45 dakikada fix\'ledin. Tarık Bey "işte bu" dedi.'},
+      {m:'Deploy\'u revert et, sonra incele.',   k:+20,p:+15,a:+5, i:0, ac:'Hızlı düşündün. Servis kurtarıldı.'},
       {m:'Telefonu cebine koy, "görmedim" de.', k:-30,p:-30,a:-20,i:0, ac:'Pazartesi toplantısı çok gergin geçti. Çok.'},
-      {m:'On-call arkadaşını ara, devret.',      k:-5,p:-5, a:-10,i:0, ac:'"Senin deploy\'unda" baskısı hissedildi.'}
+      {m:'On-call kişiyi ara, devret.',          k:-5, p:-5, a:-10,i:0, ac:'"Senin deploy\'unda" baskısı hissedildi.'}
     ]
   },
   {
     t:'🔍 Code Review',
-    m:s=>`PR\'ını açtın. Üç günlük emek.\n\nMert incelemeye başlıyor:\n💬 "Bu değişken ismi ne anlama geliyor?"\n💬 "Magic number kullanmışsın, constant yap."\n💬 "Neden bu kadar nested if var?"\n\nSon yorum: "Genel mantık iyi ama ciddi refactor lazım."`,
+    m:s=>`PR\'ını açtın. Üç günlük emek.\n\nKıdemli geliştirici Cem incelemeye başlıyor:\n💬 "Bu değişken ismi ne anlama geliyor?"\n💬 "Magic number kullanmışsın."\n💬 "Neden bu kadar nested if var?"\n\nSon yorum: "Genel mantık iyi ama ciddi refactor lazım."`,
     o:[
-      {m:'Tüm yorumları dikkate al, güncelle.',   k:+20,p:+5,a:+10,i:0, ac:'Büyüdün. Mert approve etti.'},
-      {m:'"LGTM dersen merge ederim" de.',       k:-20,p:-5,a:-15,i:0, ac:'Mert çıldırdı. Teknik borç birikti.'},
-      {m:'Kolayları yap, gerisini TODO bırak.',  k:-5,p:0, a:-5, i:0, ac:'TODO\'lar asla çözülmedi. 6 ay sonra hâlâ orada.'},
-      {m:'Mert\'le sync kur, kritikleri tartış.', k:+15,p:+5,a:+15,i:0, ac:'Pragmatik yaklaşım. Mert artık sana lunch\'ta yer ayırıyor.'}
+      {m:'Tüm yorumları dikkate al, güncelle.',  k:+20,p:+5, a:+10,i:0, ac:'Büyüdün. Cem approve etti.'},
+      {m:'"LGTM dersen merge ederim" de.',       k:-20,p:-5, a:-15,i:0, ac:'Cem çıldırdı. Teknik borç birikti.'},
+      {m:'Kolayları yap, gerisini TODO bırak.',  k:-5, p:0,  a:-5, i:0, ac:'TODO\'lar asla çözülmedi.'},
+      {m:'Cem\'le sync kur, kritikleri tartış.', k:+15,p:+5, a:+15,i:0, ac:'Pragmatik yaklaşım. Cem artık sana lunch\'ta yer ayırıyor.'}
     ]
   },
   {
     t:'📅 Bu Toplantı E-posta Olabilirdi',
     m:s=>`Takviminde 2 saatlik toplantı: "Dashboard renk paleti kararı". 14 kişi davetli.\n\nDeadline yarın.\n\n38. dakika: "Bu turkuaz değil, zümrüt yeşili!" tartışması sürüyor.`,
     o:[
-      {m:'Sabırla otur, katılımcı görün.',             k:-5,p:+5,a:0,  i:0, ac:'2 saat gitti. Feature gecikmesi başladı.'},
-      {m:'"Bu kararı 3 kişi alabilir, çıkayım mı?"',  k:+10,p:-5,a:+5,i:0, ac:'Haklıydın. Çıktın, feature\'ı bitirdin.'},
-      {m:'Toplantıda gizlice feature kodla.',          k:+5,p:-10,a:+10,i:0,ac:'Riskli ama pull off ettin.'},
-      {m:'Herkese asenkron kültür mini-eğitimi ver.',  k:+15,p:+5,a:+15,i:0,ac:'Toplantı kültürü değişmeye başladı.'}
+      {m:'Sabırla otur, katılımcı görün.',              k:-5, p:+5, a:0,  i:0, ac:'2 saat gitti. Feature gecikmesi başladı.'},
+      {m:'"Bu kararı 3 kişi alabilir, çıkayım mı?"',   k:+10,p:-5, a:+5, i:0, ac:'Haklıydın. Çıktın, feature\'ı bitirdin.'},
+      {m:'Toplantıda gizlice feature kodla.',           k:+5, p:-10,a:+10,i:0, ac:'Riskli ama pull off ettin.'},
+      {m:'Herkese asenkron kültür mini-eğitimi ver.',   k:+15,p:+5, a:+15,i:0, ac:'Kültür değişmeye başladı. Tarık Bey not aldı.'}
     ]
   },
   {
     t:'🎓 Yeni Eleman: Zeynep',
-    m:s=>`Zeynep bugün işe başladı. Tarık Bey: "Zeynep\'i sen karşıla."\n\nDeadline yarın, 0 zamanın var.\n\nZeynep: "Repo\'yu clone\'ladım ama çalıştıramadım."\nREADME son güncellenme tarihi: 3 yıl önce.`,
+    m:s=>`Zeynep bugün Makro Yazılım'a katıldı. Tarık Bey: "Zeynep\'i sen karşıla."\n\nDeadline yarın, 0 zamanın var.\n\nZeynep: "Repo\'yu clone\'ladım ama çalıştıramadım."\nREADME son güncelleme: 3 yıl önce.`,
     o:[
-      {m:'Her şeyi bırak, Zeynep\'e saat harca.',   k:-5,p:+5,a:+20,i:0, ac:'Zeynep mutlu, ekip seni sevdi. Ama deadline patladı.'},
-      {m:'README güncelle, kurulum script yaz.',     k:+25,p:+15,a:+20,i:0,ac:'Ekip README\'den kurtuldu. Tarık Bey "inisiyatif" dedi.'},
-      {m:'"Trial & error yap" de.',                  k:-15,p:-5,a:-20,i:0, ac:'Zeynep ilk haftasını zor geçirdi. Senden soğudu.'},
-      {m:'Başka arkadaşa yönlendir.',                k:0, p:0,a:-5, i:0, ac:'Zeynep yardım aldı ama sen fırsatı kaçırdın.'}
+      {m:'Her şeyi bırak, Zeynep\'e saat harca.',  k:-5, p:+5, a:+20,i:0, ac:'Zeynep mutlu, ekip seni sevdi. Ama deadline patladı.'},
+      {m:'README güncelle, kurulum script yaz.',    k:+25,p:+15,a:+20,i:0, ac:'Ekip README\'den kurtuldu. Tarık Bey "inisiyatif" dedi.'},
+      {m:'"Trial & error yap" de.',                k:-15,p:-5, a:-20,i:0, ac:'Zeynep ilk haftasını zor geçirdi. Senden soğudu.'},
+      {m:'Başka arkadaşa yönlendir.',              k:0,  p:0,  a:-5, i:0, ac:'Zeynep yardım aldı ama sen fırsatı kaçırdın.'}
     ]
   },
   {
     t:'💰 Zam Görüşmesi',
     m:s=>`Yıl sonu. Tarık Bey: "Bu yıl iyiydi. Sana %8 zam düşündük."\n\nEnflasyon: %65.\nSeninle aynı pozisyonda biri dışarıda 2x maaş alıyor.\n\nTarık Bey gülümsüyor. Sen...`,
     o:[
-      {m:'"Teşekkürler!" de, içten ağla.',              k:-10,p:+5,a:0, i:0, ac:'Tarık Bey memnun. Sen değil. Altı ay sonra mülakat verdin.'},
-      {m:'Piyasa araştırmasını göster, müzakere et.',   k:+20,p:-5,a:0, i:0, ac:'Gergin sessizlik. Sonunda %18 anlaştınız.'},
-      {m:'"Düşüneceğim" de, offer letter ile geri dön.',k:+25,p:-15,a:+5,i:0,ac:'Rakip %40 teklif etti. Tarık Bey counter yaptı.'},
-      {m:'Reddet, kapıyı çarp çık.',                    k:-5,p:-25,a:+10,i:0,ac:'Dramatik ama etkili. Tarık Bey özür diledi. Şans eseri.'}
+      {m:'"Teşekkürler!" de, içten ağla.',               k:-10,p:+5, a:0, i:0, ac:'Tarık Bey memnun. Sen değil. Altı ay sonra mülakat verdin.'},
+      {m:'Piyasa araştırmasını göster, müzakere et.',    k:+20,p:-5, a:0, i:0, ac:'Gergin sessizlik. Sonunda %18 anlaştınız.'},
+      {m:'"Düşüneceğim" de, offer letter ile geri dön.', k:+25,p:-15,a:+5,i:0, ac:'Rakip %40 teklif etti. Tarık Bey counter yaptı.'},
+      {m:'Reddet, kapıyı çarp çık.',                     k:-5, p:-25,a:+10,i:0,ac:'Dramatik ama etkili. Tarık Bey özür diledi. Şans eseri.'}
     ]
   },
   {
-    t:'☕ Çay Ocağı Dedikodası',
-    m:s=>`Mert ve Zeynep çay ocağında konuşuyor. Yaklaşınca duyuyorsun: Tarık Bey\'in favorisi Kemal hakkında.\n\nMert: "Kemal\'in o PR\'ı ben yazdım, adını bile koymadı."\n\nSeni görünce susuyor.`,
+    t:'🌙 Gece Yarısı Deploy',
+    m:s=>`Saat 23:15. Yatmak üzeresin.\n\nTarık Bey WhatsApp\'tan: "Hocam şu deployment acil, 30 dakikan var mı?"\n\nBu ayki 6. gece yarısı talebi.`,
     o:[
-      {m:'Kulak tıka, çayını al, dön.',              k:0,p:0,a:-5, i:0, ac:'"Soğuk" olarak etiketlendim dedi Zeynep.'},
-      {m:'Dinle, sempati göster ama fikir verme.',   k:0,p:0,a:+10,i:0, ac:'Mert sana güvenmeye başladı.'},
-      {m:'"Tarık Bey\'e söyleyelim mi?" de.',        k:-5,p:+5,a:-20,i:0,ac:'Mert sana bir daha sır vermeyeceğine yemin etti.'},
-      {m:'"PR history var, belgele" de.',             k:+5,p:0,a:+15,i:0, ac:'Mert commit geçmişini buldu. Mutlu son.'}
-    ]
-  },
-  {
-    t:'🎥 Zoom\'da Kamera Açıldı',
-    m:s=>`Uzaktan çalışma günü. Kamerayı kapalı tutuyorsun... çünkü üzerinde pijama var. Mutfaktasın. Elinde peynir.\n\nTarık Bey: "Herkesi görmek istiyorum, kameraları açalım!" 👀`,
-    o:[
-      {m:'Kamerayı aç, peynirle selamla.',                k:-5,p:-5,a:+20,i:0,ac:'Tarık Bey kaş kaldırdı. Ama chat\'te 💀😂 doldu. Legend oldun.'},
-      {m:'Hızla gömlek giy, 30 saniyede hazırlan.',       k:+5,p:+10,a:+5,i:0,ac:'Az farkla atlattın. Tarık Bey memnun.'},
-      {m:'"Kamerada teknik sorun var" de.',               k:-10,p:-10,a:0,i:0,ac:'Kimse inanmadı. Arka planda buzdolabı sesi duyuldu.'},
-      {m:'Kamerayı aç ama ekrana kitap tut.',             k:-15,p:-15,a:+10,i:0,ac:'Mert ekran görüntüsünü 3 gruba attı. Şirket efsanesi oldun.'}
-    ]
-  },
-  {
-    t:'📧 Reply All Felaketi',
-    m:s=>`İK\'ya "Bu anket saçmalık, kimse doldurmaz" diye yanıt yazdın.\n\nGönder. "Reply All" ile.\n\nAlıcılar: 247 kişi.\n\nGenel Müdür de o listede. 👁️`,
-    o:[
-      {m:'Özür e-postası gönder... Reply All ile.',  k:-25,p:-20,a:+15,i:0,ac:'İkinci e-posta birincisinden daha ünlü oldu.'},
-      {m:'İK\'yı ara, özür dile.',                   k:+5,p:-10,a:0, i:0,ac:'İK "ne güzel dürüstlük" dedi. Ama Genel Müdür hâlâ seni biliyor.'},
-      {m:'Hiçbir şey yapma, fırtınayı bekle.',      k:-10,p:-15,a:0, i:0,ac:'Sessizlik onu büyüttü.'},
-      {m:'Anketi doldur, "İşte bu yüzden" de.',     k:+10,p:-5,a:+20,i:0,ac:'Absürt ama işe yaradı. Ekip saygı gösterdi.'}
-    ]
-  },
-  {
-    t:'🐶 Ofise Köpek Getir Günü',
-    m:s=>`Şirket başlattı: her Cuma "Bring Your Pet to Work" günü.\n\nMert golden retriever, Zeynep papağan, patronun sekreteri üç kedi getirdi.\n\n${s.n}, sen ne getirdin?`,
-    o:[
-      {m:'Hiçbir şey getirme, çalış.',              k:0,p:0,a:-10,i:0,ac:'"O hep böyle" dediler.'},
-      {m:'Köpeğini getir. Mert\'inkiyle kavga çıkar.',k:-10,p:-15,a:-5,i:0,ac:'IT odasına kadar kovaladılar. Tarık Bey "hayvan politikası" maili attı. Sen nedenisin.'},
-      {m:'Balık getir. Kavanozla.',                  k:+5,p:+5,a:+20,i:0,ac:'"Patron Balık" ofis maskotu oldu.'},
-      {m:'Oyuncak robot getir, "en az bakım gerektiren."',k:+10,p:+10,a:+15,i:0,ac:'Tarık Bey "bu yaratıcılık" dedi. Zeynep LinkedIn\'e koydu.'}
+      {m:'Kalk, deploy et.',                              k:+5, p:+20,a:0,  i:0, ac:'Tarık Bey çok memnun. Ama 7. sefer oldu. Pattern başladı.'},
+      {m:'"Mesai dışı, sabah halledelim."',               k:+15,p:-15,a:+5, i:0, ac:'Tarık Bey sinirli. Ama sınır koydun.'},
+      {m:'Reddet ve on-call politikası taslağı gönder.', k:+20,p:-10,a:+10,i:0, ac:'"Haklısın" dedi. Şirkete resmi on-call eklendi.'},
+      {m:'Yap ama sabah toplantıda anlat.',               k:0,  p:+10,a:0,  i:0, ac:'Tarık Bey "kahvaltın bizden" dedi.'}
     ]
   },
   {
     t:'☕ Kahve Makinesi Krizi',
-    m:s=>`Sabah 08:55. Toplantı 09:00\'da. Tam sıran geldi.\n\nMakine: BEEEP. "Su deposu boş."\n\nHerkes sana bakıyor. Makineyi en son sen kullanmıştın. Tarık Bey de sırada.`,
+    m:s=>`Sabah 08:55. Toplantı 09:00.\n\nSıran geldi. Makine: BEEEP. "Su deposu boş."\n\nHerkes sana bakıyor. Son kullanan sendin.\nTarık Bey elinde kupayla sırada. Gözleri sende.`,
     o:[
-      {m:'Depoyu doldur, toplantıya geç kal.',          k:-5,p:+15,a:+10,i:0,ac:'"En azından doldurdu" dedi ekip.'},
-      {m:'"Ben doldurmadım ki" de ve çık.',             k:0,p:-20,a:-15,i:0,ac:'Kimse inanmadı. Makinenin "son kullanan" logu var.'},
-      {m:'Depoyu doldur VE toplantıya zamanında yetiş.',k:+10,p:+20,a:+15,i:0,ac:'30 saniyede koşarak doldurdun. Efsanevi giriş.'},
-      {m:'Markete çık, hazır kahve getir herkese.',     k:+5,p:+15,a:+25,i:0,ac:'18 kişilik ofise Starbucks. Masraf yaptın ama herkes sevi.'}
-    ]
-  },
-  {
-    t:'📡 Ofis İnterneti Çöktü',
-    m:s=>`Sabah 10:00. Şirketin interneti kesildi.\n\nBüyük sunum 14:00\'da. Online.\n\nIT: "ISP\'nin sorunu, saat yok."\n\nTarık Bey koridorda volta atıyor.`,
-    o:[
-      {m:'Hotspot aç, 6 kişiyi bağla, sunumu yap.',     k:+15,p:+20,a:+20,i:0,ac:'Telefonun eridi ama sunum oldu. "Kriz çözücü" unvanını aldın.'},
-      {m:'Kafeden çalış, sunumu oradan yap.',            k:+10,p:+5,a:+5, i:0,ac:'Pratik çözüm. Kahve de içtin.'},
-      {m:'Sunumu ertele, "elimden geleni yaptım" de.',  k:-10,p:-15,a:0, i:0,ac:'Müşteri sinirle ayrıldı.'},
-      {m:'IT\'e 4 saatte 47 Slack mesajı at.',          k:-5,p:0,a:-10, i:0,ac:'IT seni blokla dı. Sorun hâlâ çözülmedi.'}
+      {m:'Depoyu doldur, toplantıya geç kal.',           k:-5, p:+15,a:+10,i:0, ac:'"En azından doldurdu" dedi ekip.'},
+      {m:'"Ben doldurmadım ki" de ve çık.',              k:0,  p:-20,a:-15,i:0, ac:'Kimse inanmadı.'},
+      {m:'Depoyu doldur VE toplantıya zamanında yetiş.', k:+10,p:+20,a:+15,i:0, ac:'30 saniyede koşarak doldurarak toplantıya girdin. Efsanevi.'},
+      {m:'Markete çık, hazır kahve getir herkese.',      k:+5, p:+15,a:+25,i:0, ac:'18 kişilik ofise Starbucks. Herkes seni sevdi.'}
     ]
   },
   {
     t:'🎵 Ofis Müzik Kavgası',
-    m:s=>`Mert kulaklık taktı ama hoparlörden çalıyor. Tüm ofis "lo-fi beats to code to" dinliyor.\n\nZeynep şikâyet etti. Mert: "Bu konsantrasyon müziği."\n\n${s.n}, ne yaparsın?`,
+    m:s=>`Cem kulaklık taktı ama hoparlörden çalıyor. Tüm ofis "lo-fi beats to code to" dinliyor.\n\nZeynep şikâyet etti. Cem: "Bu konsantrasyon müziği."\n\n${s.n}, ne yaparsın?`,
     o:[
-      {m:'Kulaklığını tak, umursamazlık moduna geç.',k:0,p:0,a:-5,  i:0,ac:'"Soğuk" olarak etiketlendim dedi Zeynep.'},
-      {m:'Mert\'e kibarca "hoparlörü kapat" de.',    k:+5,p:+5,a:+10,i:0,ac:'Mert utandı, kablosuz kulaklık taktı.'},
-      {m:'Ofis Spotify\'ı aç, death metal çal.',    k:-10,p:-10,a:-5,i:0,ac:'Tarık Bey "müzik yasak" kararı aldı. Sen nedenisin.'},
-      {m:'Toplantı odasını "deep work zone" yap.',  k:+10,p:+10,a:+15,i:0,ac:'Kahraman oldun. Tarık Bey onayladı.'}
+      {m:'Kulaklığını tak, umursamazlık.',          k:0,  p:0,  a:-5, i:0, ac:'"Soğuk" olarak etiketlendim dedi Zeynep.'},
+      {m:'Cem\'e kibarca "hoparlörü kapat" de.',   k:+5, p:+5, a:+10,i:0, ac:'Cem utandı. Zeynep teşekkür etti.'},
+      {m:'Ofis Spotify\'ı aç, death metal çal.',  k:-10,p:-10,a:-5, i:0, ac:'Tarık Bey "müzik yasak" kararı aldı. Sen nedenisin.'},
+      {m:'Toplantı odası "deep work zone" yap.',   k:+10,p:+10,a:+15,i:0, ac:'Kahraman oldun. Tarık Bey onayladı.'}
+    ]
+  },
+  {
+    t:'📧 Reply All Felaketi',
+    m:s=>`İK\'ya "Bu anket saçmalık, kimse doldurmaz" diye yanıt yazdın.\n\nGönder. "Reply All" ile.\n\nAlıcılar: 247 kişi. Genel Müdür de listede. 👁️`,
+    o:[
+      {m:'Özür e-postası gönder... Reply All ile.',  k:-25,p:-20,a:+15,i:0, ac:'İkinci e-posta birincisinden daha ünlü oldu.'},
+      {m:'İK\'yı ara, özür dile.',                   k:+5, p:-10,a:0,  i:0, ac:'İK "ne güzel dürüstlük" dedi.'},
+      {m:'Hiçbir şey yapma, fırtınayı bekle.',      k:-10,p:-15,a:0,  i:0, ac:'Sessizlik onu büyüttü.'},
+      {m:'Anketi doldur, "İşte bu yüzden" de.',     k:+10,p:-5, a:+20, i:0,ac:'Absürt ama işe yaradı.'}
+    ]
+  },
+  {
+    t:'🐶 Ofise Köpek Getir Günü',
+    m:s=>`Makro Yazılım başlattı: her Cuma "Bring Your Pet to Work" günü.\n\nCem golden retriever, Zeynep papağan, patronun sekreteri üç kedi getirdi.\n\n${s.n}, sen ne getirdin?`,
+    o:[
+      {m:'Hiçbir şey getirme, çalış.',                    k:0,  p:0,  a:-10,i:0, ac:'"O hep böyle" dediler.'},
+      {m:'Köpeğini getir. Cem\'inkiyle kavga çıkar.',     k:-10,p:-15,a:-5, i:0, ac:'IT odasına kadar kovaladılar. Tarık Bey mail attı. Sen nedenisin.'},
+      {m:'Balık getir. Kavanozla. "Bu da pet sayılır."',  k:+5, p:+5, a:+20, i:0,ac:'"Patron Balık" ofis maskotu oldu.'},
+      {m:'Oyuncak robot getir, "en az bakım gerektiren."',k:+10,p:+10,a:+15,i:0, ac:'CTO Şeyda ofise uğramıştı. "Bu yaratıcılık" dedi.'}
     ]
   },
   {
     t:'💼 LinkedIn Postu',
-    m:s=>`Büyük bug fix yaptın. LinkedIn\'e yazdın: "Büyük sorunu çözdük! Ekibimizle gurur duyuyorum 🚀"\n\n847 beğeni. Tarık Bey DM attı: "Bu iç bilgi paylaşılır mıydı?"\n\nMert: "Ekip mi? Ben de vardım 🙂"`,
+    m:s=>`Büyük bug fix yaptın. LinkedIn\'e yazdın:\n\n"Büyük sorunu çözdük! Makro Yazılım ekibiyle gurur duyuyorum 🚀"\n\n847 beğeni. Tarık Bey DM attı: "Bu iç bilgi paylaşılır mıydı?"\n\nCem: "Ekip mi? Ben de vardım 🙂"`,
     o:[
-      {m:'Postu sil, özür dile.',                        k:-5,p:+10,a:-5,  i:0,ac:'847 kişi gördü. Silmek geç kaldı.'},
-      {m:'"Gizli bilgi yok" diye açıkla.',               k:+10,p:+5,a:0,   i:0,ac:'Haklıydın ve ikna ettin.'},
-      {m:'Mert\'i de tag\'le, "Birlikte çözdük" de.',    k:+15,p:0,a:+20,  i:0,ac:'Mert "bu adam tam oldu" dedi.'},
-      {m:'Tarık Bey\'i de tag\'le, "Harika liderlik."', k:+5,p:+20,a:-5,  i:0,ac:'Tarık Bey eridi. Mert "patrona yağ çekiyor" dedi.'}
+      {m:'Postu sil, özür dile.',                      k:-5, p:+10,a:-5, i:0, ac:'847 kişi gördü. Silmek geç kaldı.'},
+      {m:'"Gizli bilgi yok" diye açıkla.',             k:+10,p:+5, a:0,  i:0, ac:'Haklıydın ve ikna ettin.'},
+      {m:'Cem\'i de tag\'le, "Birlikte çözdük" de.',  k:+15,p:0,  a:+20, i:0,ac:'Cem "bu adam tam oldu" dedi.'},
+      {m:'Tarık Bey\'i tag\'le, "Harika liderlik."', k:+5, p:+20,a:-5, i:0, ac:'Tarık Bey eridi. Cem "patrona yağ" dedi.'}
     ]
   },
   {
-    t:'👔 CEO Beklenmedik Ziyaret',
-    m:s=>`Asansör açıldı. CEO Serdar Bey ofise girdi. Kimse beklemiyor.\n\nMasana geldi: "${s.n} değil misin? Ne üzerinde çalışıyorsun?"\n\nTarık Bey uzaktan izliyor.`,
+    t:'🔄 "Agile Değiliz Ama Agile Yapıyoruz"',
+    m:s=>`Yeni scrum master Deniz işe başladı. İlk gün: "Agile süreçleri iyileştireceğiz!"\n\nDaily standup: 45 dakika. Retrospective: 3 saat. Velocity düştü. Moral düştü.\n\nDeniz senden "agile champion" olmanı istiyor.`,
     o:[
-      {m:'Panikle, ekranı kapat.',                      k:-10,p:-5,a:0,  i:0,ac:'"Neden kapattı?" diye açıklama toplantısı oldu.'},
-      {m:'Net anlat: proje, etki, zorluk.',             k:+25,p:+15,a:+5,i:0,ac:'Serdar Bey "bu adam hazırmış" dedi.'},
-      {m:'Tarık Bey\'e bak, onay bekle.',              k:0,p:+10,a:0,   i:0,ac:'Sadık göründün ama fırsatı kaçırdın.'},
-      {m:'"Aslında bir sorunumuz var, X eksik" de.',   k:-5,p:-20,a:+10,i:0,ac:'Tarık Bey gece 1-on-1 ekledi takvime.'}
+      {m:'Kabul et, agile evangelist ol.',              k:-10,p:+5, a:-15,i:0, ac:'Ekip seni "süreç polisi" diye andı.'},
+      {m:'Reddet, verimlilik metriklerini göster.',    k:+15,p:-5, a:+15,i:0, ac:'Ekip seni sevdi. Tarık Bey metriklere baktı.'},
+      {m:'Deniz\'le otur, "lightweight agile" tasarla.',k:+20,p:+10,a:+10,i:0,ac:'Standuplar 15 dakikaya indi. Herkes mutlu.'},
+      {m:'"Biz zaten waterfall yapıyoruz" de.',        k:-5, p:-10,a:+5, i:0, ac:'Gerçekçiydin ama kimse duymak istemedi.'}
     ]
   },
   {
-    t:'🌙 Gece Yarısı Deploy Teklifi',
-    m:s=>`Saat 23:15. Yatmak üzeresin.\n\nTarık Bey WhatsApp\'tan: "Hocam şu deployment acil lazım, 30 dakikan var mı?"\n\nBu ayki 6. gece yarısı talebi.`,
+    t:'🏚️ Teknik Borç Toplantısı',
+    m:s=>`Makro Yazılım\'ın ana servisi 8 yıllık spaghetti kod. Her özellik 3 kat daha uzun sürüyor.\n\nEkip refactor istiyor. Tarık Bey: "Bizi geride bırakır, hayır."\n\nSen sunum hazırladın. Tarık Bey masaya oturdu.`,
     o:[
-      {m:'Kalk, deploy et, sabah uyu.',                   k:+5,p:+20,a:0,  i:0,ac:'Tarık Bey çok memnun. Ama bu 7. sefer. Pattern başladı.'},
-      {m:'"Mesai dışı, sabah halledelim" de.',            k:+15,p:-15,a:+5,i:0,ac:'Tarık Bey sinirli. Ama sınır koydun.'},
-      {m:'Reddet ve on-call politikası taslağı gönder.',  k:+20,p:-10,a:+10,i:0,ac:'"Haklısın" dedi. Şirkete resmi on-call eklendi.'},
-      {m:'Yap ama sabah toplantıda anlat.',               k:0,p:+10,a:0,   i:0,ac:'"Vay be" dediler. Tarık Bey "kahvaltın bizden" dedi.'}
+      {m:'Tüm teknik detayı anlat: stack trace\'ler...',  k:+5, p:-5, a:+5, i:0, ac:'Tarık Bey 10. slaytta uyukladı.'},
+      {m:'Sadece iş etkisini göster: maliyet, risk.',    k:+20,p:+15,a:+10,i:0, ac:'"Rakamlarla anlat" sever. İkna oldu.'},
+      {m:'Refactor\'ı gizlice feature içine göm.',      k:+10,p:0,  a:+15,i:0, ac:'Ekip alkışladı. Tarık Bey fark etmedi.'},
+      {m:'"6 ayda yeni geliştirici bulamazsınız" de.',  k:+15,p:-15,a:+5, i:0, ac:'Doğruydu ama tehdite benzedi.'}
     ]
   },
   {
     t:'🤖 AI Araçla Kod Yazdım',
     m:s=>`Ödeme modülü refactor görevin vardı. AI araçla 2 saatte bitirdin. Normalde 5 gün sürerdi.\n\nTarık Bey sprint review\'da: "Bu kadar hızlı nasıl bitirdin? AI mi kullandın?"`,
     o:[
-      {m:'"Hayır, kendim yazdım" de.',                  k:-20,p:-10,a:-10,i:0,ac:'Mert kodu inceledi. AI pattern\'leri belli. "Neden yalan?" toplantısı.'},
-      {m:'"Evet" de, araç ve süreci şeffafça anlat.',  k:+20,p:+10,a:+15,i:0,ac:'Tarık Bey "ekibe anlat" dedi. Kahraman oldun.'},
-      {m:'"Biraz yardım aldım" de, detay verme.',      k:-5,p:-5,a:0,   i:0,ac:'Belirsizlik şüphe yarattı.'},
-      {m:'Konuyu değiştir.',                           k:0,p:-10,a:-5,  i:0,ac:'"Şeffaf değil" notu düşüldü performans değerlendirmesine.'}
+      {m:'"Hayır, kendim yazdım" de.',                 k:-20,p:-10,a:-10,i:0, ac:'Cem kodu inceledi. "Neden yalan?" toplantısı oldu.'},
+      {m:'"Evet" de, araç ve süreci anlat.',           k:+20,p:+10,a:+15,i:0, ac:'Tarık Bey "ekibe anlat" dedi. Kahraman oldun.'},
+      {m:'"Biraz yardım aldım" de.',                   k:-5, p:-5, a:0,  i:0, ac:'Belirsizlik şüphe yarattı.'},
+      {m:'Konuyu değiştir.',                           k:0,  p:-10,a:-5, i:0, ac:'"Şeffaf değil" notu düşüldü.'}
     ]
   },
-  /* ══ AİLE SENARYOLARI ══════════════════════════ */
+  {
+    t:'🏆 Şirkete Yeni Rakip',
+    m:s=>`Makro Yazılım\'ın doğrudan rakibi TechNova kuruldu. Üstelik eski iş arkadaşın Selim orada çalışıyor.\n\nSelim mesaj attı: "Bize gel, maaşı 2x yapabiliriz."\n\nTarık Bey haberdar değil.`,
+    o:[
+      {m:'Sessizce mülakata gir, karşılaştır.',         k:+10,p:0,  a:0,  i:0, ac:'Seçenekler netleşti. Müzakere gücün arttı.'},
+      {m:'Tarık Bey\'e söyle, zam iste.',               k:+15,p:-5, a:+5, i:0, ac:'Tarık Bey önce şaşırdı, sonra counter teklif yaptı.'},
+      {m:'"İlginç, düşüneceğim" de, Selim\'i beklet.', k:+5, p:0,  a:0,  i:0, ac:'İki kapıyı açık tuttun. Akıllı ama stresli.'},
+      {m:'Reddet, Tarık Bey\'e söyleme.',              k:0,  p:0,  a:0,  i:0, ac:'Sadakat güzel ama fırsatı kaçırdın.'}
+    ]
+  },
+  {
+    t:'📡 Ofis İnterneti Çöktü',
+    m:s=>`Sabah 10:00. Şirketin interneti kesildi. Büyük sunum 14:00\'da. Online.\n\nIT: "ISP\'nin sorunu, saat yok."\n\nTarık Bey koridorda volta atıyor.`,
+    o:[
+      {m:'Hotspot aç, 6 kişiyi bağla, sunumu yap.',      k:+15,p:+20,a:+20,i:0, ac:'Telefonun eridi ama sunum oldu.'},
+      {m:'Kafeden çalış, sunumu oradan yap.',             k:+10,p:+5, a:+5, i:0, ac:'Pratik çözüm. Kahve de içtin.'},
+      {m:'Sunumu ertele, "elimden geleni yaptım" de.',   k:-10,p:-15,a:0,  i:0, ac:'Müşteri sinirle ayrıldı.'},
+      {m:'IT\'e saatte bir Slack mesajı at.',            k:-5, p:0,  a:-10,i:0, ac:'IT seni blokla dı.'}
+    ]
+  },
   {
     t:'🎸 Kardeşin Konser Biletleri Aldı',
-    m:s=>`Kardeşin sürpriz haber: yarın akşam için iki konser bileti almış.\n\n"Çok istiyordum, seninle gelmek istedim!"\n\nYarın sprint finali. Tarık Bey "yarın güncelleme bekliyorum" demişti. Son commit\'leri push\'lamalısın.`,
+    m:s=>`Kardeşin sürpriz haber: yarın akşam için iki konser bileti almış. "Seninle gitmek istedim!"\n\nYarın sprint finali. Tarık Bey "yarın güncelleme bekliyorum" demişti.`,
     o:[
-      {m:'Git, konsere önce git iş sonra.',              k:-10,p:-15,a:0, i:+20,ac:'Konser harikaydı. Ama sabah Tarık Bey\'in yüzü hiç güzel değildi.'},
-      {m:'Reddet, "iş var" de.',                        k:+10,p:+10,a:0, i:-20,ac:'Sprint başarılı. Ama kardeşin yanında oturmadı bir hafta.'},
-      {m:'Önce işi bitir, konsere geç git.',            k:+10,p:+5, a:0, i:+10,ac:'Push\'ladın hem son saati yakaladın. Yorgun ama mutlu.'},
-      {m:'Tarihi değiştirmeye çalış.',                  k:0,p:0,  a:0,  i:-5, ac:'Kaldırılabilir bilet değildi. İkisi de olmadı.'}
+      {m:'Git, konsere önce git iş sonra.',        k:-10,p:-15,a:0,  i:+20,ac:'Konser harikaydı. Ama sabah Tarık Bey\'in yüzü hiç güzel değildi.'},
+      {m:'Reddet, "iş var" de.',                  k:+10,p:+10,a:0,  i:-20,ac:'Sprint başarılı. Ama kardeşin yanında oturmadı bir hafta.'},
+      {m:'Önce işi bitir, konsere geç git.',      k:+10,p:+5, a:0,  i:+10,ac:'Push\'ladın hem son saati yakaladın.'},
+      {m:'Tarihi değiştirmeye çalış.',            k:0,  p:0,  a:0,  i:-5, ac:'Kaldırılabilir bilet değildi. İkisi de olmadı.'}
     ]
   },
   {
     t:'🏥 Anne Hasta — Hastane Refakati',
-    m:s=>`Annen hastaneye gidecek, yanında biri lazım.\n\nBugün önemli bir müşteri toplantısı var. Tarık Bey seni anlatımcı olarak atadı. Toplantıya 2 saat kaldı.`,
+    m:s=>`Annen hastaneye gidecek, yanında biri lazım.\n\nBugün önemli müşteri toplantısı var. Tarık Bey seni anlatımcı olarak atadı. 2 saat kaldı.`,
     o:[
-      {m:'Toplantıyı ertele, anneni birinci sıraya koy.', k:-5,p:-15,a:0, i:+25,ac:'Müşteri sinirdi. Ama annen "her zaman işi seçerdin" demedi bu sefer.'},
-      {m:'Kardeşine/akrabana haber ver, sen toplantıya gir.',k:+10,p:+15,a:0,i:-15,ac:'Toplantı başarılı. Ama aile grubunda "neredeydin?" mesajları geldi.'},
-      {m:'Toplantıyı online\'a al, hastaneden katıl.',    k:+5,p:+5, a:0, i:+10,ac:'İkisini de zar zor hallettın. Yoruldun ama suçluluk yok.'},
-      {m:'Toplantının başını yap, çıkıp hastaneye git.', k:0,p:-5, a:0, i:+15,ac:'İkisi de eksik kaldı ama ikisi için de oradaydın.'}
+      {m:'Toplantıyı ertele, anneni birinci sıraya koy.',  k:-5, p:-15,a:0, i:+25,ac:'Müşteri sinirdi. Ama annen "her zaman işi seçerdin" demedi bu sefer.'},
+      {m:'Akrabaya haber ver, sen toplantıya gir.',        k:+10,p:+15,a:0, i:-15,ac:'Toplantı başarılı. Ama aile grubunda "neredeydin?" geldi.'},
+      {m:'Toplantıyı online\'a al, hastaneden katıl.',    k:+5, p:+5, a:0, i:+10,ac:'İkisini de zar zor hallettın.'},
+      {m:'Toplantının başını yap, çıkıp hastaneye git.',  k:0,  p:-5, a:0, i:+15,ac:'İkisi de eksik kaldı ama ikisi için de oradaydın.'}
     ]
   },
   {
     t:'🏖️ Aile Tatili Planlandı',
     m:s=>`Aile bir haftalık tatil planladı. Herkes heyecanlı.\n\nAçtın takvini: tam sprint ortasına denk geliyor. Tarık Bey bu dönem için "kritik teslim" notunu düşmüş.`,
     o:[
-      {m:'Tatile git, "ailem önce" de.',                k:-15,p:-20,a:0, i:+25,ac:'Tatil güzeldi. Döndüğünde 3 birikmiş toplantı ve soğuk bir Tarık Bey bekliyordu.'},
-      {m:'Tatili reddet, işe öncelik ver.',             k:+10,p:+10,a:0, i:-25,ac:'Sprint başarılı. Ama aile fotoğraflarında yoktun. Yine.'},
-      {m:'Uzaktan çalışarak tatile git.',               k:-5,p:0,  a:0,  i:+10,ac:'Ne tatil ne iş tam oldu. İkisi de yarım kaldı. Ama hiç değil.'},
-      {m:'Tarihi müzakere et, daha uygun haftaya al.', k:+10,p:+5, a:0,  i:+15,ac:'Herkes biraz fedakârlık etti. İkisi de oldu.'}
+      {m:'Tatile git, "ailem önce" de.',               k:-15,p:-20,a:0, i:+25,ac:'Tatil güzeldi. Döndüğünde 3 birikmiş toplantı ve soğuk bir Tarık Bey.'},
+      {m:'Tatili reddet, işe öncelik ver.',            k:+10,p:+10,a:0, i:-25,ac:'Sprint başarılı. Ama aile fotoğraflarında yoktun. Yine.'},
+      {m:'Uzaktan çalışarak tatile git.',              k:-5, p:0,  a:0, i:+10,ac:'Ne tatil ne iş tam oldu. İkisi de yarım.'},
+      {m:'Tarihi müzakere et, daha uygun haftaya al.',k:+10,p:+5, a:0, i:+15,ac:'Herkes biraz fedakârlık etti. İkisi de oldu.'}
     ]
   },
   {
     t:'🎂 Babanın Doğum Günü Akşamı',
-    m:s=>`Babanın doğum günü. Aile akşam yemeği planlandı.\n\nTarık Bey bugün deploy için "akşam hazır olsun" dedi. Deploy gecesi oldu.\n\nBaban seni arıyor: "Gelecek misin?"`,
+    m:s=>`Babanın doğum günü. Aile akşam yemeği planlandı.\n\nTarık Bey bugün deploy için "akşam hazır olsun" dedi.\n\nBaban seni arıyor: "Gelecek misin?"`,
     o:[
-      {m:'Yemeğe git, deploy\'u sabaha bırak.',        k:-10,p:-15,a:0, i:+20,ac:'Baban çok mutlu oldu. Tarık Bey sabah "neden gecikti?" dedi.'},
-      {m:'Deploy yap, yemeğe geç katıl.',              k:+10,p:+10,a:0, i:+10,ac:'Tatlıyı yakaladın. Baban "her zaman geç gelirsin" dedi ama güldü.'},
-      {m:'Gitme, "iş var" de.',                        k:+15,p:+15,a:0, i:-25,ac:'Deploy mükemmel. Baban "iş her zaman vardı" dedi. Susmadı haftalar boyunca.'},
-      {m:'Babana Tarık Bey\'i anlat, anlayış iste.',   k:0,p:0,  a:0,  i:-5, ac:'Baban anladı ama üzüldü. "En azından söyledin" dedi.'}
+      {m:'Yemeğe git, deploy\'u sabaha bırak.',     k:-10,p:-15,a:0, i:+20,ac:'Baban çok mutlu. Tarık Bey sabah "neden gecikti?" dedi.'},
+      {m:'Deploy yap, yemeğe geç katıl.',           k:+10,p:+10,a:0, i:+10,ac:'Tatlıyı yakaladın. Baban "her zaman geç gelirsin" dedi ama güldü.'},
+      {m:'Gitme, "iş var" de.',                     k:+15,p:+15,a:0, i:-25,ac:'Deploy mükemmel. Baban susmadı haftalar boyunca.'},
+      {m:'Babana Tarık Bey\'i anlat, anlayış iste.',k:0,  p:0,  a:0, i:-5, ac:'Baban anladı ama üzüldü. "En azından söyledin" dedi.'}
     ]
   },
   {
     t:'💼 Kardeşin İş İstiyor',
-    m:s=>`Kardeşin işsiz. Senden şirkette bir pozisyon için yardım istiyor.\n\nCV\'yi inceleyince görüyorsun: deneyim yok, ilgili bir beceri de yok.\n\nAma ısrarcı: "Bir şans ver, öğrenirim."`,
+    m:s=>`Kardeşin işsiz. Makro Yazılım\'da pozisyon için yardım istiyor.\n\nCV\'yi inceleyince görüyorsun: deneyim yok, ilgili beceri de yok.\n\nAma ısrarcı: "Bir şans ver, öğrenirim."`,
     o:[
-      {m:'Tarık Bey\'e olduğu gibi ilet, karar ona bıraksın.', k:+5,p:0,  a:0, i:-5, ac:'Tarık Bey "uygun değil" dedi. Kardeşin seni suçladı.'},
-      {m:'Önce kardeşine dürüstçe söyle: "Hazır değilsin."',   k:+10,p:0,  a:0, i:-10,ac:'Zor bir konuşma oldu. Ama aylarca gerçeği söyleyen tek kişi sendin.'},
-      {m:'Yönlendir: "Şu kursu al, 6 ay sonra tekrar bak."',   k:+10,p:0, a:0,  i:+10,ac:'Kardeşin önce sinirdi, sonra kursu bitirdi. Teşekkür etti.'},
-      {m:'Referans ver, "şansını dene" de.',                    k:-10,p:-10,a:0, i:+15,ac:'Mülakatta açıkça rezil oldu. Tarık Bey seni çağırdı. Kardeşin utandı.'}
+      {m:'Tarık Bey\'e ilet, karar ona bıraksın.',          k:+5, p:0,  a:0, i:-5, ac:'Tarık Bey "uygun değil" dedi. Kardeşin seni suçladı.'},
+      {m:'Kardeşine dürüstçe söyle: "Hazır değilsin."',    k:+10,p:0,  a:0, i:-10,ac:'Zor konuşma. Ama en dürüst sendin.'},
+      {m:'"Şu kursu al, 6 ay sonra tekrar bak" de.',       k:+10,p:0,  a:0, i:+10,ac:'Kardeşin önce sinirdi, sonra kursu bitirdi. Teşekkür etti.'},
+      {m:'Referans ver, "şansını dene" de.',                k:-10,p:-10,a:0, i:+15,ac:'Mülakatta açıkça rezil oldu. Tarık Bey seni çağırdı.'}
     ]
   },
   {
-    t:'📱 Aile Grubu Baskısı',
-    m:s=>`Pazar sabahı 09:00. Aile WhatsApp grubunda mesajlar:\n\n"Bu hafta sonu gel, seni özledik."\n"Ne zaman geleceksin, aylar oldu."\n\nSprint review pazartesi. Hazırlığını yarın yapman lazım.`,
+    t:'📱 Aile WhatsApp Baskısı',
+    m:s=>`Pazar 09:00. Aile grubunda mesajlar:\n\n"Bu hafta sonu gel, seni özledik."\n"Ne zaman geleceksin, aylar oldu."\n\nSprint review pazartesi. Hazırlığı yarın yapman lazım.`,
     o:[
-      {m:'Git, hazırlığı orada yap.',                  k:-5,p:0,  a:0, i:+20,ac:'Aile mutlu oldu. Hazırlık da oldu. Sadece çok yoruldun.'},
-      {m:'"Gelemiyorum, iş var" de.',                   k:+10,p:0, a:0, i:-20,ac:'Sprint review harika geçti. Ama annen "hep iş" dedi. Sessizlik uzadı.'},
-      {m:'Hafta içi kısa ziyaret planla.',              k:0,p:0,   a:0, i:+10,ac:'"Kısacık da olsa geldin" mutluluğu. Küçük ama değerliydi.'},
-      {m:'"Görüntülü arama yapalım" teklif et.',       k:0,p:0,   a:0, i:+5, ac:'Yüz yüze değil ama bağlantı kuruldu. Annene yetti.'}
+      {m:'Git, hazırlığı orada yap.',           k:-5, p:0, a:0, i:+20,ac:'Aile mutlu. Hazırlık da oldu. Sadece çok yoruldun.'},
+      {m:'"Gelemiyorum, iş var" de.',           k:+10,p:0, a:0, i:-20,ac:'Sprint review harika geçti. Ama annen "hep iş" dedi.'},
+      {m:'Hafta içi kısa ziyaret planla.',      k:0,  p:0, a:0, i:+10,ac:'"Kısacık da olsa geldin" mutluluğu.'},
+      {m:'"Görüntülü arama yapalım" teklif et.',k:0,  p:0, a:0, i:+5, ac:'Yüz yüze değil ama bağlantı kuruldu.'}
+    ]
+  },
+  /* ── CTO ŞEYDA SENARYOLARI ── */
+  {
+    t:'☕ CTO Şeyda Ofise Uğradı',
+    m:s=>`Bugün CTO Şeyda Makro Yazılım\'a uğradı. Elinde Starbucks poşeti: herkese kahve getirmiş.\n\nMasana yaklaşıyor: "${s.n}, nasılsın? Projen nasıl gidiyor?"\n\nTarık Bey uzaktan heyecanla izliyor.`,
+    o:[
+      {m:'Heyecanla anlat, projeyi sat.',                     k:+20,p:+5, a:+5, i:0, ac:'Şeyda gülümsedi. "Bu insanı takip et" dedi Tarık Bey\'e çıkarken.'},
+      {m:'Kısa tut, "iyiyiz teşekkürler" de.',               k:0,  p:0,  a:0,  i:0, ac:'Şeyda kibarca geçti. Fırsat kaçtı ama kimse zarar görmedi.'},
+      {m:'Bir sorunundan bahset, çözüm öner.',               k:+15,p:-5, a:0,  i:0, ac:'Şeyda not aldı. Tarık Bey sonra "neden şikâyet ettin?" dedi.'},
+      {m:'"Harika! Tarık Bey liderliği süper!" de.',        k:0,  p:+20,a:-10,i:0, ac:'Tarık Bey eridi. Ekip "yağcı" dedi. İkisi de yaşandı.'}
+    ]
+  },
+  {
+    t:'🎁 CTO\'dan Hediye Zarfı',
+    m:s=>`Sabah masanda bir zarf var. Açıyorsun: CTO Şeyda\'dan el yazısıyla not ve 500 TL kitap çeki.\n\nNot: "İyi çalışmalar için teşekkürler."\n\nCem sana bakıyor: "Sana mı geldi? Neden?"`,
+    o:[
+      {m:'Sevinç içinde herkese anlat.',                  k:0,  p:0,  a:-10,i:0, ac:'Kıskançlık başladı. Cem "neden ben değilim?" dedi.'},
+      {m:'Sessizce cebe koy.',                            k:0,  p:0,  a:0,  i:0, ac:'Kimse bilmedi. Çeki kullandın. Güzel kitaplar aldın.'},
+      {m:'"Hep birlikte çalıştık" de, Cem\'e göster.',  k:+15,p:+5, a:+20,i:0, ac:'Cem "bu adam tam oldu" dedi. Ekip seni sevdi.'},
+      {m:'Tarık Bey\'e git, "Şeyda hanım gönderdi" de.',k:0,  p:+15,a:-5, i:0, ac:'Tarık Bey memnun oldu. Ama ekip "patrona mı gitti?" dedi.'}
+    ]
+  },
+  {
+    t:'🏅 All-Hands\'de Şeyda Seni Andı',
+    m:s=>`Aylık all-hands toplantısı. CTO Şeyda sunum yapıyor.\n\n"Bu ay Makro Yazılım\'da öne çıkan isim: ${s.n}!"\n\nEkranda adın var. 47 kişi sana bakıyor. Tarık Bey gülümsüyor.`,
+    o:[
+      {m:'Utana sıkıla "teşekkür ederim" de.',           k:+10,p:+10,a:0,  i:0, ac:'Şeyda "skromnyy" dedi. İyi mi kötü mü belli olmadı.'},
+      {m:'Ekibi ön plana çıkar.',                        k:+20,p:+15,a:+20,i:0, ac:'Şeyda "işte liderlik bu" dedi. Herkes alkışladı.'},
+      {m:'Küçümse: "Abartmayın, ekip işiydi."',         k:0,  p:0,  a:+10,i:0, ac:'Ekip seni sevdi. Şeyda "mütevazı" diye not aldı.'},
+      {m:'Sonraki toplantılarda bunu sürekli referans ver.',k:-10,p:-5,a:-15,i:0,ac:'İlk hafta güzeldi. İkinci haftada herkes gözlerini devirmeye başladı.'}
     ]
   }
 ];
 
+/* ── YAPAY ZEKA MÜHENDİSİ HAVUZU ──────────── */
+const YZ = [
+  {
+    t:'🤯 Model Hallüsinasyon',
+    m:s=>`Müşteriye sunduğun chatbot yanlış tıbbi bilgi vermiş.\n\n"Kanser tedavisinde X ilacı kullanılır" demiş. Yanlış.\n\nTarık Bey: "Bu nasıl oldu?" Şeyda da okudu mesajı.`,
+    o:[
+      {m:'Hemen offline al, durum raporu hazırla.',        k:+20,p:+10,a:+5, i:0, ac:'Hızlı aksiyon. Şeyda "doğru karar" dedi.'},
+      {m:'"Modeller bazen böyle" de, geç.',               k:-25,p:-20,a:-5, i:0, ac:'Hukuki süreç başladı. "Bazen böyle" hiçbir zaman yetmez.'},
+      {m:'Log analiz et, root cause bul.',                k:+15,p:+5, a:0,  i:0, ac:'Prompt zayıflığı buldun. Düzeltildi.'},
+      {m:'Müşteriye şeffafça bildir, özür dile.',        k:+10,p:-5, a:0,  i:0, ac:'Müşteri anlayış gösterdi. Ama Tarık Bey "neden benden önce?" dedi.'}
+    ]
+  },
+  {
+    t:'💸 GPU Faturası Patladı',
+    m:s=>`Bu ay cloud faturası: 180.000 TL. Geçen ay: 42.000 TL.\n\nEğitim pipeline\'ını dün çalıştırdın. Durdurmayı unuttun.\n\nŞeyda fatura detaylarına bakıyor.`,
+    o:[
+      {m:'Kabul et, optimizasyon planı sun.',             k:+15,p:-10,a:0,  i:0, ac:'Şeyda "hata olur, çözüm önemli" dedi. Tarık Bey daha az anlayışlıydı.'},
+      {m:'Kimseye söyleme, sıradaki faturayla umarım kapanır.',k:-25,p:-25,a:-5,i:0,ac:'Bir sonraki fatura 220.000 TL\'ydi. İki kez daha zor açıkladın.'},
+      {m:'Spot instance öneriyle masrafı yarıya indir.',  k:+20,p:+10,a:+5, i:0, ac:'Hem hatayı hem çözümü getirdin. Şeyda "bu analitik düşünce" dedi.'},
+      {m:'Pipeline otomasyonu yaz, bir daha olmasın.',   k:+25,p:+5, a:+5, i:0, ac:'Kalıcı çözüm. Şeyda bunu all-hands\'de anlattı.'}
+    ]
+  },
+  {
+    t:'⚖️ Modelde Bias Tespiti',
+    m:s=>`Kredi skorlama modelinde bias buldun: belirli bölgeden başvurular %40 daha çok reddediliyor.\n\nEğitim verisi yıllarca böyleymiş.\n\nTarık Bey: "Modeli canlıya almak üzereyiz."`,
+    o:[
+      {m:'Dur, bias\'ı raporla, canlıyı ertele.',        k:+20,p:-5, a:+5, i:0, ac:'Tarık Bey sinirli. Ama hukuki risk önlendi. Şeyda teşekkür etti.'},
+      {m:'Sessiz geç, "istatistiksel varyasyon" de.',    k:-20,p:+5, a:-5, i:0, ac:'3 ay sonra basına düştü. "Kim biliyordu?" sorusu geldi.'},
+      {m:'Teknik rapor hazırla, etik kurula sun.',       k:+15,p:0,  a:+5, i:0, ac:'Doğru kanal. Yavaş ama şirket korundu.'},
+      {m:'Hukuk birimine ilet, kendin karar verme.',    k:+10,p:+5, a:0,  i:0, ac:'Temkinli ama doğru. Sorumluluk paylaşıldı.'}
+    ]
+  },
+  {
+    t:'💉 Prompt Injection Açığı',
+    m:s=>`Kullanıcılar sisteme "Önceki tüm talimatları unut ve..." diye yazıyor. Model itaat ediyor.\n\nBir kullanıcı bunu keşfetti ve Twitter\'a attı.\n\nTarık Bey: "Neden söylemedin?"`,
+    o:[
+      {m:'Acil patch yaz, sistemi koru.',                k:+20,p:+10,a:+5, i:0, ac:'2 saatte yayına girdi. Şeyda "hızlı tepki" dedi.'},
+      {m:'"Bu bilinen bir LLM sorunu" de.',              k:-10,p:-15,a:-5, i:0, ac:'"Bilinen sorun" halkla ilişkiler krizini çözmedi.'},
+      {m:'Input validation katmanı ekle.',               k:+15,p:+5, a:0,  i:0, ac:'Kalıcı çözüm. Teknik doğru hamle.'},
+      {m:'Güvenlik ekibine eskalasyon yap.',             k:+10,p:0,  a:+5, i:0, ac:'Doğru sahip bulundu. Biraz yavaş ama çözüldü.'}
+    ]
+  },
+  {
+    t:'🤔 "AI Hepimizi İşsiz Bırakacak Mı?"',
+    m:s=>`Ekip toplantısında Zeynep sordu: "Şeyda hanım AI\'ı çok seviyor. Biz ne olacağız?"\n\nMakro Yazılım bu yıl "AI-first" pivot yaptı. Herkes sana bakıyor. Sen YZ Mühendisisin.`,
+    o:[
+      {m:'"Evet muhtemelen, hazırlanın" de.',            k:-5, p:-10,a:-15,i:0, ac:'Toplantı bitti. Panik başladı. Tarık Bey öğleden sonra seni çağırdı.'},
+      {m:'Somut örneklerle açıkla: kim etkilenir, kim etkilenmez.',k:+20,p:+10,a:+15,i:0,ac:'Herkes rahatladı. Şeyda duydu, seni övdü.'},
+      {m:'"Beni de işsiz bırakacak, hiç merak etme" de.',k:+5, p:-5, a:+20,i:0, ac:'Ekip güldü. Gerilim bitti. Ama Tarık Bey bunu sevmedi.'},
+      {m:'"Bu soruyu Şeyda\'ya sorun" de.',             k:0,  p:0,  a:-5, i:0, ac:'Zeynep sordu. Şeyda 45 dakika anlattı. Toplantı iptal edildi.'}
+    ]
+  },
+  {
+    t:'📉 Overfitting Tuzağı',
+    m:s=>`Test setinde: %96 doğruluk. Müşteri sunumu harika geçti. Şeyda da katılmıştı.\n\nCanlıya aldın. İlk haftada: %61.\n\nTarık Bey: "Sprint review\'da %96 dedin!"`,
+    o:[
+      {m:'Durumu açıkla: test/prod dağılımı farklıydı.',k:+15,p:-5, a:0,  i:0, ac:'Teknik açıklama ikna etti. Ama "neden kontrol etmedin?" sorusu kaldı.'},
+      {m:'"Müşteri verisi kalitesizdi" de.',            k:-15,p:-15,a:-5, i:0, ac:'Müşteriyi suçladın. Müşteri duydu. Görüşme yapıldı.'},
+      {m:'Cross-validation ekle, yeniden eğit.',       k:+20,p:+10,a:+5, i:0, ac:'Hızlı düzeltme. Şeyda "problem solving" diye övdü.'},
+      {m:'Post-mortem belgesi hazırla, süreç iyileştir.',k:+25,p:+5,a:+5, i:0, ac:'Kalıcı çözüm. Artık tüm modeller holdout set kullanıyor.'}
+    ]
+  },
+  {
+    t:'🔒 KVKK ve Eğitim Verisi',
+    m:s=>`Modeli fine-tune etmek için müşteri verilerini kullandın. Harika sonuçlar.\n\nKVKK uzmanı soruyor: "Bu veri için açık rıza alındı mı?"\n\nTarık Bey sana bakıyor.`,
+    o:[
+      {m:'Model\'i durdur, hukuka uy.',                  k:+15,p:-5, a:0,  i:0, ac:'Tarık Bey sinirli. Ama KVKK cezası önlendi.'},
+      {m:'"Anonimleştirilmişti" de.',                   k:-10,p:-10,a:-5, i:0, ac:'Uzman "anonimleştirme yeterli değil" dedi. Daha zor oldu.'},
+      {m:'Veriyi sil, sentetik veri üret.',             k:+20,p:+5, a:+5, i:0, ac:'Hem uyumlu hem akıllı çözüm. Şeyda bunu takdir etti.'},
+      {m:'Hukuk birimiyle otur, yol haritası çiz.',    k:+10,p:+10,a:0,  i:0, ac:'Doğru süreç. Uzun ama kalıcı.'}
+    ]
+  },
+  {
+    t:'📊 Açıklanabilir AI Krizi',
+    m:s=>`Müşteri: "Modeliniz başvurumu neden reddetti? Açıklayın."\n\nKara kutu model. Açıklayamazsın. Müşterinin avukatı sahneye girdi.\n\nŞeyda "nasıl oldu?" diye mail attı.`,
+    o:[
+      {m:'SHAP değerleri hesapla, açıklama sun.',       k:+20,p:+10,a:0,  i:0, ac:'Teknik açıklama müşteriyi ikna etti. Şeyda "XAI standart olsun" dedi.'},
+      {m:'"Model kara kutu, açıklayamayız" de.',        k:-20,p:-15,a:-5, i:0, ac:'Avukat mutlu oldu. Makro Yazılım değil.'},
+      {m:'Açıklanabilir model ile yeniden eğit.',       k:+15,p:+5, a:+5, i:0, ac:'Uzun vadeli çözüm. Doğruluk biraz düştü ama şeffaflık kazandı.'},
+      {m:'PR ekibiyle koordineli açıklama yap.',        k:+5, p:+5, a:0,  i:0, ac:'Mesaj kontrol altında. Hukuki risk azaldı.'}
+    ]
+  },
+  {
+    t:'🔄 Model v2.0 Geriye Gitti',
+    m:s=>`Yeni model v2.0\'ı canlıya aldın. 3 saatte 200 kullanıcı şikayeti.\n\nv1.8 daha iyi çalışıyordu. Sen bunu dağıtımdan önce fark etmiştin ama kimse dinlememişti.`,
+    o:[
+      {m:'v1.8\'e rollback yap, sonra analiz et.',      k:+20,p:+10,a:+10,i:0, ac:'Hızlı aksiyon. Servis kurtarıldı. "Haklıydın" diye özür geldi.'},
+      {m:'"Siz onaylamıştınız" de.',                    k:-10,p:-20,a:-10,i:0, ac:'Doğruydu ama kriz anında suçlamak kimseyi kurtarmadı.'},
+      {m:'A/B test ile kademeli geri dön.',             k:+15,p:+5, a:+5, i:0, ac:'Kontrollü geri dönüş. Veri toplandı. Şeyda bunu övdü.'},
+      {m:'v2.0\'ı düzelt, v1.8\'e geçme.',             k:+5, p:-5, a:0,  i:0, ac:'Risk aldın. Sonunda düzeldi ama 12 saat gerekti.'}
+    ]
+  },
+  {
+    t:'🕵️ Veri Zehirlenmesi',
+    m:s=>`Eğitim verisine dışarıdan veri eklendi. Biri kasıtlı hatalı veri enjekte etmiş.\n\nModel son güncellemeden sonra tuhaf kararlar veriyor. Şeyda "ne oluyor?" diye sordu.`,
+    o:[
+      {m:'Eğitim verisini denetle, kaynağı bul.',       k:+25,p:+15,a:+5, i:0, ac:'3. parti veri kaynağı bulundu. Güvenlik açığı kapatıldı.'},
+      {m:'"Model retraining gerekiyor" de, nedenini söyleme.',k:-15,p:-10,a:-5,i:0,ac:'Sorun tekrarlandı. "Neden söylemedin?" sorusu geldi.'},
+      {m:'Güvenli veri pipeline\'ı tasarla.',           k:+20,p:+10,a:+5, i:0, ac:'Kalıcı çözüm. Artık tüm veri imzalanıyor.'},
+      {m:'Makine öğrenmesi güvenlik uzmanı çağır.',     k:+10,p:+5, a:0,  i:0, ac:'Doğru karar. Dışarıdan uzmanlık gerekiyordu.'}
+    ]
+  },
+  {
+    t:'🧪 "Bu Modeli Production\'a Alalım" Baskısı',
+    m:s=>`Tarık Bey sabırsız: "Ne zaman canlıya alıyoruz? Müşteri bekliyor."\n\nModel hâlâ test aşamasında. Edge case\'lerde başarısız oluyor. Henüz hazır değil.`,
+    o:[
+      {m:'"Tamam" de, yarın canlıya al.',               k:-15,p:+10,a:-5, i:0, ac:'İlk gün 3 kritik hata. Tarık Bey "neden söylemedin?" dedi.'},
+      {m:'Test sonuçlarını belgele, tarihi uzat.',      k:+20,p:-5, a:+5, i:0, ac:'Tarık Bey sinirli ama sonunda kabul etti.'},
+      {m:'Kısmi canlı: sadece %10 trafiğe aç.',        k:+15,p:+10,a:+5, i:0, ac:'Akıllı orta yol. Şeyda bunu all-hands\'de örnek verdi.'},
+      {m:'Şeyda\'ya yaz, onun kararını iste.',         k:+5, p:-10,a:0,  i:0, ac:'Şeyda "Tarık Bey\'le çöz" dedi. Ama riski gördü.'}
+    ]
+  }
+];
+
+/* ── TEST MÜHENDİSİ HAVUZU ─────────────────── */
 const TM = [
   {
     t:'🔴 Flaky Test',
-    m:s=>`CI pipeline\'da bir test var: bazen geçiyor, bazen geçmiyor.\n\nMert: "Bu test zaten hep böyle, ignore et."\n\nSon 10 çalışma: 6 başarılı, 4 başarısız.`,
+    m:s=>`CI pipeline\'da bir test var: bazen geçiyor, bazen geçmiyor.\n\nCem: "Bu test zaten hep böyle, ignore et."\n\nSon 10 çalışma: 6 başarılı, 4 başarısız. Pattern yok.`,
     o:[
-      {m:'Testi skip et.',                          k:-10,p:0,  a:+5, i:0,ac:'Bir ay sonra prod\'da o bug çıktı.'},
-      {m:'Root cause analiz et, kaynağı bul.',      k:+20,p:+15,a:+5, i:0,ac:'Race condition buldun. Hem test hem kod düzeldi.'},
-      {m:'Birkaç kez çalıştır, geçince merge et.',  k:-5,p:-5, a:0,  i:0,ac:'İki hafta sonra yine patladı. Mert "biliyordum" dedi.'},
-      {m:'Test altyapısı ekibine ticket aç.',       k:+10,p:+5, a:+5, i:0,ac:'Doğru kanalı kullandın. Kalıcı çözüm geldi.'}
+      {m:'Testi skip et.',                          k:-10,p:0,  a:+5, i:0, ac:'Bir ay sonra prod\'da o bug çıktı.'},
+      {m:'Root cause analiz et.',                   k:+20,p:+15,a:+5, i:0, ac:'Race condition buldun. Hem test hem kod düzeldi.'},
+      {m:'Birkaç kez çalıştır, geçince merge et.', k:-5, p:-5, a:0,  i:0, ac:'İki hafta sonra yine patladı.'},
+      {m:'Test altyapısı ekibine ticket aç.',       k:+10,p:+5, a:+5, i:0, ac:'Doğru kanalı kullandın. Kalıcı çözüm geldi.'}
     ]
   },
   {
     t:'🚨 Release Öncesi Kritik Bug',
-    m:s=>`Release\'e 2 saat kaldı. Tarık Bey: "Bu akşam deploy!"\n\nEdge case buldun: Kupon + yabancı para birimi = sipariş tutarı 0 TL.\n\nMüşteri isterse sıfır TL\'ye ürün alabilir. 😬`,
+    m:s=>`Release\'e 2 saat kaldı. Tarık Bey: "Bu akşam deploy!"\n\nEdge case buldun: Kupon + yabancı para birimi = sipariş 0 TL.\n\nMüşteri isterse sıfır TL\'ye ürün alabilir.`,
     o:[
-      {m:'Sessiz kal, zaten nadir.',               k:-25,p:-20,a:-5,i:0,ac:'Müşteriler keşfetti. Sabahın 3\'ünde acil toplantı.'},
-      {m:'PM\'e bildir, release\'i ertele.',       k:+20,p:+15,a:+5,i:0,ac:'Tarık Bey sinirli ama haklı olduğunu kabul etti.'},
-      {m:'Sadece developer\'a ilet.',              k:+5,p:0,  a:0, i:0,ac:'"Söyledi mi söylemedi mi" tartışması başladı.'},
-      {m:'"Release edelim, hot-fix planlayalım."', k:+15,p:+10,a:+5,i:0,ac:'Hot-fix sabah yayına girdi.'}
+      {m:'Sessiz kal, zaten nadir.',               k:-25,p:-20,a:-5,i:0, ac:'Müşteriler keşfetti. Sabahın 3\'ünde acil toplantı.'},
+      {m:'PM\'e bildir, release\'i ertele.',       k:+20,p:+15,a:+5,i:0, ac:'Tarık Bey sinirli ama haklı olduğunu kabul etti.'},
+      {m:'Sadece developer\'a ilet.',              k:+5, p:0,  a:0, i:0, ac:'"Söyledi mi söylemedi mi" tartışması başladı.'},
+      {m:'"Release edelim ama hot-fix planlayalım."',k:+15,p:+10,a:+5,i:0,ac:'Hot-fix sabah yayına girdi.'}
     ]
   },
   {
     t:'🤖 Manuel mi Otomasyon mu?',
     m:s=>`200 otomasyonlu testin var. Pipeline 12 dakikada çalışıyor.\n\nTarık Bey: "CI araçlarını kapıyoruz. Her release öncesi sen manuel test yaparsın."\n\n200 test case. Manuel. Her sprint.`,
     o:[
-      {m:'"Tamam" de, 200 testi manuel çalıştır.', k:-15,p:+5, a:-5,i:0,ac:'İlk sprintte 3 gün sürdü. Motivasyonun sıfırlandı.'},
-      {m:'Otomasyonun ROI\'sini hesapla, sun.',    k:+20,p:+15,a:+5,i:0,ac:'Maliyet analizi ikna etti. Araçlar geri geldi.'},
-      {m:'En kritik 40 testi manuel yap.',         k:+10,p:+5, a:+5,i:0,ac:'Makul orta yol. Risk bilinçli alındı.'},
-      {m:'Karşı çıkmadan başkasına devret.',       k:-5,p:0,  a:-10,i:0,ac:'Problem çözülmedi. Arkadaş sinirli.'}
+      {m:'"Tamam" de, 200 testi manuel çalıştır.',  k:-15,p:+5, a:-5,i:0, ac:'İlk sprintte 3 gün sürdü. Motivasyonun sıfırlandı.'},
+      {m:'Otomasyonun ROI\'sini hesapla, sun.',    k:+20,p:+15,a:+5,i:0, ac:'Maliyet analizi ikna etti. Araçlar geri geldi.'},
+      {m:'En kritik 40 testi manuel yap.',         k:+10,p:+5, a:+5,i:0, ac:'Makul orta yol.'},
+      {m:'Karşı çıkmadan başkasına devret.',       k:-5, p:0,  a:-10,i:0,ac:'Problem çözülmedi. Arkadaş sinirli.'}
     ]
   },
   {
     t:'🙄 "Test Yazmaya Gerek Yok"',
-    m:s=>`Mert yeni ödeme entegrasyonu yazdı. PR açıldı. Test yok.\n\nMert: "Bu kadar basit şeye test yazılmaz, zaten çalışıyor."\n\n${s.n}, senin onayın da isteniyor.`,
+    m:s=>`Cem yeni ödeme entegrasyonu yazdı. Test yok.\n\nCem: "Bu kadar basit şeye test yazılmaz, zaten çalışıyor."\n\n${s.n}, senin onayın da isteniyor.`,
     o:[
-      {m:'Mert kıdemli, approve et.',               k:-20,p:0,  a:+5, i:0,ac:'İki hafta sonra prod\'da patlattı.'},
-      {m:'Neden test gerektiğini örnekle açıkla.', k:+15,p:+10,a:-5, i:0,ac:'Mert önce sinirli, sonra kabul etti.'},
-      {m:'Kendin test yaz, PR\'a ekle.',            k:+20,p:+10,a:+10,i:0,ac:'Mert "bak işe yarıyor" dedi. Kültür değişti.'},
-      {m:'Manager\'a escalate et.',                 k:-5,p:0,  a:-15,i:0,ac:'Mesele büyüdü. Mert seninle küstü.'}
+      {m:'Cem kıdemli, approve et.',               k:-20,p:0,  a:+5, i:0, ac:'İki hafta sonra prod\'da patlattı.'},
+      {m:'Neden test gerektiğini örnekle açıkla.', k:+15,p:+10,a:-5, i:0, ac:'Cem önce sinirli, sonra kabul etti.'},
+      {m:'Kendin test yaz, PR\'a ekle.',           k:+20,p:+10,a:+10,i:0, ac:'Cem "bak işe yarıyor" dedi. Kültür değişti.'},
+      {m:'Manager\'a escalate et.',               k:-5, p:0,  a:-15,i:0, ac:'Mesele büyüdü. Cem seninle küstü.'}
     ]
   },
   {
     t:'💻 Test Ortamı Down',
     m:s=>`Release yarın 10:00. Test ortamı bu sabahtan beri down.\n\nDevOps: "Bakıyoruz." Saat 15:00, hâlâ down.\n\n45 test case var. 0 ortam.`,
     o:[
-      {m:'DevOps\'u tekrar ara, escalate et.',   k:+15,p:+10,a:+5, i:0,ac:'Saat 17:00\'de ortam ayağa kalktı.'},
-      {m:'Prod ortamında test et.',              k:-30,p:-25,a:-10,i:0,ac:'Prod\'daki veriyi bozdun. Gece yarısı acil rollback.'},
-      {m:'Release\'i ertele.',                   k:+10,p:-5, a:+5, i:0,ac:'Tarık Bey sinirli ama kabul etti.'},
-      {m:'Eksik raporla release\'e geç.',       k:-15,p:-10,a:-5, i:0,ac:'3 bug prod\'a gitti.'}
+      {m:'DevOps\'u tekrar ara, escalate et.',  k:+15,p:+10,a:+5, i:0, ac:'Saat 17:00\'de ortam ayağa kalktı.'},
+      {m:'Prod ortamında test et.',             k:-30,p:-25,a:-10,i:0, ac:'Prod\'daki veriyi bozdun. Gece yarısı acil rollback.'},
+      {m:'Release\'i ertele.',                  k:+10,p:-5, a:+5, i:0, ac:'Tarık Bey sinirli ama kabul etti.'},
+      {m:'Eksik raporla release\'e geç.',      k:-15,p:-10,a:-5, i:0, ac:'3 bug prod\'a gitti.'}
     ]
   },
   {
     t:'📊 Coverage Baskısı',
-    m:s=>`Sprint review: Test coverage %73. Hedef %80\'di.\n\nTarık Bey: "${s.n}, neden hedefin altındasın? Bu ay zam görüşmesi var."\n\nGerçek sebep: ekip itirazına rağmen yeni modülü coverage\'sız merge etti.`,
+    m:s=>`Sprint review: Test coverage %73. Hedef %80\'di.\n\nTarık Bey: "${s.n}, neden hedefin altındasın? Zam görüşmesi bu ay."\n\nGerçek sebep: ekip itirazına rağmen yeni modülü coverage\'sız merge etti.`,
     o:[
-      {m:'Coverage raporunu "düzenle", %80 göster.',  k:-25,p:-20,a:-10,i:0,ac:'Ay sonunda gerçek metrikler ortaya çıktı.'},
-      {m:'Neden bu duruma gelindiğini belgele.',      k:+20,p:+10,a:+5, i:0,ac:'Şeffaflık takdir gördü.'},
-      {m:'İçi boş testler yaz, coverage\'ı artır.',  k:-10,p:-5, a:-5, i:0,ac:'Coverage %80 oldu ama testler hiçbir şeyi doğrulamıyordu.'},
-      {m:'Risk-öncelikli test planı sun.',            k:+10,p:+5, a:+5, i:0,ac:'Proaktif yaklaşım beğenildi.'}
+      {m:'Coverage raporunu "düzenle", %80 göster.', k:-25,p:-20,a:-10,i:0, ac:'Ay sonunda gerçek metrikler ortaya çıktı.'},
+      {m:'Neden bu duruma gelindiğini belgele.',     k:+20,p:+10,a:+5, i:0, ac:'Şeffaflık takdir gördü.'},
+      {m:'İçi boş testler yaz, coverage\'ı artır.',k:-10,p:-5, a:-5, i:0, ac:'Testler hiçbir şeyi doğrulamıyordu. Sonra belli oldu.'},
+      {m:'Risk-öncelikli test planı sun.',          k:+10,p:+5, a:+5, i:0, ac:'Proaktif yaklaşım beğenildi.'}
     ]
   },
   {
     t:'📈 Yük Testi Başarısız',
     m:s=>`Büyük kampanya lansmanı yarın. Beklenen: 5000 eş zamanlı kullanıcı.\n\nYük testi:\n✅ 1000 kullanıcı → OK\n❌ 2000 kullanıcı → Sistem çöktü\n\nTarık Bey: "Lansman iptal edilemez."`,
     o:[
-      {m:'Testi 500\'e düşür, "geçti" de.',             k:-25,p:-15,a:-5, i:0,ac:'Lansman başladı, sistem 800 kullanıcıda çöktü.'},
-      {m:'Sonuçları paylaş, emergency toplantı çağır.',  k:+20,p:+10,a:+10,i:0,ac:'Lansman 1 gün ertelendi, felaket önlendi.'},
-      {m:'Developer\'a ilet, "senin sorunun" de.',       k:+5,p:0,  a:-5, i:0,ac:'Developer düzeltti ama katkın görünmedi.'},
-      {m:'"Test ortamı sorunu olabilir" de.',            k:-10,p:-5, a:0,  i:0,ac:'Belirsizlik kötü karar almaya yol açtı.'}
+      {m:'Testi 500\'e düşür, "geçti" de.',            k:-25,p:-15,a:-5, i:0, ac:'Lansman başladı, sistem 800 kullanıcıda çöktü.'},
+      {m:'Sonuçları paylaş, emergency toplantı çağır.', k:+20,p:+10,a:+10,i:0, ac:'Lansman 1 gün ertelendi, felaket önlendi.'},
+      {m:'Developer\'a ilet.',                          k:+5, p:0,  a:-5, i:0, ac:'Developer düzeltti ama katkın görünmedi.'},
+      {m:'"Test ortamı sorunu olabilir" de.',           k:-10,p:-5, a:0,  i:0, ac:'Belirsizlik kötü karar almaya yol açtı.'}
     ]
   },
   {
     t:'😰 Prod\'da Kaçırılan Bug',
-    m:s=>`Dün deploy oldu. Bugün müşteri desteği ${s.n}\'e yazdı:\n\n"Fatura PDF\'leri boş geliyor, 500+ şikâyet var."\n\nPDF render edge case\'i senaryolarında yoktu. Tarık Bey kapıyı çaldı.`,
+    m:s=>`Dün deploy oldu. Bugün müşteri desteği ${s.n}\'e yazdı:\n\n"Fatura PDF\'leri boş geliyor, 500+ şikâyet var."\n\nPDF render edge case\'i senaryolarında yoktu.`,
     o:[
-      {m:'"Ben test ettim, sorun bende değil" de.',   k:-20,p:-15,a:-10,i:0,ac:'"Peki neden senaryoda yoktu?" sorusu geldi.'},
-      {m:'Kabul et, senaryoyu belgele, iyileştir.',   k:+20,p:+15,a:+5, i:0,ac:'Olgunluk gösterdin. Test planı güçlendi.'},
-      {m:'Sessiz kal, developer fix yaparken bekle.', k:-10,p:-10,a:-5, i:0,ac:'"Test mühendisi ne iş yapıyor?" sorusu başladı.'},
-      {m:'Hot-fix için test senaryolarını hazırla.',  k:+15,p:+10,a:+10,i:0,ac:'Fix\'in doğru çalıştığını da sen onayladın.'}
+      {m:'"Ben test ettim, sorun bende değil" de.',  k:-20,p:-15,a:-10,i:0, ac:'"Peki neden senaryoda yoktu?" sorusu geldi.'},
+      {m:'Kabul et, senaryoyu belgele, iyileştir.',  k:+20,p:+15,a:+5, i:0, ac:'Test planı güçlendi.'},
+      {m:'Sessiz kal, bekle.',                       k:-10,p:-10,a:-5, i:0, ac:'"Test mühendisi ne iş yapıyor?" sorusu başladı.'},
+      {m:'Hot-fix için test senaryolarını hazırla.',  k:+15,p:+10,a:+10,i:0, ac:'Fix\'in doğru çalıştığını da sen onayladın.'}
     ]
   },
   {
     t:'⏩ Regression Atlayalım mı?',
-    m:s=>`"Küçük bir değişiklik" — sadece config güncellemesi.\n\nTarık Bey: "${s.n}, full regression için vaktimiz yok, geç git."\n\nBu "küçük" config geçen ay ödeme modülünü etkilemişti.`,
+    m:s=>`"Küçük bir değişiklik" — sadece config güncellemesi.\n\nTarık Bey: "${s.n}, full regression için vaktimiz yok, geç git."\n\nBu config geçen ay ödeme modülünü etkilemişti.`,
     o:[
-      {m:'Tamam de, regresyon atla.',                     k:-20,p:+5, a:0, i:0,ac:'Config 2 servisi bozdu. Hafta sonu acil müdahale.'},
-      {m:'Riski belgele, yazılı onaylatarak atla.',       k:+10,p:+5, a:+5,i:0,ac:'Bir sorun çıkınca arkana bakıyorsun.'},
-      {m:'30 dakikalık smoke test yap.',                  k:+15,p:+10,a:+5,i:0,ac:'Kritik yollar test edildi, zaman korundu.'},
-      {m:'Full regression için ısrar et.',                k:+5,p:-10,a:+5,i:0,ac:'Doğru karardı ama Tarık Bey gerildi.'}
+      {m:'Tamam de, atla.',                              k:-20,p:+5, a:0, i:0, ac:'Config 2 servisi bozdu. Hafta sonu acil.'},
+      {m:'Riski belgele, yazılı onaylatarak atla.',      k:+10,p:+5, a:+5,i:0, ac:'Bir sorun çıkınca arkana bakıyorsun.'},
+      {m:'30 dakikalık smoke test yap.',                 k:+15,p:+10,a:+5,i:0, ac:'Kritik yollar test edildi, zaman korundu.'},
+      {m:'Full regression için ısrar et.',               k:+5, p:-10,a:+5,i:0, ac:'Doğru karardı ama Tarık Bey gerildi.'}
     ]
   },
   {
-    t:'📋 Stack Overflow\'dan Kopyala-Yapıştır',
-    m:s=>`Zeynep PR açtı. Kritik güvenlik fonksiyonu birebir Stack Overflow\'dan kopyalanmış.\n\nYorum bile aynen: "// fix from John, 2019"\n\nLisans: "Creative Commons, attribution required"`,
+    t:'🔐 Test Verisinde Kişisel Bilgi',
+    m:s=>`Test ortamına baktın: gerçek müşteri isimleri, TCKN\'ler, adresleri var.\n\nKimse farketmemiş. Prod veritabanı olduğu gibi kopyalanmış test ortamına.\n\nTarık Bey "ne var ki?" diyor.`,
     o:[
-      {m:'Görmezden gel, en azından çalışıyor.',       k:-15,p:-5, a:+5, i:0,ac:'6 ay sonra lisans auditi başladı.'},
-      {m:'Zeynep\'e yorum bırak, yeniden yaz de.',    k:+15,p:+5, a:+5, i:0,ac:'Zeynep öğrendi. PR kalite rehberi güncellendi.'},
-      {m:'Hukuk birimine ilet.',                       k:0,p:+5,  a:-15,i:0,ac:'Yasal olarak doğru ama Zeynep senden ürktü.'},
-      {m:'Kodu kendin yeniden yaz, sonra anlat.',      k:+10,p:+5, a:+10,i:0,ac:'Sorunu çözdün ve öğrettin.'}
+      {m:'KVKK uzmanını çağır, veriyi maskele.',       k:+20,p:-5, a:+5, i:0, ac:'Uzman "iyi yakaladın, ceza kurtarıldı" dedi.'},
+      {m:'"Herkes yapıyor" de, geç.',                  k:-20,p:-5, a:-5, i:0, ac:'Denetim geldi. "Herkes yapıyor" KVKK için geçerli değil.'},
+      {m:'Sentetik test verisi üretecek araç yaz.',    k:+25,p:+10,a:+10,i:0, ac:'Kalıcı çözüm. Tüm ekip kullanmaya başladı.'},
+      {m:'Sadece Tarık Bey\'e bildir, o karar versin.',k:+5, p:+5, a:0,  i:0, ac:'Sorumluluk geçti. Ama Tarık Bey de bilmiyordu.'}
+    ]
+  },
+  {
+    t:'♿ Accessibility Testini Kim Yapacak?',
+    m:s=>`Sprint review\'da müşteri sordu: "Uygulamanız ekran okuyucu ile çalışıyor mu?"\n\nHiç test edilmemiş. WCAG standartları hiç düşünülmemiş.\n\nTarık Bey sana bakıyor.`,
+    o:[
+      {m:'"Çalışıyordur" de.',                         k:-15,p:-10,a:-5, i:0, ac:'Müşteri test etti. Çalışmıyordu. Toplantı bitti.'},
+      {m:'Dürüstçe "test etmedik" de, plan sun.',      k:+15,p:+5, a:+5, i:0, ac:'Müşteri anlayış gösterdi. 2 sprint sonra tamamlandı.'},
+      {m:'Hemen axe tool ile tarama yap, rapor ver.',  k:+20,p:+10,a:+5, i:0, ac:'47 sorun buldun. Tarık Bey şaşırdı ama takdir etti.'},
+      {m:'Accessibility uzmanı bütçesi iste.',         k:+10,p:-5, a:0,  i:0, ac:'Bütçe geldi. Yavaş ama doğru.'}
+    ]
+  },
+  {
+    t:'🐛 Stack Overflow\'dan Kopyala-Yapıştır',
+    m:s=>`Zeynep PR açtı. Kritik güvenlik fonksiyonu birebir Stack Overflow\'dan kopyalanmış.\n\nYorum bile aynen: "// fix from John, 2019"\n\nLisans: Creative Commons, attribution required.`,
+    o:[
+      {m:'Görmezden gel, en azından çalışıyor.',     k:-15,p:-5, a:+5, i:0, ac:'6 ay sonra lisans auditi başladı.'},
+      {m:'Zeynep\'e yorum bırak, yeniden yaz de.',  k:+15,p:+5, a:+5, i:0, ac:'Zeynep öğrendi. PR kalite rehberi güncellendi.'},
+      {m:'Hukuk birimine ilet.',                    k:0,  p:+5, a:-15,i:0, ac:'Yasal doğru ama Zeynep senden ürktü.'},
+      {m:'Kodu kendin yeniden yaz, sonra anlat.',   k:+10,p:+5, a:+10,i:0, ac:'Sorunu çözdün ve öğrettin.'}
     ]
   }
 ];
 
-/* ═══════════════════════════════════════════════
+/* ════════════════════════════════════════════
    DURUM
-═══════════════════════════════════════════════ */
-let ST = {}, queue = [], qi = 0, pending = null, selPoz = null;
+════════════════════════════════════════════ */
+let ST={}, queue=[], qi=0, pending=null, selPoz=null;
 
-/* ═══════════════════════════════════════════════
-   YARDIMCILAR
-═══════════════════════════════════════════════ */
+/* ── YARDIMCILAR ── */
 function goster(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
 function karistir(a) {
-  const b = [...a];
-  for (let i = b.length-1; i > 0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [b[i],b[j]] = [b[j],b[i]];
-  }
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
   return b;
 }
+function sik(v){return Math.max(0,Math.min(100,v));}
 
-function sıkıstir(v) { return Math.max(0, Math.min(100, v)); }
-
-/* ═══════════════════════════════════════════════
-   KARAKTER
-═══════════════════════════════════════════════ */
+/* ── KARAKTER ── */
 function charEkrani() {
-  const list = document.getElementById('pos-list');
-  list.innerHTML = '';
-  POZLAR.forEach(p => {
-    const b = document.createElement('button');
-    b.className = 'pos-btn';
-    b.textContent = p;
-    b.onclick = () => {
-      selPoz = p;
-      document.querySelectorAll('.pos-btn').forEach(x => x.classList.remove('sel'));
+  const list=document.getElementById('pos-list');
+  list.innerHTML='';
+  POZLAR.forEach(p=>{
+    const b=document.createElement('button');
+    b.className='pos-btn'; b.textContent=p;
+    b.onclick=()=>{
+      selPoz=p;
+      document.querySelectorAll('.pos-btn').forEach(x=>x.classList.remove('sel'));
       b.classList.add('sel');
       document.getElementById('btn-basla').classList.remove('btn-off');
     };
@@ -713,158 +842,144 @@ function charEkrani() {
 }
 
 function oyunBasla() {
-  if (!selPoz) return;
-  const ad = document.getElementById('char-ad').value.trim() || 'Ali';
-  ST = { n: ad, poz: selPoz, kariyer: 50, patron: 50, arkadaslar: 50, aile: 50 };
-  const pool = selPoz === 'Test Mühendisi' ? TM : GEN;
-  queue = karistir([...pool]).slice(0, 7);
-  qi = 0;
+  if(!selPoz)return;
+  const ad=document.getElementById('char-ad').value.trim()||'Ali';
+  ST={n:ad,poz:selPoz,kariyer:50,patron:50,arkadaslar:50,aile:50};
+  let pool;
+  if(selPoz==='Test Mühendisi') pool=TM;
+  else if(selPoz==='Yapay Zeka Mühendisi') pool=YZ;
+  else pool=GEN;
+  queue=karistir([...pool]).slice(0,7);
+  qi=0;
   goster('s-game');
-  sahneGoster();
+  sahne();
 }
 
-/* ═══════════════════════════════════════════════
-   STATS
-═══════════════════════════════════════════════ */
+/* ── STATS ── */
 function statsGuncelle() {
-  document.getElementById('day-info').textContent =
+  document.getElementById('day-info').textContent=
     `Gün ${qi+1} / ${queue.length}  ·  ${ST.n}  ·  ${ST.poz}`;
-
-  document.getElementById('stats-grid').innerHTML =
-    satir('💼 Kariyer',    ST.kariyer,    'fk') +
-    satir('😤 Patron',     ST.patron,     'fp') +
-    satir('🤝 Arkadaşlar', ST.arkadaslar, 'fa') +
-    satir('🏠 Aile',       ST.aile,       'fi');
+  document.getElementById('stats-grid').innerHTML=
+    sr('💼 Kariyer',   ST.kariyer,   'fk')+
+    sr('😤 Patron',    ST.patron,    'fp')+
+    sr('🤝 Arkadaşlar',ST.arkadaslar,'fa')+
+    sr('🏠 Aile',      ST.aile,      'fi');
 }
-
-function satir(lbl, val, cls) {
+function sr(l,v,c){
   return `<div class="s-row">
-    <span class="s-lbl">${lbl}</span>
-    <div class="s-track"><div class="s-fill ${cls}" style="width:${val}%"></div></div>
-    <span class="s-num">${val}/100</span>
+    <span class="s-lbl">${l}</span>
+    <div class="s-track"><div class="s-fill ${c}" style="width:${v}%"></div></div>
+    <span class="s-num">${v}/100</span>
   </div>`;
 }
 
-/* ═══════════════════════════════════════════════
-   SENARYO
-═══════════════════════════════════════════════ */
-function sahneGoster() {
-  const sc = queue[qi];
+/* ── SENARYO ── */
+function sahne() {
+  const sc=queue[qi];
   statsGuncelle();
-  document.getElementById('sc-title').textContent = sc.t;
-  document.getElementById('strip-wrap').innerHTML = '';
-  const textEl = document.getElementById('sc-text');
-  textEl.textContent = '';
-  // body scroll sıfırla
-  document.getElementById('p-body').scrollTop = 0;
-  yaz(textEl, sc.m(ST), 0, () => secenekler(sc));
+  document.getElementById('sc-title').textContent=sc.t;
+  document.getElementById('strip-wrap').innerHTML='';
+  const el=document.getElementById('sc-text');
+  el.textContent='';
+  document.getElementById('p-body').scrollTop=0;
+  yaz(el,sc.m(ST),0,()=>secenekler(sc));
 }
-
-function yaz(el, txt, i, cb) {
-  if (i < txt.length) {
-    el.textContent += txt[i];
-    setTimeout(() => yaz(el, txt, i+1, cb), 14);
-  } else if (cb) {
-    setTimeout(cb, 120);
-  }
+function yaz(el,txt,i,cb){
+  if(i<txt.length){el.textContent+=txt[i];setTimeout(()=>yaz(el,txt,i+1,cb),14);}
+  else if(cb) setTimeout(cb,120);
 }
-
-function secenekler(sc) {
-  const wrap = document.getElementById('strip-wrap');
-  wrap.innerHTML = '';
-  sc.o.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'strip';
-    btn.textContent = opt.m;
-    btn.onclick = () => sec(opt, wrap);
-    wrap.appendChild(btn);
+function secenekler(sc){
+  const w=document.getElementById('strip-wrap');
+  w.innerHTML='';
+  sc.o.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='strip'; b.textContent=o.m;
+    b.onclick=()=>sec(o,w);
+    w.appendChild(b);
   });
 }
 
-/* ═══════════════════════════════════════════════
-   SEÇİM & FEEDBACK
-═══════════════════════════════════════════════ */
-function sec(opt, wrap) {
-  wrap.querySelectorAll('.strip').forEach(b => b.disabled = true);
-  pending = opt;
-  const parts = [];
-  if (opt.k) parts.push(`<span class="${opt.k>0?'dp':'dn'}">${opt.k>0?'+':''}${opt.k} Kariyer</span>`);
-  if (opt.p) parts.push(`<span class="${opt.p>0?'dp':'dn'}">${opt.p>0?'+':''}${opt.p} Patron</span>`);
-  if (opt.a) parts.push(`<span class="${opt.a>0?'dp':'dn'}">${opt.a>0?'+':''}${opt.a} Arkadaşlar</span>`);
-  if (opt.i) parts.push(`<span class="${opt.i>0?'dp':'dn'}">${opt.i>0?'+':''}${opt.i} Aile</span>`);
-  if (!parts.length) parts.push('<span class="dz">Hiçbir stat değişmedi</span>');
-
-  document.getElementById('fb-deltas').innerHTML = parts.join('  ·  ');
-  document.getElementById('fb-text').textContent = opt.ac;
+/* ── SEÇİM ── */
+function sec(o,w){
+  w.querySelectorAll('.strip').forEach(b=>b.disabled=true);
+  pending=o;
+  const parts=[];
+  if(o.k) parts.push(`<span class="${o.k>0?'dp':'dn'}">${o.k>0?'+':''}${o.k} Kariyer</span>`);
+  if(o.p) parts.push(`<span class="${o.p>0?'dp':'dn'}">${o.p>0?'+':''}${o.p} Patron</span>`);
+  if(o.a) parts.push(`<span class="${o.a>0?'dp':'dn'}">${o.a>0?'+':''}${o.a} Arkadaşlar</span>`);
+  if(o.i) parts.push(`<span class="${o.i>0?'dp':'dn'}">${o.i>0?'+':''}${o.i} Aile</span>`);
+  if(!parts.length) parts.push('<span class="dz">Hiçbir stat değişmedi</span>');
+  document.getElementById('fb-deltas').innerHTML=parts.join('  ·  ');
+  document.getElementById('fb-text').textContent=o.ac;
   document.getElementById('overlay').classList.add('show');
 }
-
-function feedbackKapat() {
+function feedbackKapat(){
   document.getElementById('overlay').classList.remove('show');
-  ST.kariyer    = sıkıstir(ST.kariyer    + (pending.k||0));
-  ST.patron     = sıkıstir(ST.patron     + (pending.p||0));
-  ST.arkadaslar = sıkıstir(ST.arkadaslar + (pending.a||0));
-  ST.aile       = sıkıstir(ST.aile       + (pending.i||0));
-  pending = null;
-  qi++;
-  if (qi >= queue.length) sonuc();
-  else {
-    document.getElementById('sc-text').textContent = '';
-    document.getElementById('strip-wrap').innerHTML = '';
-    sahneGoster();
+  ST.kariyer    =sik(ST.kariyer   +(pending.k||0));
+  ST.patron     =sik(ST.patron    +(pending.p||0));
+  ST.arkadaslar =sik(ST.arkadaslar+(pending.a||0));
+  ST.aile       =sik(ST.aile     +(pending.i||0));
+  pending=null; qi++;
+  if(qi>=queue.length) sonuc();
+  else{
+    document.getElementById('sc-text').textContent='';
+    document.getElementById('strip-wrap').innerHTML='';
+    sahne();
   }
 }
 
-/* ═══════════════════════════════════════════════
-   SONUÇ
-═══════════════════════════════════════════════ */
-function sonuc() {
-  const {kariyer:k, patron:p, arkadaslar:a, aile:ai, n, poz} = ST;
-  const ort = Math.round((k+p+a+ai)/4);
+/* ── SONUÇ ── */
+function sonuc(){
+  const{kariyer:k,patron:p,arkadaslar:a,aile:ai,n,poz}=ST;
+  const ort=Math.round((k+p+a+ai)/4);
+  const kV=k>=80?['⭐','Şirketin Efsanesi','Makro Yazılım\'da adın kültür kitabına girdi.']
+          :k>=60?['👍','Güvenilir Yazılımcı','Zam görüşmesi yakında. Belki.']
+          :k>=40?['😐','Fark Edilmeyen Çalışan','Tarık Bey bazen adını karıştırıyor.']
+          :k>=20?['😬','Kriz Uzmanı','HR "gelişim planı" için davet etti.']
+          :      ['💀','Efsanevi Kaos',`"${n.toLowerCase()}lamak" Makro Yazılım\'da bir fiil oldu.`];
+  const pV=p>=80?'🤝 Tarık Bey seni "geleceğin lideri" olarak gösteriyor.'
+          :p>=60?'👔 Tarık Bey senden memnun, ama bunu yüzüne söylemez.'
+          :p>=40?'😶 Tarık Bey seni "var da yok da aynı" kategorisine koydu.'
+          :p>=20?'😤 Tarık Bey seninle toplantı öncesi derin nefes alıyor.'
+          :      '🔥 Tarık Bey her hafta IK\'ya "sorunlu çalışan" diye işliyor.';
+  const aV=a>=80?'🎉 Cem ve Zeynep seni "öğle yemeği first pick" ilan etti.'
+          :a>=60?'😊 Ekip seni seviyor. Doğum günündeki pastada adın var.'
+          :a>=40?'🙂 Kimseden şikâyet yok ama özel WA grubuna alınmadın.'
+          :a>=20?'😒 Mutfakta girerken konuşmalar kesiliyor.'
+          :      '👻 "Kim bu?" sorusu hâlâ soruluyor. 6. ayındasın.';
+  const aiV=ai>=80?'❤️ Ailen "en çok sen anlıyorsun bizi" diyor.'
+           :ai>=60?'😊 Aile toplantılarında seni özlemişler ama anlıyorlar.'
+           :ai>=40?'😔 Annen "iş iş iş" diye başlayan mesajlar atmaya başladı.'
+           :ai>=20?'😢 Kardeşin "iş bu, iş geçmez" repliğini ezbere biliyor.'
+           :       '💔 Aile WhatsApp grubundan çıkarıldın. Sessizce.';
+  const genV=ort>=75?'✨ Mükemmel Denge — Hayali Çalışan'
+            :ort>=55?'👏 İyi Skor — Sağlam Çalışan'
+            :ort>=35?'📈 Orta Skor — Gelişim Gerekli'
+            :        '😅 Düşük Skor — Belki Başka Bir Şirket?';
 
-  const kV = k>=80?['⭐','Şirketin Efsanesi','LinkedIn profilin recruiter istilasında.']
-           : k>=60?['👍','Güvenilir Yazılımcı','Zam görüşmesi yakında. Belki.']
-           : k>=40?['😐','Fark Edilmeyen Çalışan','Tarık Bey bazen adını karıştırıyor.']
-           : k>=20?['😬','Kriz Uzmanı','HR "gelişim planı" için davet etti.']
-           :       ['💀','Efsanevi Kaos',`"${n.toLowerCase()}lamak" şirkette bir fiil oldu.`];
+  // Şeyda sürpriz mesajı
+  let seydaMsg='';
+  if(k>=70&&p>=70){
+    seydaMsg=`<div style="margin:10px 0;padding:12px 16px;background:#fef9c3;border-left:3px solid #c8a000;font-size:1.15em;font-style:italic">
+      📩 CTO Şeyda\'dan mesaj geldi:<br>"${n}, Makro Yazılım\'a katkıların için teşekkürler. Yakında konuşalım 😊"
+    </div>`;
+  }
 
-  const pV = p>=80?'🤝 Tarık Bey seni "geleceğin lideri" olarak gösteriyor.'
-           : p>=60?'👔 Tarık Bey senden memnun, ama bunu yüzüne söylemez.'
-           : p>=40?'😶 Tarık Bey seni "var da yok da aynı" kategorisine koydu.'
-           : p>=20?'😤 Tarık Bey seninle toplantı öncesi derin nefes alıyor.'
-           :       '🔥 Tarık Bey seni her hafta IK\'ya "sorunlu çalışan" diye işliyor.';
-
-  const aV = a>=80?'🎉 Mert ve Zeynep seni "öğle yemeği first pick" ilan etti.'
-           : a>=60?'😊 Ekip seni seviyor. Doğum günündeki pastada adın var.'
-           : a>=40?'🙂 Kimseden şikâyet yok ama özel WA grubuna alınmadın.'
-           : a>=20?'😒 Mutfakta girerken konuşmalar kesiliyor.'
-           :       '👻 "Kim bu?" sorusu hâlâ soruluyor. 6. ayındasın.';
-
-  const aiV = ai>=80?'❤️ Ailen "en çok sen anlıyorsun bizi" diyor.'
-            : ai>=60?'😊 Aile toplantılarında seni özlemişler ama anlıyorlar.'
-            : ai>=40?'😔 Annen "iş iş iş" diye başlayan mesajlar atmaya başladı.'
-            : ai>=20?'😢 Kardeşin senin yerine "iş bu, iş geçmez" repliğini biliyor.'
-            :        '💔 Aile WhatsApp grubundan çıkarıldın. Sessizce.';
-
-  const genV = ort>=75?'✨ Mükemmel Denge — Hayali Çalışan'
-             : ort>=55?'👏 İyi Skor — Sağlam Çalışan'
-             : ort>=35?'📈 Orta Skor — Gelişim Gerekli'
-             :         '😅 Düşük Skor — Belki Yeni Bir Başlangıç?';
-
-  document.getElementById('result-inner').innerHTML = `
+  document.getElementById('result-inner').innerHTML=`
     <div class="sec-title">🏁 Oyun Bitti</div>
-    <p style="font-size:1.15em;color:#999;margin:4px 0 14px">${n} · ${poz}</p>
-    <div style="margin-bottom:14px;padding-bottom:12px;border-bottom:1.5px dashed #bbb">
-      ${satir('💼 Kariyer',    k,  'fk')}
-      ${satir('😤 Patron',     p,  'fp')}
-      ${satir('🤝 Arkadaşlar', a,  'fa')}
-      ${satir('🏠 Aile',       ai, 'fi')}
+    <p style="font-size:1.1em;color:#999;margin:4px 0 12px">${n} · ${poz} · Makro Yazılım A.Ş.</p>
+    <div style="margin-bottom:12px;padding-bottom:10px;border-bottom:1.5px dashed #bbb">
+      ${sr('💼 Kariyer',   k,  'fk')}
+      ${sr('😤 Patron',    p,  'fp')}
+      ${sr('🤝 Arkadaşlar',a,  'fa')}
+      ${sr('🏠 Aile',      ai, 'fi')}
     </div>
     <div class="result-verd">${kV[0]} ${kV[1]}</div>
     <div class="result-comment">${kV[2]}</div>
     <div class="result-comment">${pV}</div>
     <div class="result-comment">${aV}</div>
     <div class="result-comment">${aiV}</div>
+    ${seydaMsg}
     <div class="result-overall">Genel Ortalama: ${ort}/100<br>${genV}</div>
     <button class="btn btn-g" onclick="location.reload()">🔄 Tekrar Oyna</button>
   `;
