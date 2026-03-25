@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💻 Yazılımcı Hayatı — Makro Yazılım</title>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>💻 Makro Yazılım</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       height: 100dvh;
       overflow: hidden;
-      font-family: 'Caveat', cursive;
+      font-family: 'Kalam', cursive;
+      font-size: 18px;
       background-color: #5a3e28;
       background-image:
         repeating-linear-gradient(87deg, transparent, transparent 100px, rgba(0,0,0,0.04) 100px, rgba(0,0,0,0.04) 101px),
@@ -24,7 +25,7 @@
     .paper {
       position: relative;
       width: 100%;
-      max-width: 760px;
+      max-width: 900px;
       height: 100dvh;
       display: flex;
       flex-direction: column;
@@ -66,7 +67,7 @@
 
     /* ── BUTONLAR ── */
     .btn {
-      display: inline-block; font-family: 'Caveat', cursive;
+      display: inline-block; font-family: 'Kalam', cursive;
       font-size: 1.4em; font-weight: 700; padding: 10px 32px;
       cursor: pointer; border: 2px solid;
       box-shadow: 3px 3px 0 rgba(0,0,0,0.13);
@@ -100,13 +101,13 @@
     }
     .char-label { font-size: 1.2em; color: #555; }
     .char-input {
-      font-family: 'Caveat', cursive; font-size: 1.4em;
+      font-family: 'Kalam', cursive; font-size: 1.4em;
       border: none; border-bottom: 2px solid #555; background: transparent;
       outline: none; width: 200px; color: #1a1a1a; padding: 2px 0;
     }
     .pos-list { display: flex; flex-direction: column; gap: 5px; margin: 4px 0; }
     .pos-btn {
-      font-family: 'Caveat', cursive; font-size: 1.2em;
+      font-family: 'Kalam', cursive; font-size: 1.2em;
       background: transparent; border: 1.5px solid #ccc; padding: 7px 14px;
       text-align: left; cursor: pointer; color: #333; transition: all 0.13s;
     }
@@ -144,7 +145,7 @@
       padding: 7px 14px 7px 22px;
       border: none; cursor: pointer;
       text-align: left; position: relative;
-      font-family: 'Caveat', cursive; font-size: 1.18em;
+      font-family: 'Kalam', cursive; font-size: 1.18em;
       color: #1a1a1a; line-height: 1.3;
       box-shadow: 2px 2px 5px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.55);
       transition: transform 0.12s, box-shadow 0.12s;
@@ -218,12 +219,11 @@
     <div class="p-body" style="display:flex;align-items:center;justify-content:center">
       <div style="text-align:center">
         <div class="logo-tag">Makro Yazılım A.Ş.</div>
-        <div style="font-size:2.8em;font-weight:700;color:#1a1a1a;margin-bottom:6px">💻 Yazılımcı Hayatı</div>
+        <div style="font-size:2.8em;font-weight:700;color:#1a1a1a;margin-bottom:6px">💻 Makro Yazılım</div>
         <div style="font-size:1.5em;color:#888;margin-bottom:24px">Bir Kariyer Simülasyonu</div>
         <div style="font-size:1.27em;color:#444;line-height:1.75;margin-bottom:32px">
           Her karar kariyerini, patronunu,<br>
           arkadaşlarını ve aileni etkiliyor.<br>
-          Bazen CTO Şeyda da uğrar, hediye getirir.<br>
           <span style="color:#999;font-size:0.9em">Bazıları düşündüğün gibi değil.</span>
         </div>
         <button class="btn btn-y" onclick="goster('s-char');charEkrani()">🚀 Başla</button>
@@ -566,6 +566,88 @@ const GEN = [
       {m:'Küçümse: "Abartmayın, ekip işiydi."',         k:0,  p:0,  a:+10,i:0, ac:'Ekip seni sevdi. Şeyda "mütevazı" diye not aldı.'},
       {m:'Sonraki toplantılarda bunu sürekli referans ver.',k:-10,p:-5,a:-15,i:0,ac:'İlk hafta güzeldi. İkinci haftada herkes gözlerini devirmeye başladı.'}
     ]
+  },
+
+  /* ── KOMİK / RANDOM OLAYLAR ── */
+  {
+    t:'☕ Kahve Makinesi Bozuldu',
+    m:s=>`Sabah 09:00. Kahve makinesi çalışmıyor.\n\nOfiste sessizlik hakim. Kimse konuşmuyor. Tarık Bey monitörüne boş gözlerle bakıyor. Cem masasında sallanıyor.\n\nBiri bir şey yapmak zorunda.`,
+    o:[
+      {m:'Teknik servisi ara.',                            k:+5, p:+10,a:+5, i:0, ac:'Teknisyen 3 saatte geldi. Bu sürede kimse bir satır kod yazmadı. Ama en azından geldi.'},
+      {m:'Kendim tamir etmeye çalış.',                    k:-5, p:-5, a:+15,i:0, ac:'İçindeki plastik parçayı çıkardın. Artık hiç çalışmıyor. Efsane oldun.'},
+      {m:'Aşağıdaki kafeden herkese kahve al.',           k:+10,p:+20,a:+20,i:0, ac:'Patron dahil herkes seni sevdi. Bu gün kariyerinin zirvesiydi.'},
+      {m:'Umursamadan bilgisayarın başına geç.',          k:0,  p:-10,a:-10,i:0, ac:'Herkes sana baktı. "Kahve içmiyor mu bu?" dediler. İçiyordun. Evden getirmiştin termostan.'}
+    ]
+  },
+  {
+    t:'🖨️ Yazıcı İsyan Etti',
+    m:s=>`Önemli bir belgeyi yazdırman lazım. Yazıcıya gönderdin. Yazıcı "hazır" diyor ama hiçbir şey çıkmıyor.\n\nYeniden gönderdin. Hâlâ yok. Bir daha. Bir daha.\n\nYazıcının kağıt çıkış tepsisinde 47 sayfalık boş kağıt birikmiş.`,
+    o:[
+      {m:'Yazıcıyı yeniden başlat.',                      k:+5, p:0,  a:0,  i:0, ac:'Yeniden başlattın. Biriken 47 işi hepsini aynı anda yazdırmaya başladı. Ofis titredi.'},
+      {m:'IT\'ye bildir.',                                 k:0,  p:+5, a:-5, i:0, ac:'IT "yazıcıyı kapatıp açtınız mı?" dedi. Açmamıştın. Açtın. Çalıştı. Hiçbir şey konuşmadınız.'},
+      {m:'Belgeyi PDF olarak mail at.',                   k:+10,p:+10,a:0,  i:0, ac:'"Yazıcıya gerek yok zaten" dedin. Herkes sana katıldı. Yazıcı hâlâ çalışmıyor, kimse umursamıyor.'},
+      {m:'Yazıcıya yumruk vur.',                          k:-5, p:-15,a:+25,i:0, ac:'Çalıştı. Gerçekten çalıştı. Kimse inanmadı ama herkes gördü.'}
+    ]
+  },
+  {
+    t:'🐜 Ofiste Karınca Sütunu',
+    m:s=>`Mutfaktan gelen bir karınca sütunu tam ${s.n}\'ın masasının altından geçiyor.\n\nHedefleri belli: Cem\'in çekmecesindeki gizli gofret stoku.\n\nCem henüz farkında değil.`,
+    o:[
+      {m:'Cem\'e haber ver.',                             k:0,  p:0,  a:+20,i:0, ac:'Cem "YA BU GOFRETI NE ZAMAN BULDULAR" diye bağırdı. Gofretleri kurtaramadı ama seni sonsuza kadar sevdi.'},
+      {m:'Sessiz kal, izle.',                             k:0,  p:0,  a:-10,i:0, ac:'Cem 14:30\'da fark etti. Sana baktı. Sen başka yere baktın. O hâlâ bilmiyor ama biliyor.'},
+      {m:'İlaçlama için ofis yönetimine bildir.',        k:+5, p:+10,a:0,  i:0, ac:'Ofis yönetimi "rapor doldurun" dedi. 3 form doldurdun. Karıncalar o gün çoktan göç etti.'},
+      {m:'Gofreti al, "yanlışlıkla yedim" de.',         k:-10,p:-10,a:-20,i:0, ac:'Cem\'e yedirdin mi karıncaları? Bilmiyoruz. Ama o günden sonra gofret getirmiyor.'}
+    ]
+  },
+  {
+    t:'🎵 Birinin Telefonu Çalmaya Devam Ediyor',
+    m:s=>`Toplantı başladı. Beş dakika geçmedi, bir telefon çalmaya başladı.\n\nZil sesi: "Sen Olsan Ne Yapardın" — tam ses.\n\nTelefon Tarık Bey\'in. Tarık Bey fark etmiyor. Herkes fark etti.`,
+    o:[
+      {m:'Dikkatini çekmeye çalış.',                      k:0,  p:+10,a:+10,i:0, ac:'"Tarık Bey..." dedin. "Evet, devam et" dedi. Telefon çalmaya devam etti.'},
+      {m:'Hiç ses çıkarma, not al.',                      k:+5, p:0,  a:0,  i:0, ac:'Toplantı bitti. Tarık Bey telefonuna baktı. 4 cevapsız arama. "Kim aramış bunlar?" dedi.'},
+      {m:'"Tarık Bey telefonunuz" de, direk söyle.',     k:-5, p:-10,a:+15,i:0, ac:'Tarık Bey kızardı. Ama o günden sonra toplantılarda telefonu sessizde. Net kazanım.'},
+      {m:'Sen de aynı şarkıyı zil sesi yap.',            k:-10,p:-20,a:+30,i:0, ac:'Ertesi toplantıda ikinizin telefonu aynı anda çaldı. Ekip videoyu attı gruba.'}
+    ]
+  },
+  {
+    t:'🧊 Buzdolabındaki Yemek Gizemini',
+    m:s=>`Ofis buzdolabında 3 haftadır duran bir kap var. Üzerinde isim yok. İçinde ne olduğu artık belirsiz.\n\nBugün koku almaya başladı.\n\nHerkes birbirine bakıyor. Kimse sahip çıkmıyor.`,
+    o:[
+      {m:'Gönüllü olarak at.',                            k:+5, p:+15,a:+10,i:0, ac:'Açtın. Pişman oldun. Attın. Ofis sana minnettar. Ama o görüntü zihninde kaldı.'},
+      {m:'"Kimin bu?" diye mail grubu at.',               k:-5, p:+5, a:-10,i:0, ac:'47 kişilik ofise mail atıldı. Kimse cevap vermedi. Kap hâlâ duruyor.'},
+      {m:'Sahipmiş gibi yap, al git.',                   k:-10,p:-15,a:+5, i:0, ac:'Kimse durdurmadı. Kimse sormadı. Ama herkes şüphelendi. Sen de şüphelisin.'},
+      {m:'Buzdolabına "Bu ne?" yazılı post-it yapıştır.',k:+10,p:+5, a:+15,i:0, ac:'Ertesi gün kap kaybolmuş. Altında "özür dilerim" yazılı bir not var. Dava kapandı.'}
+    ]
+  },
+  {
+    t:'🪑 Koltuğun Çöktü',
+    m:s=>`Sabah geldin, oturdun. Koltuk yavaşça alçalmaya başladı.\n\nKaldırdın, yine alçaldı. Kaldırdın, alçaldı.\n\nŞu an monitörün alt kenarı göz hizanda. Cem seyirci.`,
+    o:[
+      {m:'IT\'den yeni koltuk iste.',                     k:0,  p:+5, a:0,  i:0, ac:'IT "form doldur" dedi. Formu doldurdun. 2 hafta sonra koltuk geldi. O 2 hafta böyle çalıştın.'},
+      {m:'Ayarı tamir etmeye çalış.',                    k:-5, p:0,  a:+10,i:0, ac:'Alt mekanizmayı söktün. Koltuk artık hiç yükselmiyor. Ama en azından sabit.'},
+      {m:'Koltuğu Cem\'inkiyle gizlice değiştir.',      k:-10,p:-5, a:-20,i:0, ac:'Cem fark etti. "Bu benim koltuğum değil" dedi. Marka farklıydı zaten.'},
+      {m:'Ayakta çalış, "standing desk gibi" de.',       k:+10,p:+5, a:+15,i:0, ac:'"Aslında sağlıklıymış" dedin. Tarık Bey "bana da alın" dedi. Trend başlattın.'}
+    ]
+  },
+  {
+    t:'🌧️ Ofis Tavanından Su Damladı',
+    m:s=>`Öğleden sonra 15:00. Tavan arası tesisatından bir şeyler oluyor.\n\nMasanın tam ortasına, klavyenin üstüne, düzenli aralıklarla su damlıyor.\n\nTarık Bey toplantıda. Sen kararı vermelisin.`,
+    o:[
+      {m:'Kovayı al, altına koy.',                        k:+5, p:+10,a:+10,i:0, ac:'Kova ofis ikonuna dönüştü. "Makro Yazılım Şelale Köşesi" olarak işaretlendi Google Maps\'te.'},
+      {m:'Masayı taşı.',                                  k:+10,p:0,  a:+5, i:0, ac:'Masayı pencerenin önüne taşıdın. Manzara güzeldi. Su hâlâ damlıyor ama orası artık kimsenin yeri.'},
+      {m:'Binayı hemen terk et, güvenlik riski var.',    k:-15,p:-20,a:+15,i:0, ac:'Tarikin toplantısını böldün. Su değil, boru sızıntısıymış. Risk yoktu. Ama dramatikti.'},
+      {m:'Laptop\'u kucağına al, sanki hiçbir şey yokmuş gibi çalış.',k:-5,p:+5,a:+5,i:0,ac:'Tarık Bey toplantıdan çıktı, ıslanmış klavyeni gördü. "Neden söylemedin?" dedi. "Meşguldüm" dedin.'}
+    ]
+  },
+  {
+    t:'🔒 Birisi Ofis WC\'sini Kilitledi, İçeriden',
+    m:s=>`10:45. Ofisteki tek tuvalet içeriden kilitli.\n\nKapı vuruldu. Cevap yok. 20 dakika geçti. Hâlâ kilitli.\n\nSırada 4 kişi var. Biri sen.`,
+    o:[
+      {m:'Kapıya tekrar vur, "iyi misiniz?" diye sor.', k:0,  p:+10,a:+10,i:0, ac:'"İyiyim, bir dakika" sesi geldi. 15 dakika sonra çıktı. Yüzünde telefon izi vardı.'},
+      {m:'Aşağı kat WC\'sini kullan.',                   k:+5, p:0,  a:0,  i:0, ac:'Asansörde 3 kişiyle karşılaştın. Hepiniz aynı yöne gidiyordunuz. Sessiz yolculuk.'},
+      {m:'Ofis yönetimine bildir, "acil" de.',           k:-5, p:-5, a:+5, i:0, ac:'Güvenlik geldi. Kapıyı açtılar. İçeride Cem\'di. Zoom toplantısındaydı. Arka plan yoktu.'},
+      {m:'Kapının önünde sıra tut, liste yap.',          k:0,  p:0,  a:-10,i:0, ac:'Liste yaptın. Numaralandırdın. Kimse uymadı. Sen 7. sıraya düştün.'}
+    ]
   }
 ];
 
@@ -845,11 +927,15 @@ function oyunBasla() {
   if(!selPoz)return;
   const ad=document.getElementById('char-ad').value.trim()||'Ali';
   ST={n:ad,poz:selPoz,kariyer:50,patron:50,arkadaslar:50,aile:50};
-  let pool;
-  if(selPoz==='Test Mühendisi') pool=TM;
-  else if(selPoz==='Yapay Zeka Mühendisi') pool=YZ;
-  else pool=GEN;
-  queue=karistir([...pool]).slice(0,7);
+  let pozPool;
+  if(selPoz==='Test Mühendisi') pozPool=TM;
+  else if(selPoz==='Yapay Zeka Mühendisi') pozPool=YZ;
+  else pozPool=null;
+  let queue1 = pozPool
+    ? karistir([...pozPool]).slice(0,6)
+    : karistir([...GEN]).slice(0,12);
+  let queue2 = pozPool ? karistir([...GEN]).slice(0,6) : [];
+  queue=karistir([...queue1,...queue2]);
   qi=0;
   goster('s-game');
   sahne();
