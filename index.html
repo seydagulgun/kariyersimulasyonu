@@ -4,330 +4,462 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>💻 Makro Yazılım</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --purple: #6264A7;
+      --purple-dark: #4f5196;
+      --purple-light: #e8e8f4;
+      --bg: #f3f2f1;
+      --sidebar-bg: #ffffff;
+      --main-bg: #ffffff;
+      --header-bg: #6264A7;
+      --text: #252525;
+      --text-muted: #616161;
+      --border: #e1dfdd;
+      --card-bg: #faf9f8;
+      --input-bg: #ffffff;
+      --overlay-bg: rgba(0,0,0,0.48);
+      --fb-bg: #ffffff;
+      --track-bg: #edebe9;
+      --choice-hover: #f3f2f1;
+    }
+    body.dark {
+      --bg: #1b1a19;
+      --sidebar-bg: #252423;
+      --main-bg: #201f1e;
+      --header-bg: #3a3b6e;
+      --text: #d6d3d1;
+      --text-muted: #8a8886;
+      --border: #3b3a39;
+      --card-bg: #2d2c2b;
+      --input-bg: #2d2c2b;
+      --overlay-bg: rgba(0,0,0,0.7);
+      --fb-bg: #252423;
+      --track-bg: #3b3a39;
+      --choice-hover: #2d2c2b;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      height: 100dvh;
-      overflow: hidden;
-      font-family: 'Kalam', cursive;
-      font-size: 18px;
-      background-color: #5a3e28;
-      background-image:
-        repeating-linear-gradient(87deg, transparent, transparent 100px, rgba(0,0,0,0.04) 100px, rgba(0,0,0,0.04) 101px),
-        repeating-linear-gradient(3deg,  transparent, transparent 60px,  rgba(255,255,255,0.03) 60px, rgba(255,255,255,0.03) 61px);
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
+      height: 100dvh; overflow: hidden;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    .paper {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      background: #fefcf3;
-      background-image: repeating-linear-gradient(
-        transparent, transparent 34px, #c8d4e3 34px, #c8d4e3 35px
-      );
-      box-shadow: 4px 0 0 #d9c9a3, 8px 0 20px rgba(0,0,0,0.3), -2px 0 8px rgba(0,0,0,0.15);
-    }
-    .paper::before {
-      content: '';
-      position: absolute;
-      left: 64px; top: 0; bottom: 0; width: 2px;
-      background: rgba(210,70,70,0.35);
-      pointer-events: none; z-index: 1;
-    }
-    .paper::after {
-      content: '';
-      position: absolute;
-      left: 18px; top: 52px;
-      width: 16px; height: 16px;
-      border-radius: 50%;
-      background: #5a3e28;
-      box-shadow: 0 100px 0 #5a3e28, 0 200px 0 #5a3e28,
-                  0 300px 0 #5a3e28, 0 400px 0 #5a3e28, 0 500px 0 #5a3e28;
-      pointer-events: none; z-index: 1;
+    /* ── TEAMS SHELL ── */
+    .teams-app {
+      display: flex; flex-direction: column;
+      height: 100dvh; overflow: hidden;
     }
 
-    /* ── BÖLÜMLER ── */
-    .p-head    { flex-shrink: 0; padding: 14px 24px 0 80px; }
-    .p-stats   { flex-shrink: 0; padding: 7px 24px 9px 80px; border-bottom: 1.5px dashed #b8bcc8; }
-    .p-body    { flex: 1; overflow-y: auto; padding: 10px 24px 6px 80px; scrollbar-width: thin; scrollbar-color: #c8d4e3 transparent; }
-    .p-choices { flex-shrink: 0; padding: 5px 24px 12px 80px; }
+    /* ── HEADER ── */
+    .t-header {
+      flex-shrink: 0;
+      background: var(--header-bg);
+      height: 48px;
+      display: flex; align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .t-header-logo {
+      font-size: 1.15em; font-weight: 700;
+      color: #fff; letter-spacing: 0.02em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .t-header-sub {
+      font-size: 0.8em; color: rgba(255,255,255,0.65);
+      font-weight: 400;
+    }
+    .t-header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    #dark-toggle {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.1em; opacity: 0.75; transition: opacity 0.15s;
+      line-height: 1; padding: 4px;
+    }
+    #dark-toggle:hover { opacity: 1; }
+
+    /* ── CONTENT AREA ── */
+    .t-content {
+      flex: 1; display: flex; overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .t-sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      padding: 16px 12px;
+      gap: 16px;
+    }
+    .sidebar-profile {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 6px; text-align: center;
+    }
+    .sidebar-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--purple-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5em; flex-shrink: 0;
+    }
+    body.dark .sidebar-avatar { background: #3a3b6e; }
+    .sidebar-name {
+      font-weight: 700; font-size: 1em; color: var(--text);
+    }
+    .sidebar-role {
+      font-size: 0.8em; color: var(--purple);
+      font-weight: 600;
+    }
+    body.dark .sidebar-role { color: #a8a9d8; }
+    .sidebar-kultur {
+      font-size: 0.75em; color: var(--text-muted);
+    }
+
+    .sidebar-divider {
+      height: 1px; background: var(--border); flex-shrink: 0;
+    }
+
+    .sidebar-stats-label {
+      font-size: 0.72em; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 2px;
+    }
+    #stats-grid { display: flex; flex-direction: column; gap: 8px; }
+    .s-row { display: flex; flex-direction: column; gap: 3px; }
+    .s-row-top { display: flex; justify-content: space-between; align-items: center; }
+    .s-lbl { font-size: 0.82em; color: var(--text); font-weight: 500; }
+    .s-num { font-size: 0.78em; color: var(--text-muted); font-weight: 600; }
+    .s-track {
+      height: 4px; background: var(--track-bg); border-radius: 2px; overflow: hidden;
+    }
+    .s-fill {
+      height: 100%; border-radius: 2px;
+      transition: width 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    .fk { background-color: #6264A7; }
+    .fp { background-color: #e85d4a; }
+    .fa { background-color: #13a40e; }
+    .fi { background-color: #f97316; }
+
+    .sidebar-day-info {
+      margin-top: auto;
+      font-size: 0.75em; color: var(--text-muted);
+      line-height: 1.5;
+    }
+    #day-info { font-size: 0.75em; color: var(--text-muted); margin-top: auto; line-height: 1.6; }
+    #acil-timer {
+      font-size: 0.85em; font-weight: 700; color: #dc2626;
+      background: #fee2e2; border: 1.5px solid #dc2626;
+      padding: 2px 8px; border-radius: 4px;
+      text-align: center; letter-spacing: 1px;
+    }
+    body.dark #acil-timer { background: #3f1010; }
+    @keyframes pulse-red { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    #acil-timer.urgent { animation: pulse-red 0.5s infinite; }
+
+    /* ── MAIN AREA ── */
+    .t-main {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+      background: var(--main-bg);
+    }
 
     /* ── SCREENS ── */
-    .screen { display: none; height: 100%; flex-direction: column; position: relative; z-index: 1; }
+    .screen { display: none; flex: 1; flex-direction: column; overflow: hidden; }
     .screen.active { display: flex; }
 
-
-    /* ── BUTONLAR ── */
-    .btn {
-      display: inline-block; font-family: 'Kalam', cursive;
-      font-size: 1.4em; font-weight: 700; padding: 10px 32px;
-      cursor: pointer; border: 2px solid;
-      box-shadow: 3px 3px 0 rgba(0,0,0,0.13);
-      transition: transform 0.12s, box-shadow 0.12s;
+    /* ── INTRO SCREEN ── */
+    #s-intro {
+      align-items: center; justify-content: center; padding: 40px 24px;
+      overflow-y: auto;
     }
-    .btn:hover  { transform: translateY(-2px); box-shadow: 4px 5px 0 rgba(0,0,0,0.18); }
-    .btn:active { transform: translateY(0);    box-shadow: 1px 1px 0 rgba(0,0,0,0.1);  }
-    .btn-y   { background: #fef08a; border-color: #c8a000; color: #1a1a1a; }
-    .btn-g   { background: #86efac; border-color: #16a34a; color: #1a1a1a; }
-    .btn-off { opacity: 0.4; pointer-events: none; }
-
-    /* ── INTRO ── */
-    .intro-inner {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      height: 100%; text-align: center; gap: 10px; padding: 0 20px;
+    .intro-card {
+      max-width: 480px; width: 100%;
+      background: var(--sidebar-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 40px 36px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .intro-logo {
+      width: 56px; height: 56px; border-radius: 12px;
+      background: var(--purple);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.8em; margin-bottom: 16px;
+    }
+    #intro-title {
+      font-size: 1.6em; font-weight: 700; color: var(--text);
+      margin-bottom: 4px;
+    }
+    .intro-sub {
+      font-size: 0.9em; color: var(--text-muted); margin-bottom: 20px;
+    }
+    .intro-desc {
+      font-size: 0.88em; color: var(--text-muted);
+      line-height: 1.7; margin-bottom: 28px;
     }
     .logo-tag {
-      font-size: 0.95em; color: #aaa; letter-spacing: 2px;
-      text-transform: uppercase; margin-bottom: 4px;
+      font-size: 0.72em; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--purple); margin-bottom: 8px;
     }
+    body.dark .logo-tag { color: #a8a9d8; }
 
-    /* ── CHAR ── */
-    .char-inner {
-      display: flex; flex-direction: column;
-      height: 100%; justify-content: center; gap: 8px;
+    /* ── CHAR SCREEN ── */
+    #s-char {
+      align-items: center; justify-content: center; padding: 24px;
+      overflow-y: auto;
+    }
+    .char-card {
+      max-width: 560px; width: 100%;
+      background: var(--sidebar-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow-y: auto; max-height: calc(100dvh - 100px);
     }
     .sec-title {
-      font-size: 1.85em; font-weight: 700; color: #1a1a1a;
-      border-bottom: 2px solid #1a1a1a; padding-bottom: 3px; margin-bottom: 4px;
+      font-size: 1.2em; font-weight: 700; color: var(--text);
+      margin-bottom: 20px;
+      padding-bottom: 12px; border-bottom: 1px solid var(--border);
     }
-    .char-label { font-size: 1.2em; color: #555; }
+    .char-label {
+      font-size: 0.82em; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 6px; display: block;
+    }
     .char-input {
-      font-family: 'Kalam', cursive; font-size: 1.4em;
-      border: none; border-bottom: 2px solid #555; background: transparent;
-      outline: none; width: 200px; color: #1a1a1a; padding: 2px 0;
+      font-family: 'Inter', sans-serif; font-size: 0.95em;
+      border: 1px solid var(--border); border-radius: 4px;
+      background: var(--input-bg); color: var(--text);
+      outline: none; width: 100%; padding: 8px 10px;
+      transition: border-color 0.15s;
     }
-    .pos-list { display: flex; flex-direction: column; gap: 5px; margin: 4px 0; }
+    .char-input:focus { border-color: var(--purple); }
+    .form-group { margin-bottom: 16px; }
+    .pos-list { display: flex; flex-direction: column; gap: 4px; }
     .pos-btn {
-      font-family: 'Kalam', cursive; font-size: 1.2em;
-      background: transparent; border: 1.5px solid #ccc; padding: 7px 14px;
-      text-align: left; cursor: pointer; color: #333; transition: all 0.13s;
+      font-family: 'Inter', sans-serif; font-size: 0.88em; font-weight: 500;
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 4px; padding: 8px 12px;
+      text-align: left; cursor: pointer; color: var(--text);
+      transition: all 0.12s;
     }
-    .pos-btn:hover, .pos-btn.sel {
-      background: #fef9c3; border-color: #c8a000;
-      transform: translateX(8px); font-weight: 700;
+    .pos-btn:hover { background: var(--purple-light); border-color: var(--purple); }
+    .pos-btn.sel { background: var(--purple); border-color: var(--purple); color: #fff; font-weight: 600; }
+    body.dark .pos-btn:hover { background: #3a3b6e; border-color: #6264A7; }
+    body.dark .pos-btn.sel { background: #4f5196; border-color: #6264A7; color: #fff; }
+    .kultur-row { display: flex; gap: 8px; }
+    .kultur-row .pos-btn { flex: 1; text-align: center; }
+
+    /* ── GAME SCREEN ── */
+    #s-game { flex-direction: row !important; overflow: hidden; }
+
+    /* game uses t-sidebar + p-body area */
+    .game-main {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
     }
-
-    /* ── STATS ── */
-    .day-info { font-size: 1.05em; color: #999; margin-bottom: 5px; }
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; }
-    .s-row { display: flex; align-items: center; gap: 6px; }
-    .s-lbl { width: 108px; font-size: 1.02em; color: #555; flex-shrink: 0; }
-    .s-track { flex: 1; height: 10px; background: #e6e0d0; border: 1px solid #ccc; overflow: hidden; }
-    .s-fill {
-      height: 100%; transition: width 0.5s cubic-bezier(.4,0,.2,1);
-      background-image: repeating-linear-gradient(45deg,
-        rgba(255,255,255,0.18), rgba(255,255,255,0.18) 2px, transparent 2px, transparent 6px);
+    .game-header {
+      flex-shrink: 0; padding: 14px 24px 10px;
+      border-bottom: 1px solid var(--border);
     }
-    .fk { background-color: #4a6cf7; }
-    .fp { background-color: #e85d4a; }
-    .fa { background-color: #27ae60; }
-    .fi { background-color: #f97316; }
-    .s-num { width: 44px; text-align: right; font-size: 0.92em; color: #888; }
-
-    /* ── SENARYO ── */
-    .sc-title { font-size: 1.7em; font-weight: 700; color: #111; margin-bottom: 7px; line-height: 1.2; flex-shrink: 0; }
-    .sc-text  { font-size: 1.27em; color: #2d2d2d; line-height: 1.62; white-space: pre-wrap; }
-
-    /* ── STRİP SEÇENEKLER ── */
-    .strip-wrap { display: flex; flex-direction: column; gap: 5px; }
+    .sc-title {
+      font-size: 1.15em; font-weight: 700; color: var(--text); line-height: 1.3;
+    }
+    .p-body {
+      flex: 1; overflow-y: auto; padding: 16px 24px;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .sc-text {
+      font-size: 0.92em; color: var(--text); line-height: 1.7;
+      white-space: pre-wrap;
+    }
+    .p-choices {
+      flex-shrink: 0; padding: 12px 24px 16px;
+      border-top: 1px solid var(--border);
+    }
+    .strip-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .strip {
-      display: flex; align-items: center;
-      width: 100%; min-height: 43px;
-      padding: 7px 14px 7px 22px;
-      border: none; cursor: pointer;
-      text-align: left; position: relative;
-      font-family: 'Kalam', cursive; font-size: 1.18em;
-      color: #1a1a1a; line-height: 1.3;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.55);
-      transition: transform 0.12s, box-shadow 0.12s;
+      display: flex; align-items: flex-start;
+      width: 100%; min-height: 48px;
+      padding: 10px 14px;
+      border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; text-align: left;
+      font-family: 'Inter', sans-serif; font-size: 0.84em; font-weight: 500;
+      color: var(--text); line-height: 1.4;
+      background: var(--card-bg);
+      transition: all 0.12s;
     }
-    .strip::before {
-      content: '';
-      position: absolute; left: 0; top: 0; bottom: 0; width: 10px;
-      background: rgba(0,0,0,0.1); border-right: 1px solid rgba(0,0,0,0.07);
+    .strip:hover { background: var(--purple-light); border-color: var(--purple); color: var(--purple); }
+    body.dark .strip:hover { background: #3a3b6e; border-color: #6264A7; color: #a8a9d8; }
+    .strip:disabled { opacity: 0.4; pointer-events: none; }
+    .strip-wildcard {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #6264A7, #8b5cf6);
+      color: #fff; border-color: transparent;
+      font-size: 0.95em; font-weight: 700;
+      justify-content: center;
     }
-    .strip::after {
-      content: '';
-      position: absolute; right: 0; bottom: 0;
-      width: 0; height: 0; border-style: solid;
-      border-width: 0 0 13px 13px;
-      border-color: transparent transparent rgba(0,0,0,0.08) transparent;
-    }
-    .strip:nth-child(1) { background: #fef08a; }
-    .strip:nth-child(2) { background: #fda4af; }
-    .strip:nth-child(3) { background: #93c5fd; }
-    .strip:nth-child(4) { background: #86efac; }
-    .strip:hover  { transform: translateX(6px); box-shadow: 4px 3px 10px rgba(0,0,0,0.18); }
-    .strip:disabled { opacity: 0.38; pointer-events: none; }
+    .strip-wildcard:hover { background: linear-gradient(135deg, #4f5196, #7c3aed); color: #fff; border-color: transparent; }
 
     /* ── FEEDBACK OVERLAY ── */
     .overlay {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: var(--overlay-bg);
       display: flex; align-items: center; justify-content: center;
-      z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.22s;
+      z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s;
     }
     .overlay.show { opacity: 1; pointer-events: all; }
     .fb-card {
-      background: #fefcf3;
-      background-image: repeating-linear-gradient(transparent, transparent 34px, #c8d4e3 34px, #c8d4e3 35px);
-      max-width: 460px; width: 92%;
-      padding: 30px 34px 26px;
-      box-shadow: 5px 5px 0 #d9c9a3, 8px 8px 22px rgba(0,0,0,0.35);
-      position: relative;
+      background: var(--fb-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      max-width: 440px; width: 92%;
+      padding: 28px 32px 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
     }
-    .fb-card::before {
-      content: ''; position: absolute;
-      left: 0; top: 0; bottom: 0; width: 2px;
-      background: rgba(210,70,70,0.3);
-    }
-    .fb-deltas { font-size: 1.5em; font-weight: 700; margin-bottom: 10px; line-height: 1.6; }
-    .fb-text   { font-size: 1.25em; color: #444; margin-bottom: 20px; font-style: italic; line-height: 1.5; }
-    .dp { color: #16a34a; }
+    .fb-deltas { font-size: 1em; font-weight: 700; margin-bottom: 10px; line-height: 1.7; }
+    .fb-text { font-size: 0.88em; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+    .dp { color: #13a40e; }
     .dn { color: #dc2626; }
-    .dz { color: #888; }
+    .dz { color: var(--text-muted); }
 
-    /* ── ACİL TIMER ── */
-    #acil-timer {
-      font-size:1.35em; font-weight:700; color:#dc2626;
-      background:#fee2e2; border:2px solid #dc2626;
-      padding:2px 10px; border-radius:4px; letter-spacing:1px;
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif; font-size: 0.88em; font-weight: 600;
+      padding: 9px 20px; border-radius: 4px; cursor: pointer; border: none;
+      transition: background 0.12s;
     }
-    @keyframes pulse-red { 0%,100%{opacity:1} 50%{opacity:0.35} }
-    #acil-timer.urgent { animation:pulse-red 0.5s infinite; }
+    .btn-y { background: var(--purple); color: #fff; }
+    .btn-y:hover { background: var(--purple-dark); }
+    .btn-g { background: #13a40e; color: #fff; }
+    .btn-g:hover { background: #0f8a0b; }
+    .btn-off { opacity: 0.4; pointer-events: none; }
 
-    /* ── KARANLIK MOD ── */
-    #dark-toggle {
-      position:absolute; top:8px; right:14px; z-index:20;
-      background:none; border:none; cursor:pointer;
-      font-size:1.3em; opacity:0.4; transition:opacity 0.2s; line-height:1;
+    /* ── RESULT SCREEN ── */
+    #s-result {
+      align-items: center; justify-content: flex-start;
+      overflow-y: auto; padding: 24px; flex-direction: column;
     }
-    #dark-toggle:hover { opacity:0.9; }
-
-    body.dark {
-      background-color:#0a0906;
-    }
-    body.dark .paper {
-      background-color:#1c1b14;
-      background-image: repeating-linear-gradient(transparent, transparent 34px, #252520 34px, #252520 35px);
-      box-shadow: 4px 0 0 #111008, 8px 0 24px rgba(0,0,0,0.7);
-    }
-    body.dark .paper::after { background:#0a0906; box-shadow:0 100px 0 #0a0906,0 200px 0 #0a0906,0 300px 0 #0a0906,0 400px 0 #0a0906,0 500px 0 #0a0906; }
-    body.dark .sec-title    { color:#e0d8c8; border-color:#4a4840; }
-    body.dark .char-label   { color:#888; }
-    body.dark .char-input   { color:#e0d8c8; border-color:#555; }
-    body.dark .pos-btn      { color:#bbb; border-color:#3a3830; }
-    body.dark .pos-btn:hover, body.dark .pos-btn.sel { background:#2a2a18; border-color:#8a7a00; color:#fef08a; }
-    body.dark .logo-tag     { color:#555; }
-    #intro-title  { color:#1a1a1a; }
-    body.dark #intro-title  { color:#e0d8c8; }
-    body.dark .day-info     { color:#666; }
-    body.dark .s-lbl        { color:#888; }
-    body.dark .s-track      { background:#2a2820; border-color:#3a3830; }
-    body.dark .s-num        { color:#666; }
-    body.dark .sc-title     { color:#e0d8c8; }
-    body.dark .sc-text      { color:#b0a898; }
-    body.dark .p-stats      { border-color:#2a2820; }
-    body.dark .fb-card      { background-color:#1c1b14; background-image:repeating-linear-gradient(transparent,transparent 34px,#252520 34px,#252520 35px); }
-    body.dark .fb-text      { color:#888; }
-    body.dark .result-comment { color:#888; }
-    body.dark .btn-y        { background:#2a2818; border-color:#7a6000; color:#fef08a; }
-    body.dark .btn-g        { background:#0f2018; border-color:#145a30; color:#86efac; }
-    body.dark .overlay      { background:rgba(0,0,0,0.72); }
-
-    /* ── SONUÇ ── */
     .result-inner {
-      height: 100%; overflow-y: auto; padding: 0;
-      scrollbar-width: thin; scrollbar-color: #c8d4e3 transparent;
+      max-width: 600px; width: 100%;
+      background: var(--sidebar-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
-    .result-verd    { font-size: 1.45em; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
-    .result-comment { font-size: 1.18em; color: #555; margin-bottom: 7px; font-style: italic; }
-    .result-overall {
-      margin: 12px 0; padding: 13px 16px;
-      background: #fef9c3; border-left: 4px solid #c8a000;
-      font-size: 1.3em; font-weight: 700; color: #1a1a1a;
-    }
+    .result-comment { font-size: 0.85em; color: var(--text-muted); margin-bottom: 5px; line-height: 1.5; }
+
+    /* ── DARK extras ── */
+    body.dark .intro-card,
+    body.dark .char-card,
+    body.dark .result-inner { box-shadow: 0 2px 16px rgba(0,0,0,0.3); }
+
+    /* purple-light in dark mode */
+    body.dark { --purple-light: #2d2e5f; }
   </style>
 </head>
 <body>
-<div class="paper">
-<button id="dark-toggle" onclick="toggleDark()" title="Gece/Gündüz modu">🌙</button>
+<div class="teams-app">
 
-  <!-- ══ INTRO ══ -->
-  <div class="screen active" id="s-intro">
-    <div class="p-head" style="height:0"></div>
-    <div class="p-body" style="display:flex;align-items:center;justify-content:center">
-      <div style="text-align:center">
+  <!-- ══ HEADER ══ -->
+  <div class="t-header">
+    <div class="t-header-logo">
+      💻 Makro Yazılım
+      <span class="t-header-sub">Kariyer Simülasyonu</span>
+    </div>
+    <div class="t-header-right">
+      <button id="dark-toggle" onclick="toggleDark()" title="Gece/Gündüz modu">🌙</button>
+    </div>
+  </div>
+
+  <!-- ══ CONTENT ══ -->
+  <div class="t-content">
+
+    <!-- ══ INTRO ══ -->
+    <div class="screen active t-main" id="s-intro">
+      <div class="intro-card">
+        <div class="intro-logo">💻</div>
         <div class="logo-tag">Makro Yazılım A.Ş.</div>
-        <div id="intro-title" style="font-size:2.8em;font-weight:700;margin-bottom:6px">💻 Makro Yazılım</div>
-        <div style="font-size:1.5em;color:#888;margin-bottom:24px">Bir Kariyer Simülasyonu</div>
-        <div style="font-size:1.27em;color:#444;line-height:1.75;margin-bottom:32px">
+        <div id="intro-title">Makro Yazılım</div>
+        <div class="intro-sub">Bir Kariyer Simülasyonu</div>
+        <div class="intro-desc">
           Her karar kariyerini, patronunu,<br>
           arkadaşlarını ve aileni etkiliyor.<br>
-          <span style="color:#999;font-size:0.9em">Bazıları düşündüğün gibi değil.</span>
+          Bazıları düşündüğün gibi değil.
         </div>
         <button class="btn btn-y" onclick="goster('s-char');charEkrani()">🚀 Başla</button>
       </div>
     </div>
-  </div>
 
-  <!-- ══ CHAR ══ -->
-  <div class="screen" id="s-char">
-    <div class="p-head"><div style="height:14px"></div></div>
-    <div class="p-body">
-      <div class="char-inner">
-        <div class="sec-title">Makro Yazılım'a Hoş Geldin</div>
-        <label class="char-label">Adın nedir?</label>
-        <input class="char-input" id="char-ad" type="text" placeholder="Ali" maxlength="20">
-        <label class="char-label" style="margin-top:8px">Pozisyonunu seç:</label>
-        <div class="pos-list" id="pos-list"></div>
-        <label class="char-label" style="margin-top:12px">Şirket kültürü:</label>
-        <div style="display:flex;gap:8px;margin-top:4px" id="kultur-list">
-          <button class="pos-btn" id="k-startup" onclick="secKultur('startup',this)">🚀 Startup</button>
-          <button class="pos-btn" id="k-kurumsal" onclick="secKultur('kurumsal',this)">🏢 Kurumsal</button>
+    <!-- ══ CHAR ══ -->
+    <div class="screen t-main" id="s-char">
+      <div class="char-card">
+        <div class="sec-title">👋 Makro Yazılım'a Hoş Geldin</div>
+        <div class="form-group">
+          <label class="char-label">Adın nedir?</label>
+          <input class="char-input" id="char-ad" type="text" placeholder="Ali" maxlength="20">
         </div>
-        <button class="btn btn-y btn-off" id="btn-basla" onclick="oyunBasla()" style="margin-top:8px;align-self:flex-start">İşe Başla →</button>
+        <div class="form-group">
+          <label class="char-label">Pozisyonunu seç</label>
+          <div class="pos-list" id="pos-list"></div>
+        </div>
+        <div class="form-group">
+          <label class="char-label">Şirket kültürü</label>
+          <div class="kultur-row" id="kultur-list">
+            <button class="pos-btn" id="k-startup" onclick="secKultur('startup',this)">🚀 Startup</button>
+            <button class="pos-btn" id="k-kurumsal" onclick="secKultur('kurumsal',this)">🏢 Kurumsal</button>
+          </div>
+        </div>
+        <button class="btn btn-y btn-off" id="btn-basla" onclick="oyunBasla()">İşe Başla →</button>
       </div>
     </div>
-  </div>
 
-  <!-- ══ GAME ══ -->
-  <div class="screen" id="s-game">
-    <div class="p-head" style="display:flex;justify-content:space-between;align-items:center">
-      <div class="day-info" id="day-info"></div>
-      <div id="acil-timer" style="display:none"></div>
+    <!-- ══ GAME ══ -->
+    <div class="screen" id="s-game">
+      <!-- sidebar -->
+      <div class="t-sidebar">
+        <div class="sidebar-profile">
+          <div class="sidebar-avatar">🧑‍💻</div>
+          <div class="sidebar-name" id="sidebar-name">—</div>
+          <div class="sidebar-role" id="sidebar-role">—</div>
+          <div class="sidebar-kultur" id="sidebar-kultur">—</div>
+        </div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-stats-label">Durum</div>
+        <div id="stats-grid"></div>
+        <div id="acil-timer" style="display:none"></div>
+        <div id="day-info"></div>
+      </div>
+      <!-- main -->
+      <div class="game-main">
+        <div class="game-header">
+          <div class="sc-title" id="sc-title"></div>
+        </div>
+        <div class="p-body" id="p-body">
+          <div class="sc-text" id="sc-text"></div>
+        </div>
+        <div class="p-choices">
+          <div class="strip-wrap" id="strip-wrap"></div>
+        </div>
+      </div>
     </div>
-    <div class="p-stats">
-      <div class="stats-grid" id="stats-grid"></div>
-    </div>
-    <div class="p-body" id="p-body">
-      <div class="sc-title" id="sc-title"></div>
-      <div class="sc-text"  id="sc-text"></div>
-    </div>
-    <div class="p-choices">
-      <div class="strip-wrap" id="strip-wrap"></div>
-    </div>
-  </div>
 
-  <!-- ══ RESULT ══ -->
-  <div class="screen" id="s-result">
-    <div class="p-head"><div style="height:14px"></div></div>
-    <div class="p-body">
+    <!-- ══ RESULT ══ -->
+    <div class="screen t-main" id="s-result">
       <div class="result-inner" id="result-inner"></div>
     </div>
-  </div>
 
-</div>
+  </div><!-- /t-content -->
+</div><!-- /teams-app -->
 
 <div class="overlay" id="overlay">
   <div class="fb-card">
@@ -1407,29 +1539,7 @@ function playClick(){
     o.start(t);o.stop(t+0.05);
   }catch(e){}
 }
-function playPaper(){
-  try{
-    const c=getAudio(),t=c.currentTime;
-    const n=Math.floor(c.sampleRate*0.45);
-    const buf=c.createBuffer(1,n,c.sampleRate);
-    const d=buf.getChannelData(0);
-    for(let i=0;i<n;i++){
-      // beyaz gürültü + hafif yüksek frekans filtresi simülasyonu
-      d[i]=(Math.random()*2-1)*(i<n*0.05 ? i/(n*0.05) : Math.pow(1-(i-n*0.05)/(n*0.95),1.4));
-    }
-    const src=c.createBufferSource();src.buffer=buf;
-    // bandpass filtresi — kağıt sesinin frekans aralığı
-    const filter=c.createBiquadFilter();
-    filter.type='bandpass';
-    filter.frequency.value=3000;
-    filter.Q.value=0.8;
-    const g=c.createGain();
-    g.gain.setValueAtTime(0,t);
-    g.gain.linearRampToValueAtTime(0.7,t+0.02);
-    g.gain.exponentialRampToValueAtTime(0.001,t+0.45);
-    src.connect(filter);filter.connect(g);g.connect(c.destination);src.start(t);
-  }catch(e){}
-}
+function playPaper(){}
 
 /* ── YARDIMCILAR ── */
 function goster(id) {
@@ -1500,8 +1610,10 @@ function oyunBasla() {
 
 /* ── STATS ── */
 function statsGuncelle() {
-  document.getElementById('day-info').textContent=
-    `Gün ${qi+1} / ${queue.length}  ·  ${ST.n}  ·  ${ST.poz}`;
+  document.getElementById('sidebar-name').textContent = ST.n;
+  document.getElementById('sidebar-role').textContent = ST.poz;
+  document.getElementById('sidebar-kultur').textContent = ST.kultur==='startup' ? '🚀 Startup' : '🏢 Kurumsal';
+  document.getElementById('day-info').textContent = `Gün ${qi+1} / ${queue.length}`;
   document.getElementById('stats-grid').innerHTML=
     sr('💼 Kariyer',   ST.kariyer,   'fk')+
     sr('😤 Patron',    ST.patron,    'fp')+
@@ -1510,9 +1622,8 @@ function statsGuncelle() {
 }
 function sr(l,v,c){
   return `<div class="s-row">
-    <span class="s-lbl">${l}</span>
+    <div class="s-row-top"><span class="s-lbl">${l}</span><span class="s-num">${v}</span></div>
     <div class="s-track"><div class="s-fill ${c}" style="width:${v}%"></div></div>
-    <span class="s-num">${v}/100</span>
   </div>`;
 }
 
@@ -1529,8 +1640,7 @@ function sahne() {
     document.getElementById('sc-text').textContent='Günün sürprizi geldi. Ne geleceğini kimse bilmiyor — sen de.';
     const w=document.getElementById('strip-wrap');
     const b=document.createElement('button');
-    b.className='strip';
-    b.style.cssText='background:linear-gradient(135deg,#c4b5fd,#818cf8);font-weight:700;font-size:1.2em;justify-content:center;color:#1e1b4b;';
+    b.className='strip strip-wildcard';
     b.textContent='🎲 Kartı Çevir!';
     b.onclick=()=>wildcardCevir(w);
     w.appendChild(b);
@@ -1677,9 +1787,9 @@ function sonuc(){
   if(flags.has('cem_gofreti'))    badges.push('🐜 Gofret Katili');
 
   const badgeHTML=badges.length?`
-    <div style="margin:10px 0 12px;padding:10px 14px;background:#f8fafc;border:1.5px dashed #94a3b8;border-radius:4px">
-      <div style="font-size:0.95em;color:#64748b;margin-bottom:8px">🎖️ Kazandığın Unvanlar</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">${badges.map(b=>`<span style="background:#e2e8f0;padding:3px 12px;border-radius:20px;font-size:0.95em">${b}</span>`).join('')}</div>
+    <div style="margin:10px 0 12px;padding:10px 14px;background:var(--card-bg);border:1px dashed var(--border);border-radius:6px">
+      <div style="font-size:0.75em;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:8px">🎖️ Kazandığın Unvanlar</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${badges.map(b=>`<span style="background:var(--purple-light);padding:3px 12px;border-radius:20px;font-size:0.82em;font-weight:500;color:var(--purple)">${b}</span>`).join('')}</div>
     </div>`:'';
 
   // ── Per-stat yorumları ──
@@ -1701,14 +1811,14 @@ function sonuc(){
 
   // ── Şeyda mesajı ──
   const seydaMsg=k>=70&&p>=70?`
-    <div style="margin:10px 0;padding:12px 16px;background:#fef9c3;border-left:3px solid #c8a000;font-size:1.1em;font-style:italic">
+    <div style="margin:10px 0;padding:12px 16px;background:var(--card-bg);border-left:3px solid var(--purple);border-radius:4px;font-size:0.85em;font-style:italic;color:var(--text)">
       📩 CTO Şeyda'dan mesaj geldi:<br>"${n}, Makro Yazılım'a katkıların için teşekkürler. Yakında konuşalım 😊"
     </div>`:'';
 
   const endingHTML=ending?`
-    <div style="margin:12px 0;padding:14px 16px;background:${ending.bg};border-left:4px solid ${ending.border};border-radius:3px">
-      <div style="font-size:1.5em;font-weight:700;margin-bottom:6px">${ending.icon} ${ending.title}</div>
-      <div style="font-size:1.1em;line-height:1.65;color:#333">${ending.desc}</div>
+    <div style="margin:12px 0;padding:14px 16px;background:${ending.bg};border-left:4px solid ${ending.border};border-radius:6px">
+      <div style="font-size:1.1em;font-weight:700;margin-bottom:6px;color:#1a1a1a">${ending.icon} ${ending.title}</div>
+      <div style="font-size:0.85em;line-height:1.65;color:#333">${ending.desc}</div>
     </div>`:'';
 
   // ── Oyun sonu istatistikleri ──
@@ -1721,15 +1831,15 @@ function sonuc(){
   if(stats.zero>=3) ozet.push(`😐 ${stats.zero} karar hiçbir şeyi değiştirmedi`);
   ozet.push(`📊 ${queue.length} kararın tamamı verildi`);
   const ozetHTML=`
-    <div style="margin:10px 0 12px;padding:10px 14px;background:#f8fafc;border:1.5px dashed #94a3b8;border-radius:4px">
-      <div style="font-size:0.95em;color:#64748b;margin-bottom:8px">📋 Bu Oyunda...</div>
-      <ul style="margin:0;padding-left:18px;font-size:1em;line-height:1.85;color:#334155">${ozet.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <div style="margin:10px 0 12px;padding:10px 14px;background:var(--card-bg);border:1px dashed var(--border);border-radius:6px">
+      <div style="font-size:0.75em;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:8px">📋 Bu Oyunda...</div>
+      <ul style="margin:0;padding-left:18px;font-size:0.82em;line-height:1.85;color:var(--text)">${ozet.map(x=>`<li>${x}</li>`).join('')}</ul>
     </div>`;
 
   document.getElementById('result-inner').innerHTML=`
     <div class="sec-title">🏁 Oyun Bitti</div>
-    <p style="font-size:1.05em;color:#999;margin:4px 0 10px">${n} · ${poz} · ${kultur==='startup'?'🚀 Startup':'🏢 Kurumsal'} · Makro Yazılım A.Ş.</p>
-    <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1.5px dashed #bbb">
+    <p style="font-size:0.82em;color:var(--text-muted);margin:4px 0 14px">${n} · ${poz} · ${kultur==='startup'?'🚀 Startup':'🏢 Kurumsal'} · Makro Yazılım A.Ş.</p>
+    <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
       ${sr('💼 Kariyer',   k,  'fk')}
       ${sr('😤 Patron',    p,  'fp')}
       ${sr('🤝 Arkadaşlar',a,  'fa')}
@@ -1742,7 +1852,7 @@ function sonuc(){
     <div class="result-comment">${aV}</div>
     <div class="result-comment">${aiV}</div>
     ${seydaMsg}
-    <button class="btn btn-g" onclick="location.reload()" style="margin-top:14px">🔄 Tekrar Oyna</button>
+    <button class="btn btn-g" onclick="location.reload()" style="margin-top:16px">🔄 Tekrar Oyna</button>
   `;
   goster('s-result');
 }
