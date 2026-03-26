@@ -62,8 +62,9 @@
     .p-choices { flex-shrink: 0; padding: 5px 24px 12px 80px; }
 
     /* ── SCREENS ── */
-    .screen { display: none; height: 100%; flex-direction: column; }
+    .screen { display: none; height: 100%; flex-direction: column; position: relative; z-index: 1; }
     .screen.active { display: flex; }
+
 
     /* ── BUTONLAR ── */
     .btn {
@@ -218,10 +219,8 @@
     }
     body.dark .paper {
       background-color:#1c1b14;
-      background-image:
-        radial-gradient(ellipse 80% 40% at 50% 15%, rgba(255,190,60,0.07) 0%, transparent 70%),
-        repeating-linear-gradient(transparent, transparent 34px, #252520 34px, #252520 35px);
-      box-shadow: 0 0 80px rgba(255,150,20,0.06), 4px 0 0 #111008, 8px 0 24px rgba(0,0,0,0.7);
+      background-image: repeating-linear-gradient(transparent, transparent 34px, #252520 34px, #252520 35px);
+      box-shadow: 4px 0 0 #111008, 8px 0 24px rgba(0,0,0,0.7);
     }
     body.dark .paper::after { background:#0a0906; box-shadow:0 100px 0 #0a0906,0 200px 0 #0a0906,0 300px 0 #0a0906,0 400px 0 #0a0906,0 500px 0 #0a0906; }
     body.dark .sec-title    { color:#e0d8c8; border-color:#4a4840; }
@@ -230,6 +229,8 @@
     body.dark .pos-btn      { color:#bbb; border-color:#3a3830; }
     body.dark .pos-btn:hover, body.dark .pos-btn.sel { background:#2a2a18; border-color:#8a7a00; color:#fef08a; }
     body.dark .logo-tag     { color:#555; }
+    #intro-title  { color:#1a1a1a; }
+    body.dark #intro-title  { color:#e0d8c8; }
     body.dark .day-info     { color:#666; }
     body.dark .s-lbl        { color:#888; }
     body.dark .s-track      { background:#2a2820; border-color:#3a3830; }
@@ -268,7 +269,7 @@
     <div class="p-body" style="display:flex;align-items:center;justify-content:center">
       <div style="text-align:center">
         <div class="logo-tag">Makro Yazılım A.Ş.</div>
-        <div style="font-size:2.8em;font-weight:700;color:#1a1a1a;margin-bottom:6px">💻 Makro Yazılım</div>
+        <div id="intro-title" style="font-size:2.8em;font-weight:700;margin-bottom:6px">💻 Makro Yazılım</div>
         <div style="font-size:1.5em;color:#888;margin-bottom:24px">Bir Kariyer Simülasyonu</div>
         <div style="font-size:1.27em;color:#444;line-height:1.75;margin-bottom:32px">
           Her karar kariyerini, patronunu,<br>
