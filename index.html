@@ -196,6 +196,54 @@
     .dn { color: #dc2626; }
     .dz { color: #888; }
 
+    /* ── ACİL TIMER ── */
+    #acil-timer {
+      font-size:1.35em; font-weight:700; color:#dc2626;
+      background:#fee2e2; border:2px solid #dc2626;
+      padding:2px 10px; border-radius:4px; letter-spacing:1px;
+    }
+    @keyframes pulse-red { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    #acil-timer.urgent { animation:pulse-red 0.5s infinite; }
+
+    /* ── KARANLIK MOD ── */
+    #dark-toggle {
+      position:absolute; top:8px; right:14px; z-index:20;
+      background:none; border:none; cursor:pointer;
+      font-size:1.3em; opacity:0.4; transition:opacity 0.2s; line-height:1;
+    }
+    #dark-toggle:hover { opacity:0.9; }
+
+    body.dark {
+      background-color:#0a0906;
+    }
+    body.dark .paper {
+      background-color:#1c1b14;
+      background-image:
+        radial-gradient(ellipse 80% 40% at 50% 15%, rgba(255,190,60,0.07) 0%, transparent 70%),
+        repeating-linear-gradient(transparent, transparent 34px, #252520 34px, #252520 35px);
+      box-shadow: 0 0 80px rgba(255,150,20,0.06), 4px 0 0 #111008, 8px 0 24px rgba(0,0,0,0.7);
+    }
+    body.dark .paper::after { background:#0a0906; box-shadow:0 100px 0 #0a0906,0 200px 0 #0a0906,0 300px 0 #0a0906,0 400px 0 #0a0906,0 500px 0 #0a0906; }
+    body.dark .sec-title    { color:#e0d8c8; border-color:#4a4840; }
+    body.dark .char-label   { color:#888; }
+    body.dark .char-input   { color:#e0d8c8; border-color:#555; }
+    body.dark .pos-btn      { color:#bbb; border-color:#3a3830; }
+    body.dark .pos-btn:hover, body.dark .pos-btn.sel { background:#2a2a18; border-color:#8a7a00; color:#fef08a; }
+    body.dark .logo-tag     { color:#555; }
+    body.dark .day-info     { color:#666; }
+    body.dark .s-lbl        { color:#888; }
+    body.dark .s-track      { background:#2a2820; border-color:#3a3830; }
+    body.dark .s-num        { color:#666; }
+    body.dark .sc-title     { color:#e0d8c8; }
+    body.dark .sc-text      { color:#b0a898; }
+    body.dark .p-stats      { border-color:#2a2820; }
+    body.dark .fb-card      { background-color:#1c1b14; background-image:repeating-linear-gradient(transparent,transparent 34px,#252520 34px,#252520 35px); }
+    body.dark .fb-text      { color:#888; }
+    body.dark .result-comment { color:#888; }
+    body.dark .btn-y        { background:#2a2818; border-color:#7a6000; color:#fef08a; }
+    body.dark .btn-g        { background:#0f2018; border-color:#145a30; color:#86efac; }
+    body.dark .overlay      { background:rgba(0,0,0,0.72); }
+
     /* ── SONUÇ ── */
     .result-inner {
       height: 100%; overflow-y: auto; padding: 0;
@@ -212,6 +260,7 @@
 </head>
 <body>
 <div class="paper">
+<button id="dark-toggle" onclick="toggleDark()" title="Gece/Gündüz modu">🌙</button>
 
   <!-- ══ INTRO ══ -->
   <div class="screen active" id="s-intro">
@@ -253,8 +302,9 @@
 
   <!-- ══ GAME ══ -->
   <div class="screen" id="s-game">
-    <div class="p-head">
+    <div class="p-head" style="display:flex;justify-content:space-between;align-items:center">
       <div class="day-info" id="day-info"></div>
+      <div id="acil-timer" style="display:none"></div>
     </div>
     <div class="p-stats">
       <div class="stats-grid" id="stats-grid"></div>
@@ -895,6 +945,145 @@ const TM = [
   }
 ];
 
+/* ── ŞANS KARTI HAVUZU ─────────────────────── */
+const WILDCARD_POOL = [
+  {m:'💰 Beklenmedik Prim',      ac:'Çeyrek dönem bonusu hesabına yattı. Nedenini kimse açıklamadı.', k:+15,p:+5, a:0,  i:+10},
+  {m:'😴 Uykusuz Gece',          ac:'Sunucu alarmı sabah 03:00\'te çaldı. Kimse neden olduğunu bilmiyor. Sen de.', k:-10,p:-5, a:0,  i:-10},
+  {m:'🎉 Takım Yemeği',          ac:'Şirket hesabına takım yemeği! Tarık Bey ödedi. İlk kez.', k:0,  p:+15,a:+20,i:0},
+  {m:'📧 Yanlış Gruba Mail',     ac:'"Tüm Şirket" grubuna kişisel şikâyet mailini attın. Geri çağırma çalışmadı.', k:-10,p:-15,a:+10,i:0, log:'📧 Tüm şirkete yanlış mail attı'},
+  {m:'🌟 Basın Haberi',          ac:'Makro Yazılım habere girdi, senin çalışman öne çıktı. Linkedin patladı.', k:+20,p:+10,a:0,  i:0},
+  {m:'💻 Bilgisayar Arızası',    ac:'IT yarın bakacak. Bugün telefonla çalıştın. Verimliliğin ne?', k:-15,p:0,  a:0,  i:+5, log:'💻 Bilgisayarı arızalandı, telefonla çalıştı'},
+  {m:'🏠 Sürpriz Evden Çalış',   ac:'Ofis ısıtması bozuldu. Herkes eve gönderildi. Pijama zamanı.', k:+5, p:0,  a:-5, i:+20},
+  {m:'⚡ Elektrik Kesintisi',    ac:'1 saatlik kesinti. UPS\'siz olanların çalışması kayboldu. Sen UPS\'lisin şans.', k:0,  p:-5, a:+10,i:0},
+  {m:'🍕 Patron Pizza Söyledi',  ac:'Tarık Bey "bugün ben ısmarlıyorum" dedi. Sebep? Kimse bilmiyor.', k:0,  p:+20,a:+10,i:0},
+  {m:'🤧 Ofis Gribi Dalgası',    ac:'Ekibin yarısı hasta. Sen de biraz gıdıklanıyor. Ama devam ediyorsun.', k:-5, p:0,  a:+5, i:-5},
+  {m:'📦 Şirketten Hediye Kutusu',ac:'Masana şirket logolu hediye kutusu geldi. İçinde termos. Güzel aslında.', k:0,  p:+10,a:+5, i:+5},
+  {m:'🔇 Zoom Sessiz Kaldın',    ac:'30 dakika boyunca mikrofon kapalıydı. Herkes duyuyordu, sen bilmiyordun.', k:-5, p:-10,a:+15,i:0, log:'🔇 Zoom\'da 30 dakika sessizde konuştu'},
+];
+
+/* ── ACİL SENARYO HAVUZU ───────────────────── */
+const ACIL = [
+  {
+    acil:true, worstIdx:3,
+    t:'🚨 ACİL: Production Çöktü',
+    m:s=>`ALARM — tüm servislerde 500 hatası.\n\nKullanıcılar sisteme giremiyor. Slack patlamış.\n\nTarık Bey: "${s.n}, ne oluyor?"\n\n⏱ Hızlı karar ver!`,
+    o:[
+      {m:'Hemen rollback yap.',                        k:+20,p:+10,a:+5, i:0, ac:'30 saniyede rollback. Servis geri döndü. "Hızlı tepki" olarak tarihe geçti.'},
+      {m:'Root cause bul, sonra fix et.',              k:+15,p:+5, a:0,  i:0, ac:'15 dakika sürdü ama kalıcı çözümdü.'},
+      {m:'Ekibi topla, birlikte çöz.',                k:+5, p:0,  a:+10,i:0, ac:'20 dakika. Takım ruhu kurtardı.'},
+      {m:'Panikle, ekrana bak.',                      k:-20,p:-20,a:-10,i:0, ac:'Herkes seni bekledi. Sen monitörü izledin. Tarık Bey devraldu.', log:'🚨 Production\'da panik yaptı'}
+    ]
+  },
+  {
+    acil:true, worstIdx:3,
+    t:'📞 ACİL: Müşteri Resepsiyonda',
+    m:s=>`Resepsiyondan arama: "Bir müşteri görüşme için geldi. 5 dakikaya çıkabilir misiniz?"\n\nHiçbir bilgin yok. Toplantı takviminde yok.\n\n⏱ Ne yapıyorsun?`,
+    o:[
+      {m:'Hemen çıkıyorum, en iyi yüzünü tak.',      k:+10,p:+15,a:+5, i:0, ac:'Hazırlıksız ama sakin görünmen yeterliydi. Müşteri memnun ayrıldı.'},
+      {m:'2 dakika ver, hızlıca hazırlan.',           k:+15,p:+10,a:0,  i:0, ac:'Notları hızlıca gözden geçirdin. Doğru soru sordun. İyi geçti.'},
+      {m:'Tarık Bey\'i ara, "sen git" de.',          k:-5, p:+5, a:0,  i:0, ac:'Tarık Bey "neden sen çıkmadın?" dedi. Ama gitti. Çözüldü.'},
+      {m:'"Randevum yoktu" de, çıkma.',               k:-20,p:-25,a:-5, i:0, ac:'Müşteri 20 dakika bekledi, vazgeçti. Tarık Bey bunu 6 ay unutmadı.', log:'📞 Kapıdaki müşteriyi bekletti'}
+    ]
+  },
+  {
+    acil:true, worstIdx:3,
+    t:'🔥 ACİL: Deploy Sırasında Kritik Bug',
+    m:s=>`Deploy biteli 3 dakika oldu. Monitoring panoda kırmızı:\n\n"Ödeme modülü hata veriyor — kullanıcılar ödeme yapamıyor."\n\nBu senin deploy'undı.\n\n⏱ Karar an meselesi.`,
+    o:[
+      {m:'Hemen rollback tetikle.',                   k:+20,p:+10,a:+5, i:0, ac:'Deploy geri alındı. Ödeme modülü düzeldi. "Doğru karar" dendi.'},
+      {m:'Hatayı hızlıca izole et, hotfix yaz.',     k:+15,p:+5, a:0,  i:0, ac:'25 dakikada hotfix yayında. İkinci deploy başarılı.'},
+      {m:'Monitörü izle, belki düzelir.',            k:-10,p:-15,a:-5, i:0, ac:'Düzelmedi. 8 dakika daha geçti. Tarık Bey artık biliyordu.'},
+      {m:'Kimseye söyleme, "soruşturuyorum" de.',    k:-25,p:-25,a:-10,i:0, ac:'12 dakika sonra müşteri şikâyeti geldi. Herkes bunu öğrendi.', log:'🔥 Deploy hatasını gizlemeye çalıştı'}
+    ]
+  },
+  {
+    acil:true, worstIdx:3,
+    t:'⚡ ACİL: Sunucu Kapasitesi Doldu',
+    m:s=>`Disk kullanımı: %98. Alarm sinyali geliyor.\n\nLog dosyaları şişmiş. Bir şey silinmezse sistem 10 dakikaya durabilir.\n\nYetkili kişi Tarık Bey — toplantıda.\n\n⏱ Süre daralıyor.`,
+    o:[
+      {m:'Log dosyalarını temizle, yedeği var zaten.',k:+20,p:+5, a:+5, i:0, ac:'Disk %65\'e düştü. Kriz atlatıldı. Tarık Bey sonra "iyi iş" dedi.'},
+      {m:'Toplantıya gir, Tarık Bey\'e bildir.',     k:+10,p:+15,a:0,  i:0, ac:'Tarık Bey görüşmeyi kesti. Onay verdi. Birlikte çözdünüz.'},
+      {m:'IT\'ye haber ver, onlar halletsin.',        k:0,  p:0,  a:0,  i:0, ac:'IT "biz log temizlemeyiz" dedi. Sen temizledin. 6 dakika gitti.'},
+      {m:'Alarm biter mi acaba diye bekle.',          k:-20,p:-20,a:-5, i:0, ac:'Bitmedi. Sistem durdu. Herkes ne olduğunu sordu.', log:'⚡ Disk dolunca sistemin durmasını bekledi'}
+    ]
+  },
+  {
+    acil:true, worstIdx:3,
+    t:'📱 ACİL: CEO Anlık Toplantı',
+    m:s=>`CEO Şeyda\'dan anlık mesaj: "5 dakika içinde konferans odasında olabilir misin? Teknik bir konuda sana ihtiyacım var."\n\nBilmiyorsun neden. Hazırlıksızsın.\n\n⏱ Ne yaparsın?`,
+    o:[
+      {m:'Hemen git, "hazırım" de.',                 k:+10,p:+10,a:0,  i:0, ac:'Şeyda teknik bir kararı seninle aldı. Güveniyor demek.'},
+      {m:'Git ama "konu ne?" diye sor.',             k:+15,p:+5, a:0,  i:0, ac:'"Güvenlik açığı" konusuymuş. Biliyordun. Harika geçti.'},
+      {m:'2 dk beklet, dashboardlara bak.',          k:+5, p:-5, a:0,  i:0, ac:'Geç gittin. Şeyda "sorun değil" dedi ama biraz gergin başladı.'},
+      {m:'"Şu an uygun değilim" diye cevap ver.',   k:-20,p:-25,a:-5, i:0, ac:'CEO\'ya "uygun değilim" dedin. Sessizlik. Uzun bir sessizlik.', log:'📱 CEO\'nun acil çağrısını reddetti'}
+    ]
+  }
+];
+
+/* ── AİLE SENARYO HAVUZU ───────────────────── */
+const AILE = [
+  {
+    t:'🏥 Annenin Ameliyat Haberi',
+    m:s=>`Annen sabah aradı: "Doktor ameliyat dedi, en kısa sürede gelseniz iyi olur."\n\nBugün kritik bir sprint review var. Tarık Bey müşteri beklentilerini sana bırakmıştı.`,
+    o:[
+      {m:'Hemen yola çık, sprint\'i Cem\'e devret.',k:-5, p:-10,a:+5, i:+25,ac:'Cem idare etti. Tarık Bey anladı. Annen ameliyattan çıktı. Doğru seçimdi.'},
+      {m:'Sprint\'i bitir, öğleden sonra git.',      k:+10,p:+5, a:0,  i:-15,ac:'Sprint iyi geçti. Hastaneye gittiğinde ameliyat bitmişti. Annen "geç kaldın" demedi.'},
+      {m:'Uzaktan takip et, ikisini birden yürüt.', k:-5, p:0,  a:0,  i:0,  ac:'İkisi de tam olmadı. Ama tamamen bırakmadın.'},
+      {m:'Durumu Tarık Bey\'e anlat, karar ver.',   k:+5, p:+10,a:0,  i:+10,ac:'Tarık Bey "ailen önce gelir" dedi. Sprint ertelendi. İnsan gibi yönetici.'}
+    ]
+  },
+  {
+    t:'🚚 Kardeşin Taşınma Günü',
+    m:s=>`Kardeşin haftalardır planlıyor: bu Cumartesi taşınacak, senin yardımına ihtiyacı var.\n\nBugün Tarık Bey "Cumartesi ofise gelsek, ilerleyelim" dedi. Ekip sessizce kabul etti.`,
+    o:[
+      {m:'Kardeşine git, Tarık Bey\'e söyle.',      k:0,  p:-10,a:+5, i:+20,ac:'Tarık Bey "tamam" dedi ama yüzü ekşidi. Kardeşin taşındı. Mutluydu.', log:'🚚 Cumartesi mesaisini kardeşi için reddetti'},
+      {m:'Ofise git, kardeşe "anlayış göster" de.',k:+5, p:+10,a:-5, i:-20,ac:'Sprint ilerledi. Kardeşin arkadaşları yardım etti. "Abim işte" dedi.'},
+      {m:'Sabah kardeşe git, öğleden sonra ofise.', k:-5, p:-5, a:0,  i:+10,ac:'İkisi de yarım. Ama tamamen bırakmadın ikisini de.'},
+      {m:'Kardeşe nakliyeci tut, hediye ver.',      k:+5, p:0,  a:0,  i:-5, ac:'Kardeşin "para değil senin yardımın lazımdı" dedi. Harcama da boşa gitti.'}
+    ]
+  },
+  {
+    t:'💬 Aile WhatsApp Grubu',
+    m:s=>`Telefona baktın: "Aile" grubunda 247 mesaj. Amcan ile teyzen tartışıyor — konu siyasi.\n\nHerkes "sen ne düşünüyorsun?" diye bekliyor. Grupta 34 kişi var.`,
+    o:[
+      {m:'Konuya gir, düşünceni yaz.',               k:-5, p:0,  a:0,  i:-15,ac:'Mesajın 47 yanıt aldı. Şu an sen ve amcan tartışıyorsunuz. Akşama kadar sürdü.', log:'💬 Aile grubunda tartışmaya girdi'},
+      {m:'"Seviyorum hepinizi 💜" yaz, geç.',        k:+5, p:0,  a:0,  i:+5, ac:'Grubu susturdun. Teyzen "ne zeki çocuksun" dedi. Mesele kapandı.'},
+      {m:'Grubu sessize al, sonra bakarsın.',         k:+10,p:0,  a:0,  i:0,  ac:'İş bitince baktın: hâlâ tartışıyorlardı. Sen dahil olmadan.'},
+      {m:'Grubtan çık.',                             k:0,  p:0,  a:0,  i:-25,ac:'"Gruptan çıkmış" bildirimi herkese gitti. 3 akraba ayrıca aradı.', log:'👋 Aile grubundan çıktı'}
+    ]
+  },
+  {
+    t:'✈️ Aile Tatili vs Sprint',
+    m:s=>`Ailen 6 aydır planlıyor: önümüzdeki hafta deniz tatili, 5 gün.\n\nBugün Tarık Bey duyurdu: "Bu sprint kritik, herkese ihtiyacım var."\n\nBiletler alınmış.`,
+    o:[
+      {m:'Tatile git, izin hakkını kullan.',         k:-5, p:-15,a:0,  i:+25,ac:'Tarık Bey surat astı. Ailen mutluydu. Yasal hakkındı. Pişman değilsin.'},
+      {m:'Tatili ertele, aileyi ikna et.',           k:+10,p:+10,a:0,  i:-20,ac:'Ailen anladı ama yüzleri asıktı. Sonbahara ertelendi. Sonbahar yağmurlu geçti.'},
+      {m:'Remote çalışarak tatilde ol.',             k:-5, p:-5, a:0,  i:+10,ac:'Ne tam tatil ne tam iş. Her ikisi de yarım.'},
+      {m:'Durumu Tarık Bey\'e anlat, çözüm bul.',   k:+10,p:+5, a:0,  i:+15,ac:'Tarık Bey "ilk 3 gün remote, son 2 gün tatil" dedi. İkisi de kazandı.'}
+    ]
+  },
+  {
+    t:'🎓 Kardeşinin Mezuniyet Töreni',
+    m:s=>`Kardeşin 4 yıldır okudu. Bugün mezuniyet töreni — sabah 11:00.\n\nTarık Bey 10:00\'da sprint review ayarlamış. İptal edemezsin çünkü müşteri de gelecek.`,
+    o:[
+      {m:'Törene git, review\'u Cem\'e bırak.',     k:-5, p:-10,a:+10,i:+20,ac:'Cem idare etti. Kardeşin diplomasını alırken yanındaydın. Fotoğraflar güzeldi.'},
+      {m:'Review\'a git, tören kaydında izle.',      k:+10,p:+10,a:0,  i:-15,ac:'Review başarılı. Kardeşin "gelmemişsin ama olsun" dedi. Olsun demedi aslında.'},
+      {m:'Törene git, review\'da 30 dk sonra ol.',  k:-10,p:-15,a:+5, i:+10,ac:'İkisine de yetişemedin tam. Yarım yarım.'},
+      {m:'Durumu Tarık Bey\'e anlat.',              k:+10,p:+5, a:0,  i:+20,ac:'Tarık Bey review\'u 14:00\'a aldı. Törene gittin, sonra review\'a döndün. Mükemmel.'}
+    ]
+  },
+  {
+    t:'📞 Annenin Haftalık Araması',
+    m:s=>`Her Çarşamba öğlen annen arar. Bugün öğlen 12:05\'te aradı.\n\nTam o sırada acil bir bug toplantısı başladı.\n\nTelefon çalmaya devam ediyor.`,
+    o:[
+      {m:'Toplantıya gir, anneni ara.',              k:+5, p:+5, a:0,  i:-5, ac:'Annen merak etti ama anladı. Akşam 10 dakika konuştunuz. Yeterliydi.'},
+      {m:'Anneni şimdi yanıtla, kısa tut.',         k:-5, p:-5, a:0,  i:+10,ac:'3 dakika konuştunuz. Toplantıya geç girdin. Annen memnundu.'},
+      {m:'Mesaj at: "Toplantıdayım, sonra arayacağım"',k:+5,p:+5,a:0, i:+5, ac:'Annen "tamam canım" dedi. Saat 19:00\'da aradın. Güzel konuştunuz.'},
+      {m:'Çalışmaya devam et, sessize al.',         k:0,  p:0,  a:0,  i:-20,ac:'Annen 4 kez aradı. Akşam "bir şey mi oldu, neden açmadın?" dedi. İçin sıkıştı.'}
+    ]
+  }
+];
+
 /* ── POZİSYON BAŞLANGIÇ STATLARI ──────────── */
 const POZ_CONFIG = {
   'Junior Developer':     {kariyer:30, patron:48, arkadaslar:60, aile:62},
@@ -1168,7 +1357,36 @@ const PM = [
 /* ════════════════════════════════════════════
    DURUM
 ════════════════════════════════════════════ */
-let ST={}, queue=[], qi=0, pending=null, selPoz=null, selKulturVal=null, chainPool=[], audioCtx=null;
+let ST={}, queue=[], qi=0, pending=null, selPoz=null, selKulturVal=null, chainPool=[], audioCtx=null, timerInterval=null;
+
+/* ── GECE MODU ── */
+function toggleDark(){
+  const dark=document.body.classList.toggle('dark');
+  document.getElementById('dark-toggle').textContent=dark?'☀️':'🌙';
+  localStorage.setItem('dark',dark);
+}
+if(localStorage.getItem('dark')==='true'){
+  document.body.classList.add('dark');
+  document.getElementById('dark-toggle').textContent='☀️';
+}
+
+/* ── ACİL TIMER ── */
+function timerBasla(sc,w){
+  let kalan=15;
+  const el=document.getElementById('acil-timer');
+  el.style.display='block'; el.textContent=`⏱ ${kalan}s`;
+  timerInterval=setInterval(()=>{
+    kalan--;
+    el.textContent=`⏱ ${kalan}s`;
+    if(kalan<=5) el.classList.add('urgent');
+    if(kalan<=0){ timerDur(); sec(sc.o[sc.worstIdx??sc.o.length-1],w); }
+  },1000);
+}
+function timerDur(){
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+  const el=document.getElementById('acil-timer');
+  if(el){el.style.display='none';el.classList.remove('urgent');}
+}
 
 /* ── SES ── */
 function getAudio(){
@@ -1262,12 +1480,18 @@ function oyunBasla() {
   else if(selPoz==='Proje Yöneticisi') pozPool=PM;
   else pozPool=null;
   const kulturPool = selKulturVal==='startup' ? STARTUP : KURUMSAL;
-  let queue1 = pozPool
-    ? karistir([...pozPool]).slice(0,5)
-    : karistir([...GEN]).slice(0,9);
-  let queue2 = pozPool ? karistir([...GEN]).slice(0,4) : [];
-  let queue3 = karistir([...kulturPool]).slice(0,3);
-  queue=karistir([...queue1,...queue2,...queue3]);
+  const qPoz    = pozPool ? karistir([...pozPool]).slice(0,6) : karistir([...GEN]).slice(0,10);
+  const qGen    = pozPool ? karistir([...GEN]).slice(0,4) : [];
+  const qKultur = karistir([...kulturPool]).slice(0,3);
+  const qAile   = karistir([...AILE]).slice(0,2);
+  const qAcil   = karistir([...ACIL]).slice(0,1);
+  const base    = karistir([...qPoz,...qGen,...qKultur,...qAile,...qAcil]);
+  // Her 4 senaryoda bir şans kartı ekle
+  queue=[];
+  base.forEach((sc,i)=>{
+    queue.push(sc);
+    if((i+1)%4===0 && i<base.length-1) queue.push({type:'wildcard'});
+  });
   qi=0;
   goster('s-game');
   sahne();
@@ -1295,12 +1519,44 @@ function sr(l,v,c){
 function sahne() {
   const sc=queue[qi];
   statsGuncelle();
-  document.getElementById('sc-title').textContent=sc.t;
-  document.getElementById('strip-wrap').innerHTML='';
-  const el=document.getElementById('sc-text');
-  el.textContent='';
   document.getElementById('p-body').scrollTop=0;
-  yaz(el,sc.m(ST),0,()=>secenekler(sc));
+  document.getElementById('strip-wrap').innerHTML='';
+  document.getElementById('sc-text').textContent='';
+
+  if(sc.type==='wildcard'){
+    document.getElementById('sc-title').textContent='🎲 Talih mi Bela mı?';
+    document.getElementById('sc-text').textContent='Günün sürprizi geldi. Ne geleceğini kimse bilmiyor — sen de.';
+    const w=document.getElementById('strip-wrap');
+    const b=document.createElement('button');
+    b.className='strip';
+    b.style.cssText='background:linear-gradient(135deg,#c4b5fd,#818cf8);font-weight:700;font-size:1.2em;justify-content:center;color:#1e1b4b;';
+    b.textContent='🎲 Kartı Çevir!';
+    b.onclick=()=>wildcardCevir(w);
+    w.appendChild(b);
+    return;
+  }
+
+  if(sc.acil){
+    document.getElementById('sc-title').innerHTML=`<span style="color:#dc2626">🚨 ACİL</span> — ${sc.t.replace(/^🚨 ACİL: /,'')}`;
+  } else {
+    document.getElementById('sc-title').textContent=sc.t;
+  }
+  yaz(document.getElementById('sc-text'),sc.m(ST),0,()=>secenekler(sc));
+}
+function wildcardCevir(w){
+  playPaper();
+  const o=WILDCARD_POOL[Math.floor(Math.random()*WILDCARD_POOL.length)];
+  w.querySelectorAll('button').forEach(b=>b.disabled=true);
+  pending=o;
+  const parts=[];
+  if(o.k) parts.push(`<span class="${o.k>0?'dp':'dn'}">${o.k>0?'+':''}${o.k} Kariyer</span>`);
+  if(o.p) parts.push(`<span class="${o.p>0?'dp':'dn'}">${o.p>0?'+':''}${o.p} Patron</span>`);
+  if(o.a) parts.push(`<span class="${o.a>0?'dp':'dn'}">${o.a>0?'+':''}${o.a} Arkadaşlar</span>`);
+  if(o.i) parts.push(`<span class="${o.i>0?'dp':'dn'}">${o.i>0?'+':''}${o.i} Aile</span>`);
+  if(!parts.length) parts.push('<span class="dz">Hiçbir stat değişmedi</span>');
+  document.getElementById('fb-deltas').innerHTML=`<span style="font-size:1.1em">${o.m}</span><br>${parts.join('  ·  ')}`;
+  document.getElementById('fb-text').textContent=o.ac;
+  document.getElementById('overlay').classList.add('show');
 }
 function yaz(el,txt,i,cb){
   if(i<txt.length){
@@ -1315,9 +1571,10 @@ function secenekler(sc){
   sc.o.forEach(o=>{
     const b=document.createElement('button');
     b.className='strip'; b.textContent=o.m;
-    b.onclick=()=>sec(o,w);
+    b.onclick=()=>{ timerDur(); sec(o,w); };
     w.appendChild(b);
   });
+  if(sc.acil) timerBasla(sc,w);
 }
 
 /* ── SEÇİM ── */
@@ -1336,6 +1593,7 @@ function sec(o,w){
   document.getElementById('overlay').classList.add('show');
 }
 function feedbackKapat(){
+  timerDur();
   document.getElementById('overlay').classList.remove('show');
   const dk=pending.k||0, dp=pending.p||0;
   if(dk>0) ST.stats.k_up++; else if(dk<0) ST.stats.k_dn++;
