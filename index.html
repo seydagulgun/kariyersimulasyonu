@@ -1183,6 +1183,13 @@ const WILDCARD_POOL = [
   {m:'🤧 Ofis Gribi Dalgası',    ac:'Ekibin yarısı hasta. Sen de biraz gıdıklanıyor. Ama devam ediyorsun.', k:-5, p:0,  a:+5, i:-5},
   {m:'📦 Şirketten Hediye Kutusu',ac:'Masana şirket logolu hediye kutusu geldi. İçinde termos. Güzel aslında.', k:0,  p:+10,a:+5, i:+5},
   {m:'🔇 Zoom Sessiz Kaldın',    ac:'30 dakika boyunca mikrofon kapalıydı. Herkes duyuyordu, sen bilmiyordun.', k:-5, p:-10,a:+15,i:0, log:'🔇 Zoom\'da 30 dakika sessizde konuştu'},
+  {m:'🗑️ Yanlış Branch\'i Sildim', ac:'Remote\'dan production branch\'ini sildin. Geri getirmek 2 saat sürdü. Tarık Bey hâlâ bilmiyor. Ama biliyor.', k:-20,p:-15,a:-5, i:0, log:'🗑️ Production branch\'ini sildi'},
+  {m:'😡 Müşteri Şikâyeti',       ac:'Bir müşteri doğrudan Şeyda\'ya mail atmış. Konu: senin yazdığın modül. Şeyda seni CC\'lemiş.', k:-15,p:-20,a:0,  i:0},
+  {m:'🏆 Hackathon Birinciliği',  ac:'Şirket içi hackathon\'da takımın birinci oldu! Şeyda ödülü bizzat verdi.', k:+25,p:+15,a:+15,i:0},
+  {m:'💸 Hatalı Fatura',          ac:'Muhasebe seni aradı: geçen ay yanlış proje koduna saat girişi yapmışsın. Düzeltme toplantısı var.', k:-5, p:-10,a:0,  i:0},
+  {m:'📰 Sektör Ödülü',           ac:'Makro Yazılım bu yıl "En İyi İşveren" ödülü aldı. Tarık Bey fotoğrafta ön sırada. Sen yoksun.', k:+5, p:+5, a:+10,i:0},
+  {m:'🔑 VPN Şifreni Unuttun',    ac:'Sabah 09:00\'da VPN şifreni unuttun. IT "sıfırlama 4 saat sürer" dedi. Önemli toplantı 10:00\'da.', k:-10,p:-5, a:0,  i:0},
+  {m:'🎂 Ofiste Doğum Günün',     ac:'Ekip sürpriz yaptı! Pasta, balon, utanç verici şarkı. Tarık Bey bile geldi.', k:+5, p:+10,a:+20,i:+10},
 ];
 
 /* ── ACİL SENARYO HAVUZU ───────────────────── */
@@ -1688,12 +1695,10 @@ function oyunBasla() {
   const qAile   = karistir([...AILE]).slice(0,2);
   const qAcil   = karistir([...ACIL]).slice(0,1);
   const base    = karistir([...qPoz,...qGen,...qKultur,...qAile,...qAcil]);
-  // Her 4 senaryoda bir şans kartı ekle
-  queue=[];
-  base.forEach((sc,i)=>{
-    queue.push(sc);
-    if((i+1)%4===0 && i<base.length-1) queue.push({type:'wildcard'});
-  });
+  // Run başına 1 şans kartı, rastgele konuma yerleştir
+  queue=[...base];
+  const wcPos=Math.floor(Math.random()*(queue.length-2))+2; // en erken 3. sıraya
+  queue.splice(wcPos,0,{type:'wildcard'});
   qi=0;
   goster('s-game');
   sahne();
