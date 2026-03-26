@@ -365,6 +365,47 @@
 
     /* purple-light in dark mode */
     body.dark { --purple-light: #2d2e5f; }
+
+    /* ── SIDEBAR MESAJLAR ── */
+    .sidebar-msgs-header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0; margin-bottom: 4px;
+    }
+    .sidebar-msgs-label {
+      font-size: 0.72em; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted);
+    }
+    .btn-yeni-sohbet {
+      font-family: 'Inter', sans-serif; font-size: 0.68em; font-weight: 600;
+      background: var(--purple-light); color: var(--purple);
+      border: none; border-radius: 3px; padding: 2px 7px;
+      cursor: default; pointer-events: none;
+    }
+    body.dark .btn-yeni-sohbet { background: #2d2e5f; color: #a8a9d8; }
+    .sidebar-msgs { display: flex; flex-direction: column; gap: 1px; overflow: hidden; flex-shrink: 0; }
+    .msg-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 5px 6px; border-radius: 4px; cursor: default;
+      transition: background 0.1s;
+    }
+    .msg-item:hover { background: var(--choice-hover); }
+    .msg-avatar {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7em; font-weight: 700; color: #fff;
+    }
+    .msg-body { flex: 1; min-width: 0; }
+    .msg-name {
+      font-size: 0.78em; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .msg-preview {
+      font-size: 0.73em; color: var(--text-muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .msg-item.unread .msg-name { color: var(--text); }
+    .msg-item.unread .msg-preview { color: var(--text); font-weight: 500; }
+    .msg-item.unread .msg-avatar { box-shadow: 0 0 0 2px var(--purple); }
   </style>
 </head>
 <body>
@@ -433,6 +474,56 @@
           <div class="sidebar-role" id="sidebar-role">—</div>
           <div class="sidebar-kultur" id="sidebar-kultur">—</div>
         </div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-msgs-header">
+          <span class="sidebar-msgs-label">Sohbetler</span>
+          <button class="btn-yeni-sohbet" tabindex="-1">+ Yeni Sohbet</button>
+        </div>
+        <div class="sidebar-msgs">
+          <div class="msg-item unread">
+            <div class="msg-avatar" style="background:#6264A7">ŞO</div>
+            <div class="msg-body">
+              <div class="msg-name">Şeyda Oğan</div>
+              <div class="msg-preview" id="msg-seyda">'cım işine bakabildin mi? Zama...</div>
+            </div>
+          </div>
+          <div class="msg-item">
+            <div class="msg-avatar" style="background:#e85d4a">TB</div>
+            <div class="msg-body">
+              <div class="msg-name">Tarık Bey</div>
+              <div class="msg-preview">Sen: Evet, bugün bitiririm inşallah</div>
+            </div>
+          </div>
+          <div class="msg-item unread">
+            <div class="msg-avatar" style="background:#13a40e">CY</div>
+            <div class="msg-body">
+              <div class="msg-name">Cem Yıldız</div>
+              <div class="msg-preview">Bro sen çok iyi ya hahaha ya...</div>
+            </div>
+          </div>
+          <div class="msg-item">
+            <div class="msg-avatar" style="background:#f97316">ZK</div>
+            <div class="msg-body">
+              <div class="msg-name">Zeynep K.</div>
+              <div class="msg-preview">Sen: Şu PR için bakar mısın bi...</div>
+            </div>
+          </div>
+          <div class="msg-item unread">
+            <div class="msg-avatar" style="background:#8b5cf6">İK</div>
+            <div class="msg-body">
+              <div class="msg-name">İK — Duyurular</div>
+              <div class="msg-preview">📢 Piknik kayıtları başladı! Ka...</div>
+            </div>
+          </div>
+          <div class="msg-item">
+            <div class="msg-avatar" style="background:#0284c7">KE</div>
+            <div class="msg-body">
+              <div class="msg-name">Kerem Erdem</div>
+              <div class="msg-preview">Sen: 😂 ya sen de dur bir dk</div>
+            </div>
+          </div>
+        </div>
+
         <div class="sidebar-divider"></div>
         <div class="sidebar-stats-label">Durum</div>
         <div id="stats-grid"></div>
@@ -1613,6 +1704,7 @@ function statsGuncelle() {
   document.getElementById('sidebar-name').textContent = ST.n;
   document.getElementById('sidebar-role').textContent = ST.poz;
   document.getElementById('sidebar-kultur').textContent = ST.kultur==='startup' ? '🚀 Startup' : '🏢 Kurumsal';
+  document.getElementById('msg-seyda').textContent = `${ST.n}'cım işine bakabildin mi? Zama...`;
   document.getElementById('day-info').textContent = `Gün ${qi+1} / ${queue.length}`;
   document.getElementById('stats-grid').innerHTML=
     sr('💼 Kariyer',   ST.kariyer,   'fk')+
