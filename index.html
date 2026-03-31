@@ -578,12 +578,13 @@ const POZLAR = [
 const GEN = [
   {
     t:'📋 Sprint Planning',
-    m:s=>`Pazartesi 09:00. Henüz kahveni bile içmemişken PM Tarık Bey "Sprint planning var, 5 dakikaya gel" dedi.\n\nEkran dolup taşıyor: 47 backlog item.\n\nTarık Bey: "Bu sprint ${s.n}, hepsini bitiririz değil mi?" Ekip sana bakıyor. Kaktüs bile sana bakıyor.`,
+    m:s=>`Pazartesi 09:00. Henüz kahveni bile içmemişken PM Tarık Bey ${patronTonu(s)} "Sprint planning var, 5 dakikaya gel" dedi.\n\nEkran dolup taşıyor: 47 backlog item.\n\nTarık Bey: "Bu sprint ${s.n} ${kariyerTag(s)}, hepsini bitiririz değil mi?" Ekip sana bakıyor. Kaktüs bile sana bakıyor.`,
     o:[
       {m:'"Tabii ki!" de ve mucize bekle.',           k:-15,p:+5, a:-5, i:0, ac:'Sprint ortasında çöktün. Tarık Bey "neden söylemedi?" dedi.'},
       {m:'Story point hesapla, gerçekçi tahmin sun.', k:+20,p:+10,a:+5, i:0, ac:'Veri odaklı yaklaşımın takdir gördü.'},
       {m:'"Önce önceliklendirme yapalım" de.',        k:+10,p:0, a:+5, i:0, ac:'Sağduyulu buldular ama Tarık Bey biraz sıkıldı.'},
-      {m:'Telefona bak, "acil" de ve kaç.',           k:-5, p:-15,a:-5, i:0, ac:'Kaçtın ama Slack\'te 47 kez mention\'landın.'}
+      {m:'Telefona bak, "acil" de ve kaç.',           k:-5, p:-15,a:-5, i:0, ac:'Kaçtın ama Slack\'te 47 kez mention\'landın.'},
+      {req:{k:65}, m:'🔓 Geçmiş sprint verileriyle kapasite planı çıkar, toplantıyı yönet.', k:+25,p:+15,a:+10,i:0, sets:'sprint_lider', ac:'Herkes etkilendi. Tarık Bey "artık sen yönet" dedi.'}
     ]
   },
   {
@@ -638,12 +639,13 @@ const GEN = [
   },
   {
     t:'💰 Zam Görüşmesi',
-    m:s=>`Yıl sonu. Tarık Bey: "Bu yıl iyiydi. Sana %8 zam düşündük."\n\nEnflasyon: %65.\nSeninle aynı pozisyonda biri dışarıda 2x maaş alıyor.\n\nTarık Bey gülümsüyor. Sen...`,
+    m:s=>`Yıl sonu. Tarık Bey ${patronTonu(s)} konuşuyor: "Bu yıl iyiydi. Sana %8 zam düşündük."\n\nEnflasyon: %65.\nSeninle aynı pozisyonda ${kariyerTag(s)} biri dışarıda 2x maaş alıyor.\n\nTarık Bey gülümsüyor. Sen...`,
     o:[
       {m:'"Teşekkürler!" de, içten ağla.',               k:-10,p:+5, a:0, i:0, ac:'Tarık Bey memnun. Sen değil. Altı ay sonra mülakat verdin.'},
-      {m:'Piyasa araştırmasını göster, müzakere et.',    k:+20,p:-5, a:0, i:0, ac:'Gergin sessizlik. Sonunda %18 anlaştınız.'},
+      {m:'Piyasa araştırmasını göster, müzakere et.',    k:+20,p:-5, a:0, i:0, sets:'zam_muz', ac:'Gergin sessizlik. Sonunda %18 anlaştınız.'},
       {m:'"Düşüneceğim" de, offer letter ile geri dön.', k:+25,p:-15,a:+5,i:0, ac:'Rakip %40 teklif etti. Tarık Bey counter yaptı.'},
-      {m:'Reddet, kapıyı çarp çık.',                     k:-5, p:-25,a:+10,i:0,ac:'Dramatik ama etkili. Tarık Bey özür diledi. Şans eseri.'}
+      {m:'Reddet, kapıyı çarp çık.',                     k:-5, p:-25,a:+10,i:0,ac:'Dramatik ama etkili. Tarık Bey özür diledi. Şans eseri.'},
+      {req:{k:65}, m:'🔓 Son 6 aydaki katkıları rakamla sun, değer bazlı müzakere yap.', k:+30,p:-5,a:0,i:0, ac:'Tarık Bey rakamlar karşısında sustu. %27\'de anlaştınız.'}
     ]
   },
   {
@@ -731,7 +733,7 @@ const GEN = [
     m:s=>`Ödeme modülü refactor görevin vardı. AI araçla 2 saatte bitirdin. Normalde 5 gün sürerdi.\n\nTarık Bey sprint review\'da: "Bu kadar hızlı nasıl bitirdin? AI mi kullandın?"`,
     o:[
       {m:'"Hayır, kendim yazdım" de.',                 k:-20,p:-10,a:-10,i:0, ac:'Cem kodu inceledi. "Neden yalan?" toplantısı oldu.'},
-      {m:'"Evet" de, araç ve süreci anlat.',           k:+20,p:+10,a:+15,i:0, ac:'Tarık Bey "ekibe anlat" dedi. Kahraman oldun.'},
+      {m:'"Evet" de, araç ve süreci anlat.',           k:+20,p:+10,a:+15,i:0, sets:'ai_sampi', ac:'Tarık Bey "ekibe anlat" dedi. Kahraman oldun.'},
       {m:'"Biraz yardım aldım" de.',                   k:-5, p:-5, a:0,  i:0, ac:'Belirsizlik şüphe yarattı.'},
       {m:'Konuyu değiştir.',                           k:0,  p:-10,a:-5, i:0, ac:'"Şeffaf değil" notu düşüldü.'}
     ]
@@ -1478,6 +1480,50 @@ const CHAIN = [
       {m:'"Ben sadece kendim için yapmıştım" de.',      k:-5, p:-10,a:-5, i:0, ac:'"Ekip fikriydi sanmıştım" dedi Tarık Bey. Hayal kırıklığı gözlerinde.'},
       {m:'Pilot için 3 kişilik test öner.',             k:+10,p:+10,a:+5, i:0, ac:'Akıllı yaklaşım. Pilot başladı. Kararı veriye bıraktın.'}
     ]
+  },
+  {
+    req:'patron_kizgin',
+    t:'😠 Tarık Bey Seni Odaya Çağırdı',
+    m:s=>`Tarık Bey kapıdan seslendi: "${s.n}, bir dakikan var mı?" Tonu ${patronTonu(s)} — bu iyi bir işaret değil.\n\nOdaya girdin. Kapıyı kapattı. "Son zamanlarda aramız biraz gergin, değil mi?" dedi.`,
+    o:[
+      {m:'"Fark ettim, düzeltmek istiyorum" de.',   k:+10,p:+20,a:0, i:0, ac:'Dürüstlük işe yaradı. Tarık Bey biraz yumuşadı. "Göreceğiz" dedi.'},
+      {m:'Sorunları listele, yapıcı konuş.',         k:+15,p:+10,a:+5,i:0, ac:'İki taraftan bakış açısı çıktı. İlişki kısmen onarıldı.'},
+      {m:'"Ben bir şey yapmadım ki" de.',            k:-10,p:-15,a:0, i:0, ac:'Tarık Bey "anlıyorum" dedi. Anlamadı. Gerilim arttı.'},
+      {m:'Özür dile, detaya girme.',                 k:0,  p:+15,a:0, i:0, ac:'Kısa ama etkili. Tarık Bey "tamam" dedi. Konu kapandı — şimdilik.'}
+    ]
+  },
+  {
+    req:'zam_muz',
+    t:'📊 Tarık Bey: "Başarını Duydum"',
+    m:s=>`Koridorda Tarık Bey seni durdurdu. ${patronTonu(s).charAt(0).toUpperCase()+patronTonu(s).slice(1)} konuştu:\n\n"Zam görüşmesini çok iyi yönettin ${s.n}. Piyasa araştırmasın etkileyiciydi. Seni kıdemli rolde görmek istiyorum."`,
+    o:[
+      {m:'Heyecanla kabul et.',                       k:+20,p:+15,a:+5,i:0, ac:'Kariyer hamlesi yapıldı. Ekip duydu. Tebrikler gecikmedi.'},
+      {m:'"Detayları konuşalım" de, müzakere et.',    k:+25,p:+5, a:0, i:0, ac:'İkinci kez müzakere ettin. Bu sefer daha iyi şartlar çıktı.'},
+      {m:'"Şu an düşünmek istiyorum" de.',            k:+10,p:-5, a:0, i:0, ac:'Tarık Bey bekledi. Sonunda "hazır olduğunda söyle" dedi.'},
+      {m:'Reddet, mevcut rolde kal.',                 k:-5, p:-10,a:0, i:0, ac:'Tarık Bey anladı ama bir daha sormadı.'}
+    ]
+  },
+  {
+    req:'ai_sampi',
+    t:'🤖 "Sen AI Uzmanısın Artık"',
+    m:s=>`Ekip toplantısında Tarık Bey duyurdu: "${s.n} ${kariyerTag(s)}, AI araçlarla verimliliği ikiye katladı. Bu hafta herkesin katılacağı bir bilgi paylaşım oturumu yapacak."\n\nHerkes sana döndü.`,
+    o:[
+      {m:'Oturumu planla, araçları herkese anlat.',   k:+20,p:+15,a:+20,i:0, ac:'Ekip öğrendi. "Neden daha önce bilmiyorduk?" dediler.'},
+      {m:'"Hazır değilim, biraz süre lazım" de.',     k:+10,p:-5, a:+5, i:0, ac:'Tarık Bey "haftaya" dedi. Zaman kazandın. Daha iyi oldu.'},
+      {m:'Kısa tut, en işe yarar 3 aracı göster.',   k:+5, p:+5, a:+5, i:0, ac:'Pratik geçti. Herkes memnun — az vakti olanlar da.'},
+      {m:'"Bu sadece bir araç, abartmayalım" de.',    k:-5, p:-10,a:-5, i:0, ac:'Tarık Bey "tevazu güzel ama fırsat bu" dedi. Kaçırdın.'}
+    ]
+  },
+  {
+    req:'sprint_lider',
+    t:'📋 Toplantı Liderliği Kalıcı Oldu',
+    m:s=>`Tarık Bey bu sabah Slack'te yazdı:\n\n"${s.n}, sprint planningları bundan sonra sen yönetmeye devam et. Ekip senden memnun."\n\nEkip de ayrıca tebrik mesajı atmış. Ama yeni sorumluluk, yeni beklenti demek.`,
+    o:[
+      {m:'Kabul et, süreci daha da iyileştir.',       k:+20,p:+15,a:+10,i:0, ac:'Liderlik rolü oturdu. Şeyda bunu duydu.'},
+      {m:'Kabul et ama iş yükü için kaynak iste.',    k:+15,p:+5, a:+5, i:0, ac:'Tarık Bey "haklısın" dedi. Ekibe bir junior geldi.'},
+      {m:'"Teşekkür ederim ama bu resmi olsun" de.',  k:+10,p:-5, a:0, i:0, ac:'Unvan görüşmesi başladı. Yavaş ama başladı.'},
+      {m:'Geri çevir, "zamanım yok" de.',             k:-5, p:-15,a:-5, i:0, ac:'Tarık Bey hayal kırıklığını gizleyemedi.'}
+    ]
   }
 ];
 
@@ -1651,6 +1697,20 @@ function karistir(a) {
 }
 function sik(v){return Math.max(0,Math.min(100,v));}
 
+/* ── BAĞLAM YARDIMCILARI ── */
+function patronTonu(s){
+  return s.patron>=70 ? 'gülümseyerek'
+       : s.patron>=45 ? 'ciddi bir ifadeyle'
+       : s.patron>=25 ? 'kaşlarını çatarak'
+       :                'soğuk bir sesle';
+}
+function kariyerTag(s){
+  return s.kariyer>=70 ? '(Kıdemli)'
+       : s.kariyer>=50 ? '(Mid-level)'
+       : s.kariyer>=30 ? '(Junior)'
+       :                 '(Deneme Sürecinde)';
+}
+
 /* ── KARAKTER ── */
 function charEkrani() {
   selPoz=null; selKulturVal=null;
@@ -1681,7 +1741,7 @@ function oyunBasla() {
   const cfg=POZ_CONFIG[selPoz]||{kariyer:50,patron:50,arkadaslar:50,aile:50};
   ST={n:ad, poz:selPoz, kultur:selKulturVal,
       kariyer:cfg.kariyer, patron:cfg.patron, arkadaslar:cfg.arkadaslar, aile:cfg.aile,
-      flags:new Set(), stats:{k_up:0,k_dn:0,p_up:0,p_dn:0,zero:0,log:[]}};
+      flags:new Set(), stats:{k_up:0,k_dn:0,p_up:0,p_dn:0,zero:0,log:[],decisions:[]}};
   chainPool=[...CHAIN];
   let pozPool;
   if(selPoz==='Test Mühendisi') pozPool=TM;
@@ -1777,6 +1837,7 @@ function secenekler(sc){
   const w=document.getElementById('strip-wrap');
   w.innerHTML='';
   sc.o.forEach(o=>{
+    if(o.req && ST.kariyer < o.req.k) return;
     const b=document.createElement('button');
     b.className='strip'; b.textContent=o.m;
     b.onclick=()=>{ timerDur(); sec(o,w); };
@@ -1803,15 +1864,29 @@ function sec(o,w){
 function feedbackKapat(){
   timerDur();
   document.getElementById('overlay').classList.remove('show');
-  const dk=pending.k||0, dp=pending.p||0;
-  if(dk>0) ST.stats.k_up++; else if(dk<0) ST.stats.k_dn++;
+  let dk=pending.k||0, dp=pending.p||0;
+  // Kültür çarpanları
+  if(ST.kultur==='startup'){
+    dp=Math.round(dp*1.3);
+  } else if(ST.kultur==='kurumsal'){
+    if(dp<0) dp=Math.round(dp*0.7);
+  }
+  let dkK=dk;
+  if(ST.kultur==='kurumsal' && dk>0) dkK=Math.round(dk*0.85);
+  if(dkK>0) ST.stats.k_up++; else if(dkK<0) ST.stats.k_dn++;
   if(dp>0) ST.stats.p_up++; else if(dp<0) ST.stats.p_dn++;
   if(!pending.k&&!pending.p&&!pending.a&&!pending.i) ST.stats.zero++;
   if(pending.log) ST.stats.log.push(pending.log);
-  ST.kariyer    =sik(ST.kariyer   +dk);
+  ST.stats.decisions.push({m:pending.m, mag:Math.abs(pending.k||0)+Math.abs(pending.p||0)+Math.abs(pending.a||0)+Math.abs(pending.i||0)});
+  ST.kariyer    =sik(ST.kariyer   +dkK);
   ST.patron     =sik(ST.patron    +dp);
   ST.arkadaslar =sik(ST.arkadaslar+(pending.a||0));
   ST.aile       =sik(ST.aile     +(pending.i||0));
+  // Cascading etkiler
+  if(ST.patron < 20) ST.kariyer=sik(ST.kariyer-2);
+  if(ST.aile   < 15) ST.kariyer=sik(ST.kariyer-1);
+  // NPC hafızası: patron çok düştüyse flag
+  if(ST.patron < 25 && !ST.flags.has('patron_kizgin')) ST.flags.add('patron_kizgin');
   if(pending.sets) ST.flags.add(pending.sets);
   pending=null; qi++;
   // Zincirleme senaryo enjeksiyonu
@@ -1918,6 +1993,14 @@ function sonuc(){
       <div style="font-size:0.85em;line-height:1.65;color:#333">${ending.desc}</div>
     </div>`:'';
 
+  // ── En etkili 3 karar ──
+  const top3=[...stats.decisions].sort((a,b)=>b.mag-a.mag).slice(0,3);
+  const top3HTML=top3.length?`
+    <div style="margin:10px 0 12px;padding:10px 14px;background:var(--card-bg);border:1px dashed var(--border);border-radius:6px">
+      <div style="font-size:0.75em;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin-bottom:8px">🎯 En Etkili 3 Kararın</div>
+      <ol style="margin:0;padding-left:18px;font-size:0.82em;line-height:1.85;color:var(--text)">${top3.map(d=>`<li>${d.m} <span style="color:var(--text-muted)">(etki: ${d.mag})</span></li>`).join('')}</ol>
+    </div>`:'';
+
   // ── Oyun sonu istatistikleri ──
   const ozet=[];
   if(stats.log.length) ozet.push(...stats.log.slice(0,6));
@@ -1944,6 +2027,7 @@ function sonuc(){
     </div>
     ${endingHTML}
     ${badgeHTML}
+    ${top3HTML}
     ${ozetHTML}
     <div class="result-comment">${pV}</div>
     <div class="result-comment">${aV}</div>
